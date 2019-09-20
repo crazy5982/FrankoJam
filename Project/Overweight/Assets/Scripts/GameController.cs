@@ -14,8 +14,11 @@ public class GameController : MonoBehaviour
     public int timeLimit = 20;
     private int timerAsInt;
     public Text timerUI;
-    private int 
+    private int objectiveWeight = 10;
     private int player1Scale;
+    private int player2Scale;
+    private int player3Scale;
+    private int player4Scale;
 
 
 
@@ -38,5 +41,12 @@ public class GameController : MonoBehaviour
         {
             timerUI.text = "Time is up mother lickers!";
         }
+
+
+    }
+
+    void CalculateTimer()
+    {
+
     }
 }
