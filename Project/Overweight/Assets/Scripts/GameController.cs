@@ -1,23 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject player1;
-    public GameObject player2;
-    public GameObject player3;
-    public GameObject player4;
-    private float timer = 3;
-    public int timeLimit = 20;
-    private int timerAsInt;
-    public Text timerUI;
-    private int 
-    private int player1Scale;
-
-
 
     void Start()
     {
@@ -27,16 +14,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer >= 0)
-        {
-            timer -= Time.deltaTime;
-            timerAsInt = Mathf.RoundToInt(timer);
-            timerUI.text = "Timer is: " + timerAsInt;
-            Debug.Log("Time is: " + timerAsInt);
-        }
-        else
-        {
-            timerUI.text = "Time is up mother lickers!";
-        }
+        
     }
 }
