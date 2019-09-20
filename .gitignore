@@ -34,3 +34,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Project/Overweight/Assets/Prefab.meta
+Project/Overweight/Assets/Scripts.meta
