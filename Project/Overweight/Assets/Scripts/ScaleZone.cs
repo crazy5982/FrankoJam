@@ -14,6 +14,10 @@ public class ScaleZone : MonoBehaviour
 	private Transform m_AttachPointParent;
 
 	private int m_CurrentWeight = 0;
+	public int CurrentWeight
+	{
+		get { return m_CurrentWeight; }
+	}
 
 	private List<parcel> m_ParcelList;
 
