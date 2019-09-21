@@ -4,7 +4,35 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    const float m_MovementSpeed = 0.2f;
+    [SerializeField]
+    protected float m_MovementSpeed = 0.1f;
+
+	[SerializeField]
+	protected float m_ThrowSpeedH = 0.50f;
+	[SerializeField]
+	protected float m_ThrowSpeedV = 0.10f;
+
+	[SerializeField]
+    protected string m_PlayerNumber = "1";
+
+
+
+	private Transform m_AttachPoint;
+    private Rigidbody m_RigidBody;
+	private Grabber m_Grabber;
+
+	private bool m_IsCarrying = false;
+	private Rigidbody m_CarriedPackage;
+
+    void Awake()
+    {
+        m_RigidBody = GetComponent<Rigidbody>();
+        m_RigidBody.freezeRotation = true;
+
+		m_Grabber = GetComponentInChildren<Grabber>();
+
+		m_AttachPoint = transform.GetChild(0);
+	}
 
     // Start is called before the first frame update
     void Start()
@@ -15,28 +43,79 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+		if (Input.GetButtonDown("GrabDrop_P" + m_PlayerNumber))
+		{
+			if (m_IsCarrying == false)
+			{
+				parcel latestPackage = m_Grabber.GetLatestPackage();
+				if (latestPackage != null)
+				{
+					latestPackage.gameObject.transform.position = m_AttachPoint.position;
+					latestPackage.gameObject.transform.SetParent(m_AttachPoint);
+
+					m_CarriedPackage = latestPackage.GetComponent<Rigidbody>();
+					if (m_CarriedPackage != null)
+					{
+						m_CarriedPackage.isKinematic = true;
+					}
+					m_IsCarrying = true;
+				}
+			}
+			else
+			{
+				DeparentCarriedPackage();
+				m_CarriedPackage = null;
+			}
+
+		}
+		if (Input.GetButtonDown("Throw_P" + m_PlayerNumber) && m_IsCarrying)
+		{
+			if (m_CarriedPackage != null)
+			{
+				DeparentCarriedPackage();
+
+				Vector3 throwVector = transform.forward;
+				throwVector.x *= m_ThrowSpeedH;
+				throwVector.z *= m_ThrowSpeedH;
+				throwVector.y = m_ThrowSpeedV;
+				m_CarriedPackage.AddForce(throwVector);
+
+				m_CarriedPackage = null;
+			}
+		}
     }
 
     void FixedUpdate()
     {
+        m_RigidBody.velocity = Vector3.zero;
+        m_RigidBody.angularVelocity = Vector3.zero;
+
         Vector2 analogue_input;
-        analogue_input.x = Input.GetAxis("Horizontal");
-        analogue_input.y = Input.GetAxis("Vertical");
+        analogue_input.x = Input.GetAxis("Horizontal_P" + m_PlayerNumber);
+        analogue_input.y = Input.GetAxis("Vertical_P" + m_PlayerNumber);
         analogue_input *= m_MovementSpeed;
 
-        Rigidbody rigidBody = GetComponent<Rigidbody>();
-        if (rigidBody)
+        if (m_RigidBody && analogue_input.SqrMagnitude() >= 0.00001f)
         {
-            Vector3 newPosition = rigidBody.position;
+            Vector3 newPosition = m_RigidBody.position;
             newPosition.x += analogue_input.x;
             newPosition.z += analogue_input.y;
-            rigidBody.MovePosition(newPosition);
+            m_RigidBody.MovePosition(newPosition);
+
+            analogue_input.Normalize();
+
+            Quaternion rotation = Quaternion.LookRotation(new Vector3(analogue_input.x, 0.0f, analogue_input.y));
+            m_RigidBody.MoveRotation(rotation);
         }
-
-        analogue_input.Normalize();
-
-        Quaternion rotation = Quaternion.LookRotation(new Vector3(analogue_input.x, 0.0f, analogue_input.y));
-        rigidBody.MoveRotation(rotation);
     }
+
+	private void DeparentCarriedPackage()
+	{
+		if (m_CarriedPackage != null)
+		{
+			m_CarriedPackage.isKinematic = false;
+			m_CarriedPackage.gameObject.transform.SetParent(transform.root);
+		}
+		m_IsCarrying = false;
+	}
 }
