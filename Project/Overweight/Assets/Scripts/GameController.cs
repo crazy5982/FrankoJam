@@ -19,9 +19,17 @@ public class GameController : MonoBehaviour
     public int numberOfPlayers;
     private float timer = 5;
     private float newRoundTimer = 5;
+    private float timerFrozen = 20;
     private int timerAsInt;
+
     public Text timerUI;
     public Text objectiveUI;
+
+    public Text player1WinUI;
+    public Text player2WinUI;
+    public Text player3WinUI;
+    public Text player4WinUI;
+
     private int objectiveWeightFrozen = 5;
     private int objectiveWeight;
     private int currentObjectiveWeight;
@@ -47,10 +55,12 @@ public class GameController : MonoBehaviour
     void Start()
     {
         //this is where some game controller things will happen
+
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
         GetPlayersList();
         SetupGame();
+
     }
 
     // Update is called once per frame
@@ -73,13 +83,13 @@ public class GameController : MonoBehaviour
             timer -= Time.deltaTime;
             timerAsInt = Mathf.RoundToInt(timer);
             timerUI.text = "Timer is: " + timerAsInt;
-            //Debug.Log("Time is: " + timerAsInt);
         }
         else
         {
             timerUI.text = "Time is up mother lickers!";
             DeactivateAllPlayers();
             GetAndEvaluateFinalScores();
+            CalculateEndRoundTimer();
         }
     }
 
@@ -90,16 +100,13 @@ public class GameController : MonoBehaviour
             newRoundTimer -= Time.deltaTime;
             timerAsInt = Mathf.RoundToInt(newRoundTimer);
             timerUI.text = "New Round starts in: " + timerAsInt+"s";
-            //Debug.Log("Time is: " + timerAsInt);
         }
         else
         {
             timerUI.text = "START!";
             ActivateAllPlayers();
-            if (objectiveWeight > 0)
-            {
-                GetAndEvaluateFinalScores();
-            }
+            ClearGame();
+            SetupGame();
         }
     }
 
@@ -111,6 +118,8 @@ public class GameController : MonoBehaviour
         player3Score = 0;
         player4Score = 0;
         //wipe timers
+        timer = timerFrozen;
+        ClearAllPlayerWeights();
     }
 
     void SetupGame()
@@ -130,15 +139,15 @@ public class GameController : MonoBehaviour
         //set item spawns
 
         // Setup parcel spawners here
+
         Vector3 parcelPosition_1 = new Vector3(0, 50, 0);
         var parcelSpawn_1 = (GameObject)Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
-        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(7, 1, 0, 0, 0);
+        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(7, 1, 0, 0, 1);
+
     }
 
     void GetAndEvaluateFinalScores()
     {
-        if(objectiveWeight > 0)
-        {
             int playerScore;
             perfectPlayerScores = new List<PlayerZoneControllerTemp> { };
             foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
@@ -154,7 +163,7 @@ public class GameController : MonoBehaviour
                     perfectPlayerScores.Add(playerScale);
                 }
                 playerScale.SetScore(playerScore);
-                Debug.Log("Bedson Test: " + playerScore);
+                //Debug.Log("Bedson Test: " + playerScore);
             }
             if (perfectPlayerScores.Count > 0)
             {
@@ -165,10 +174,12 @@ public class GameController : MonoBehaviour
                         Color winCol = new Color(0f, 1f, 0f, 1f);
                         playerScale.SetEvaluationTextColour(winCol);
                         playerScale.SetEvaluationText("PERFECT WINNER!!!");
+                        playerScale.AddWins(1);
                     }
                     else
                     {
                         playerScale.SetEvaluationText("WINNER!!!");
+                        playerScale.AddWins(1);
                     }
 
                 }
@@ -178,9 +189,7 @@ public class GameController : MonoBehaviour
                 //no perfect score so we get the closest
                 objectiveWeight--;
                 GetAndEvaluateFinalScores();
-            }
-        }
-        
+            }        
     }
 
     //void GetAndEvaluateCurrentScores()
@@ -271,6 +280,22 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void ClearAllPlayerWeights()
+    {
+        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        {
+            playerScale.SetWeight(0);
+        }
+    }
+
+    void UpdatePlayerWins()
+    {
+        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        {
+            playerScale.GetWinCount();
+        }
+    }
+
 
     void EvaluatePlayerScore(int playerScore, PlayerZoneControllerTemp playerScale)
     {
@@ -304,18 +329,22 @@ public class GameController : MonoBehaviour
         if(player1Scale != null)
         {
             currentPlayers.Add(player1Scale);
+            player1Scale.SetPlayerNumber(1);
         }
         if (player2Scale != null)
         {
             currentPlayers.Add(player2Scale);
+            player2Scale.SetPlayerNumber(2);
         }
         if (player3Scale != null)
         {
             currentPlayers.Add(player3Scale);
+            player3Scale.SetPlayerNumber(3);
         }
         if (player4Scale != null)
         {
             currentPlayers.Add(player4Scale);
+            player4Scale.SetPlayerNumber(4);
         }
     }
 }
