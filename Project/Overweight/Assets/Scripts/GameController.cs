@@ -51,6 +51,6 @@ public class GameController : MonoBehaviour
 
     void GetPlayerScales()
     {
-
+        //for each player get the current score 
     }
 }
