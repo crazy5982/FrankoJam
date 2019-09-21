@@ -13,23 +13,23 @@ public class parcel_spawner : MonoBehaviour
 
     private float spawnAve = 5;
 
-    private List<int> parcelSpawnWeight = new List<int>();
+    private List<float> parcelSpawnWeight = new List<float>();
 
-    private string parcelDirection;
+    [SerializeField] private string parcelDirection;
     private float parcelSpeed = 1.3f;
 
     private void Update()
     {
         if (canSpawn)
         {
-            if (ShouldSpawn())
+            if (TimerCheck())
             {
                 Spawn(parcelToSpawn());
             }
         }
     }
 
-    public void StartSpawning(int numSpawnMin, int numSpawnMax, int smallP, int medP, int largeP, int badP, string pDirection)
+    public void StartSpawning(int numSpawnMin, int numSpawnMax, float smallP, float medP, float largeP, float badP)
     {
         spawnAve = Mathf.RoundToInt(Random.Range(numSpawnMin, numSpawnMax+0.49f));
         parcelSpawnWeight.Add(smallP);
@@ -37,7 +37,7 @@ public class parcel_spawner : MonoBehaviour
         parcelSpawnWeight.Add(largeP);
         parcelSpawnWeight.Add(badP);
         canSpawn = true;
-        parcelDirection = pDirection;
+        spawnCount = 0;
     }
 
     public void SetParcelDirection(string directionP)
@@ -70,11 +70,6 @@ public class parcel_spawner : MonoBehaviour
             spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
         spawnCount++;
-    }
-
-    private bool ShouldSpawn()
-    {
-        return TimerCheck();
     }
 
     private bool TimerCheck()

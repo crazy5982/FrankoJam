@@ -62,17 +62,14 @@ public class GameController : MonoBehaviour
     private List<ScaleZone> currentPerfectPlayerScores = new List<ScaleZone> { };
     private List<ScaleZone> PlayerScores = new List<ScaleZone> { };
 
-    // Parcel Direction vars
-    public string LEFT = "left";
-    public string RIGHT = "right";
-    public string UP = "up";
-    public string DOWN = "down";
-
     // Parcel Spawner game object reference
     [SerializeField] private GameObject parcel_spawner_object;
 
     // Parcel destruction setup
-    destroy_parcel des_parcel = new destroy_parcel();
+    parcel_manager parcel_man = new parcel_manager();
+
+    // Parcel spawn setup
+    //parcel_spawner spw_parcel;
 
     void Start()
     {
@@ -113,7 +110,7 @@ public class GameController : MonoBehaviour
         {
             timerUI.text = "Time is up mother lickers!";
 
-            des_parcel.DestroyParcels("Parcel");
+            parcel_man.DestroyParcels("Parcel");
 
             if (roundScoreCalculated==false)
             {
@@ -203,10 +200,7 @@ public class GameController : MonoBehaviour
         //set item spawns
 
         // Setup parcel spawners here
-
-        Vector3 parcelPosition_1 = new Vector3(2.5f, 50f, -2.5f);
-        var parcelSpawn_1 = (GameObject)Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
-        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(5, 7, 1, 0, 0, 0, "");
+        parcel_man.BeginParcelSpawning();
 
         UpdateTotalScores();
     }
