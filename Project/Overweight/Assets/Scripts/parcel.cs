@@ -30,8 +30,8 @@ public class parcel : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Vector3 throwVector = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
-        rb.velocity = throwVector;
+        //Vector3 throwVector = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
+        //rb.velocity = throwVector;
         m_roundEnd.AddListener(DestroyParcel);
     }
 

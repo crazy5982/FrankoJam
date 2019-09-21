@@ -55,6 +55,12 @@ public class GameController : MonoBehaviour
     private List<ScaleZone> currentPerfectPlayerScores = new List<ScaleZone> { };
     private List<ScaleZone> PlayerScores = new List<ScaleZone> { };
 
+    // Parcel Direction vars
+    public string LEFT = "left";
+    public string RIGHT = "right";
+    public string UP = "up";
+    public string DOWN = "down";
+
     // Parcel Spawner game object reference
     [SerializeField] private GameObject parcel_spawner_object;
 
@@ -159,7 +165,7 @@ public class GameController : MonoBehaviour
 
         Vector3 parcelPosition_1 = new Vector3(0, 50, 0);
         var parcelSpawn_1 = (GameObject)Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
-        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(5, 7, 1, 0, 0, 0);
+        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(5, 7, 1, 0, 0, 0, LEFT);
 
         UpdateTotalScores();
     }

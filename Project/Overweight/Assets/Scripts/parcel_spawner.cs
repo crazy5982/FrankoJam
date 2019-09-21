@@ -15,6 +15,9 @@ public class parcel_spawner : MonoBehaviour
 
     private List<int> parcelSpawnWeight = new List<int>();
 
+    private string parcelDirection;
+    private float parcelSpeed = 1.3f;
+
     private void Update()
     {
         if (canSpawn)
@@ -26,7 +29,7 @@ public class parcel_spawner : MonoBehaviour
         }
     }
 
-    public void StartSpawning(int numSpawnMin, int numSpawnMax, int smallP, int medP, int largeP, int badP)
+    public void StartSpawning(int numSpawnMin, int numSpawnMax, int smallP, int medP, int largeP, int badP, string pDirection)
     {
         spawnAve = Mathf.RoundToInt(Random.Range(numSpawnMin, numSpawnMax+0.49f));
         parcelSpawnWeight.Add(smallP);
@@ -34,12 +37,38 @@ public class parcel_spawner : MonoBehaviour
         parcelSpawnWeight.Add(largeP);
         parcelSpawnWeight.Add(badP);
         canSpawn = true;
+        parcelDirection = pDirection;
+    }
+
+    public void SetParcelDirection(string directionP)
+    {
+        parcelDirection = directionP;
     }
 
     private void Spawn(GameObject parcelToSpawn)
     {
         nextSpawnTime = Time.time + spawnDelay;
         GameObject spawnedParcel = Instantiate(parcelToSpawn, transform.position, transform.rotation);
+        if (parcelDirection == "right")
+        {
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(parcelSpeed, 0, 0);
+        }
+        else if (parcelDirection == "left")
+        {
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(-parcelSpeed, 0, 0);
+        }
+        else if (parcelDirection == "down")
+        {
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -parcelSpeed);
+        }
+        else if (parcelDirection == "up")
+        {
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, parcelSpeed);
+        }
+        else
+        {
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        }
         spawnCount++;
     }
 
