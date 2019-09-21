@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour
         else
         {
             timerUI.text = "Time is up mother lickers!";
-            DeactivateAllPlayers();
+            //DeactivateAllPlayers();
             
             if (roundScoreCalculated==false)
             {
