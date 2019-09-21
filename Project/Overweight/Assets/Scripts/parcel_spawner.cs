@@ -25,7 +25,7 @@ public class parcel_spawner : MonoBehaviour
         }
     }
 
-    private void StartSpawning(int numSpawn, int[] parcelWeights)
+    public void StartSpawning(int numSpawn, int[] parcelWeights)
     {
         spawnMax = numSpawn;
         parcelSpawnWeight = null;

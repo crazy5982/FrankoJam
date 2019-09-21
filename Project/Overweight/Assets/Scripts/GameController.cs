@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour
     private List<PlayerZoneControllerTemp> currentPerfectPlayerScores = new List<PlayerZoneControllerTemp> { };
     private List<PlayerZoneControllerTemp> PlayerScores = new List<PlayerZoneControllerTemp> { };
 
+    // Parcel Spawner game object reference
+    [SerializeField] private GameObject parcel_spawner_object;
+
     void Start()
     {
         //this is where some game controller things will happen
@@ -125,6 +128,12 @@ public class GameController : MonoBehaviour
         GetPlayersList();
         //set player spawns
         //set item spawns
+
+        // Setup parcel spawners here
+        Vector3 parcelPosition_1 = new Vector3(0, 5, 0);
+        int[] parcelW = { 1, 0, 0, 0 };
+        GameObject parcelSpawn_1 = Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
+        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(7, parcelW);
     }
 
     void GetAndEvaluateFinalScores()
