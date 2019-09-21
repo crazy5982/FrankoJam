@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     private float newRoundTimer = 5;
     private float timerFrozen = 20;
     private int timerAsInt;
+    private bool roundScoreCalculated = false;
 
     public Text timerUI;
     public Text objectiveUI;
@@ -88,7 +89,13 @@ public class GameController : MonoBehaviour
         {
             timerUI.text = "Time is up mother lickers!";
             DeactivateAllPlayers();
-            GetAndEvaluateFinalScores();
+            if(roundScoreCalculated==false)
+            {
+                roundScoreCalculated = true;
+                GetAndEvaluateFinalScores();
+                UpdateTotalScores();
+            }
+            
             CalculateEndRoundTimer();
         }
     }
@@ -120,6 +127,7 @@ public class GameController : MonoBehaviour
         //wipe timers
         timer = timerFrozen;
         ClearAllPlayerWeights();
+        roundScoreCalculated = false;
     }
 
     void SetupGame()
@@ -143,52 +151,56 @@ public class GameController : MonoBehaviour
         Vector3 parcelPosition_1 = new Vector3(0, 50, 0);
         var parcelSpawn_1 = (GameObject)Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
         parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(5, 7, 1, 0, 0, 0);
+
+        UpdateTotalScores();
     }
 
     void GetAndEvaluateFinalScores()
     {
-            int playerScore;
-            perfectPlayerScores = new List<PlayerZoneControllerTemp> { };
-            foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        int playerScore;
+        perfectPlayerScores = new List<PlayerZoneControllerTemp> { };
+        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        {
+            playerScore = playerScale.GetWeight();
+            playerScore = objectiveWeight - playerScore;
+            if (playerScore < 0)
             {
-                playerScore = playerScale.GetWeight();
-                playerScore = objectiveWeight - playerScore;
-                if (playerScore < 0)
-                {
-                    playerScore = playerScore * -1;
-                }
-                if (playerScore == 0)
-                {
-                    perfectPlayerScores.Add(playerScale);
-                }
-                playerScale.SetScore(playerScore);
-                //Debug.Log("Bedson Test: " + playerScore);
+                playerScore = playerScore * -1;
             }
-            if (perfectPlayerScores.Count > 0)
+            if (playerScore == 0)
             {
-                foreach (PlayerZoneControllerTemp playerScale in perfectPlayerScores)
+                perfectPlayerScores.Add(playerScale);
+            }
+            playerScale.SetScore(playerScore);
+            //Debug.Log("Bedson Test: " + playerScore);
+        }
+        if (perfectPlayerScores.Count > 0)
+        {
+            foreach (PlayerZoneControllerTemp playerScale in perfectPlayerScores)
+            {
+                if (objectiveWeight == objectiveWeightFrozen)
                 {
-                    if (objectiveWeight == objectiveWeightFrozen)
-                    {
-                        Color winCol = new Color(0f, 1f, 0f, 1f);
-                        playerScale.SetEvaluationTextColour(winCol);
-                        playerScale.SetEvaluationText("PERFECT WINNER!!!");
-                        playerScale.AddWins(1);
-                    }
-                    else
-                    {
-                        playerScale.SetEvaluationText("WINNER!!!");
-                        playerScale.AddWins(1);
-                    }
+                    Color winCol = new Color(0f, 1f, 0f, 1f);
+                    playerScale.SetEvaluationTextColour(winCol);
+                    playerScale.SetEvaluationText("PERFECT WINNER!!!");
+                    playerScale.AddWins(1);
+                    Debug.Log("Bedson Test: " + playerScale.GetWinCount());
+                }
+                else
+                {
+                    playerScale.SetEvaluationText("WINNER!!!");
+                    playerScale.AddWins(1);
+                    Debug.Log("Bedson Test: " + playerScale.GetWinCount());
+                }
 
-                }
             }
-            else
-            {
-                //no perfect score so we get the closest
-                objectiveWeight--;
-                GetAndEvaluateFinalScores();
-            }        
+        }
+        else
+        {
+            //no perfect score so we get the closest
+            objectiveWeight--;
+            GetAndEvaluateFinalScores();
+        }
     }
 
     //void GetAndEvaluateCurrentScores()
@@ -251,6 +263,40 @@ public class GameController : MonoBehaviour
                 player1Score = player1Score * -1;
             }
         }
+    }
+
+    void UpdateTotalScores()
+    {
+        //for each current player
+        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        {
+            int playerNum = playerScale.GetPlayerNumber();
+            if(playerNum == 1)
+            {
+                player1WinCount = playerScale.GetWinCount();
+            }else if (playerNum == 2)
+            {
+                player2WinCount = playerScale.GetWinCount();
+            }
+            else if (playerNum == 3)
+            {
+                player3WinCount = playerScale.GetWinCount();
+            }
+            else if (playerNum == 4)
+            {
+                player4WinCount = playerScale.GetWinCount();
+            }
+        }
+        UpdateTotalScoreText();
+    }
+
+    void UpdateTotalScoreText()
+    {
+        string scoreText = "Score ";
+        player1WinUI.text = scoreText + player1WinCount;
+        player2WinUI.text = scoreText + player2WinCount;
+        player3WinUI.text = scoreText + player3WinCount;
+        player4WinUI.text = scoreText + player4WinCount;
     }
 
     void GetAndEvaluatePlayerScales()
@@ -323,27 +369,38 @@ public class GameController : MonoBehaviour
         return objectiveWeight;
     }
 
+    void AssignPlayerNumbers()
+    {
+        int num = 1;
+        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        {
+            playerScale.SetPlayerNumber(num);
+            num++;
+        }
+    }
+
     void GetPlayersList()
     {
         if(player1Scale != null)
         {
             currentPlayers.Add(player1Scale);
-            player1Scale.SetPlayerNumber(1);
+            //player1Scale.SetPlayerNumber(1);
         }
         if (player2Scale != null)
         {
             currentPlayers.Add(player2Scale);
-            player2Scale.SetPlayerNumber(2);
+            //player2Scale.SetPlayerNumber(2);
         }
         if (player3Scale != null)
         {
             currentPlayers.Add(player3Scale);
-            player3Scale.SetPlayerNumber(3);
+            //player3Scale.SetPlayerNumber(3);
         }
         if (player4Scale != null)
         {
             currentPlayers.Add(player4Scale);
-            player4Scale.SetPlayerNumber(4);
+            //player4Scale.SetPlayerNumber(4);
         }
-    }
+        AssignPlayerNumbers();
+    } 
 }
