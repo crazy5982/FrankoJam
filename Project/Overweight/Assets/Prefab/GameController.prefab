@@ -54,5 +54,60 @@ MonoBehaviour:
   numberOfPlayers: 0
   timerUI: {fileID: 0}
   objectiveUI: {fileID: 0}
+  player1WinUI: {fileID: 0}
+  player2WinUI: {fileID: 0}
+  player3WinUI: {fileID: 0}
+  player4WinUI: {fileID: 0}
+  m_roundEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6364232575106618593, guid: 085e6a7a000c46d4c98832018843b83d,
+          type: 3}
+        m_MethodName: DestroyParcel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -1464159983080167764, guid: d1f4db3932ebb974a89c1869b97a7832,
+          type: 3}
+        m_MethodName: DestroyParcel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4067491478120614588, guid: 83f7e4f2d81d8a64fb43415822938ad2,
+          type: 3}
+        m_MethodName: DestroyParcel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4067491478120614588, guid: 65cc912a948a07d4b936972b3d31a7eb,
+          type: 3}
+        m_MethodName: DestroyParcel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   parcel_spawner_object: {fileID: 3874572970931642558, guid: 29c021562e1d844499d4429318dd6c7c,
     type: 3}

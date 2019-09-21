@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
 		get { return m_PlayerIndex; }
 	}
 
+	private List<int> PLAYER_LAYER_IDS;
+	private int PARCEL_LAYER_ID = 9;
+
 	private string m_PlayerNumber;
 
 	private Transform m_AttachPoint;
@@ -37,6 +40,8 @@ public class PlayerController : MonoBehaviour
 		m_AttachPoint = transform.GetChild(0);
 
 		m_PlayerNumber = m_PlayerIndex.ToString();
+
+		PLAYER_LAYER_IDS = new List<int> { 10, 11, 12, 13 };
 	}
 
     // Start is called before the first frame update
@@ -58,12 +63,14 @@ public class PlayerController : MonoBehaviour
 					if (latestPackage.RemovePackageFromZone(m_PlayerIndex))
 					{
 						latestPackage.gameObject.transform.position = m_AttachPoint.position;
+						latestPackage.gameObject.transform.rotation = m_AttachPoint.rotation;
 						latestPackage.gameObject.transform.SetParent(m_AttachPoint);
 
 						m_CarriedPackage = latestPackage.GetComponent<Rigidbody>();
 						if (m_CarriedPackage != null)
 						{
 							m_CarriedPackage.isKinematic = true;
+							m_CarriedPackage.gameObject.layer = PLAYER_LAYER_IDS[m_PlayerIndex - 1];
 						}
 					}
 				}
@@ -122,6 +129,8 @@ public class PlayerController : MonoBehaviour
 		{
 			m_CarriedPackage.isKinematic = false;
 			m_CarriedPackage.gameObject.transform.SetParent(null);
+
+			m_CarriedPackage.gameObject.layer = PARCEL_LAYER_ID;
 		}
 	}
 }
