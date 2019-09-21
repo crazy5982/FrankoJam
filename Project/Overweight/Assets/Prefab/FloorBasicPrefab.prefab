@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5279952883705112703}
   - component: {fileID: 1975565884244169007}
   m_Layer: 0
-  m_Name: Floor_main (37)
+  m_Name: FloorBasicPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5871285580718464163}
-  m_Mesh: {fileID: 347013164166513179, guid: 5cd0074bf13e32b45882454204545862, type: 3}
+  m_Mesh: {fileID: -6575563954217823330, guid: 5cd0074bf13e32b45882454204545862, type: 3}
 --- !u!23 &5279952883705112703
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4427394405292297522, guid: 5cd0074bf13e32b45882454204545862, type: 3}
+  - {fileID: 6508253787162885888, guid: ebf3ab9c2867bce4386dc669abf1d905, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

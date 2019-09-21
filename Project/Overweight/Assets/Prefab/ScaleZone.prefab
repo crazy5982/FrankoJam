@@ -283,9 +283,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 624367680625664131}
-  - component: {fileID: 852597637760711030}
   - component: {fileID: 1774569830141941166}
-  m_Layer: 0
+  - component: {fileID: 3067057179532015064}
+  m_Layer: 10
   m_Name: ScaleZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,19 +309,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &852597637760711030
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5136862814562645612}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 3.4090765, z: 0.9181953}
-  m_Center: {x: 0, y: 1.204538, z: 0.040902346}
 --- !u!114 &1774569830141941166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +322,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerIndex: 1
+--- !u!136 &3067057179532015064
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136862814562645612}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.736849
+  m_Height: 1.640737
+  m_Direction: 0
+  m_Center: {x: -0.24748929, y: 0, z: 0.3544708}
 --- !u!1 &6404464466029469314
 GameObject:
   m_ObjectHideFlags: 0
