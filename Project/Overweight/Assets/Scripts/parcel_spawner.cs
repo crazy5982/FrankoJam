@@ -12,24 +12,30 @@ public class parcel_spawner : MonoBehaviour
     [SerializeField] private float spawnDelay = 5;
     [SerializeField] private float spawnMax = 5;
 
-    [SerializeField] private int[] parcelSpawnWeight = {2,1,1,1};
+    private List<int> parcelSpawnWeight = new List<int>();
 
     private void Update()
     {
-        if(canSpawn)
+        print("outie");
+        if (canSpawn)
         {
+            print("innie");
             if (ShouldSpawn())
             {
+                print("deepie");
                 Spawn(parcelToSpawn());
             }
         }
     }
 
-    public void StartSpawning(int numSpawn, int[] parcelWeights)
+    public void StartSpawning(int numSpawn, int smallP, int medP, int largeP, int badP)
     {
+        print("GEES");
         spawnMax = numSpawn;
-        parcelSpawnWeight = null;
-        parcelWeights.CopyTo(parcelSpawnWeight, 0);
+        parcelSpawnWeight.Add(smallP);
+        parcelSpawnWeight.Add(medP);
+        parcelSpawnWeight.Add(largeP);
+        parcelSpawnWeight.Add(badP);
         canSpawn = true;
     }
 

@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
         GetPlayersList();
-        
+        SetupGame();
     }
 
     // Update is called once per frame
@@ -130,10 +130,9 @@ public class GameController : MonoBehaviour
         //set item spawns
 
         // Setup parcel spawners here
-        Vector3 parcelPosition_1 = new Vector3(0, 5, 0);
-        int[] parcelW = { 1, 0, 0, 0 };
-        GameObject parcelSpawn_1 = Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
-        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(7, parcelW);
+        Vector3 parcelPosition_1 = new Vector3(0, 50, 0);
+        var parcelSpawn_1 = (GameObject)Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
+        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(7, 1, 0, 0, 0);
     }
 
     void GetAndEvaluateFinalScores()
