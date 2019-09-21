@@ -73,8 +73,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        playerSetup();
-        //SetupGame();
+        //playerSetup();
+        SetupGame();
     }
 
     // Update is called once per frame
