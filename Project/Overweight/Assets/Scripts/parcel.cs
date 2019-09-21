@@ -6,6 +6,12 @@ public class parcel : MonoBehaviour
 {
     // Package weight variable setup
     [SerializeField] int parcelWeight;
+	public int ParcelWeight
+	{
+		get { return parcelWeight; }
+	}
+
+	private ScaleZone m_ScaleZone = null;
 
     [SerializeField]
     protected float m_ThrowSpeedH = 0.50f;
@@ -20,4 +26,19 @@ public class parcel : MonoBehaviour
         Vector3 throwVector = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
         rb.velocity = throwVector;
     }
+
+	public void SetScaleZone(ScaleZone scaleZone)
+	{
+		m_ScaleZone = scaleZone;
+	}
+
+	public bool RemovePackageFromZone(int playerIndex)
+	{
+		if (m_ScaleZone != null)
+		{
+			return m_ScaleZone.RemovePackage(this, playerIndex);
+		}
+
+		return true;
+	}
 }

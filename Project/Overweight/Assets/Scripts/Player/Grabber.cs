@@ -38,7 +38,7 @@ public class Grabber : MonoBehaviour
 
 	public parcel GetLatestPackage()
 	{
-		if (m_ObjectList.Count >= 0)
+		if (m_ObjectList.Count > 0)
 		{
 			int latestIndex = m_ObjectList.Count - 1;
 			parcel latestPackage = m_ObjectList[latestIndex];

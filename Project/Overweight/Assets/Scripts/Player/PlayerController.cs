@@ -13,15 +13,18 @@ public class PlayerController : MonoBehaviour
 	protected float m_ThrowSpeedV = 0.10f;
 
 	[SerializeField]
-    protected string m_PlayerNumber = "1";
+    protected int m_PlayerIndex = 1;
+	public int PlayerIndex
+	{
+		get { return m_PlayerIndex; }
+	}
 
-
+	private string m_PlayerNumber;
 
 	private Transform m_AttachPoint;
     private Rigidbody m_RigidBody;
 	private Grabber m_Grabber;
 
-	private bool m_IsCarrying = false;
 	private Rigidbody m_CarriedPackage;
 
     void Awake()
@@ -32,6 +35,8 @@ public class PlayerController : MonoBehaviour
 		m_Grabber = GetComponentInChildren<Grabber>();
 
 		m_AttachPoint = transform.GetChild(0);
+
+		m_PlayerNumber = m_PlayerIndex.ToString();
 	}
 
     // Start is called before the first frame update
@@ -45,20 +50,22 @@ public class PlayerController : MonoBehaviour
     {
 		if (Input.GetButtonDown("GrabDrop_P" + m_PlayerNumber))
 		{
-			if (m_IsCarrying == false)
+			if (m_CarriedPackage == false)
 			{
 				parcel latestPackage = m_Grabber.GetLatestPackage();
 				if (latestPackage != null)
 				{
-					latestPackage.gameObject.transform.position = m_AttachPoint.position;
-					latestPackage.gameObject.transform.SetParent(m_AttachPoint);
-
-					m_CarriedPackage = latestPackage.GetComponent<Rigidbody>();
-					if (m_CarriedPackage != null)
+					if (latestPackage.RemovePackageFromZone(m_PlayerIndex))
 					{
-						m_CarriedPackage.isKinematic = true;
+						latestPackage.gameObject.transform.position = m_AttachPoint.position;
+						latestPackage.gameObject.transform.SetParent(m_AttachPoint);
+
+						m_CarriedPackage = latestPackage.GetComponent<Rigidbody>();
+						if (m_CarriedPackage != null)
+						{
+							m_CarriedPackage.isKinematic = true;
+						}
 					}
-					m_IsCarrying = true;
 				}
 			}
 			else
@@ -68,7 +75,7 @@ public class PlayerController : MonoBehaviour
 			}
 
 		}
-		if (Input.GetButtonDown("Throw_P" + m_PlayerNumber) && m_IsCarrying)
+		if (Input.GetButtonDown("Throw_P" + m_PlayerNumber))
 		{
 			if (m_CarriedPackage != null)
 			{
@@ -114,8 +121,7 @@ public class PlayerController : MonoBehaviour
 		if (m_CarriedPackage != null)
 		{
 			m_CarriedPackage.isKinematic = false;
-			m_CarriedPackage.gameObject.transform.SetParent(transform.root);
+			m_CarriedPackage.gameObject.transform.SetParent(null);
 		}
-		m_IsCarrying = false;
 	}
 }

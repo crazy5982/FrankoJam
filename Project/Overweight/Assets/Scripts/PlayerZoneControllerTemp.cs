@@ -11,7 +11,6 @@ public class PlayerZoneControllerTemp : MonoBehaviour
     private GameObject evaluationTextHolder;
     private TextMesh evaluationText;
     public GameController gameController;
-    private int objectiveWeight;
     public bool active = true;
     private int score;
     private int winCount = 0;
@@ -66,11 +65,6 @@ public class PlayerZoneControllerTemp : MonoBehaviour
     public void SetWeight(int setWeight)
     {
         weight = setWeight;
-    }
-
-    public void SetWeightObjective(int objective)
-    {
-        objectiveWeight = objective;
     }
 
     public void SetEvaluationText(string text)
