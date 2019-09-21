@@ -107,6 +107,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parcelWeight: 0
+  m_ThrowSpeedH: 0.5
+  m_ThrowSpeedV: 0.1
+  rb: {fileID: 0}
+  x_val: 0.5
+  z_val: 0.5
 --- !u!54 &-3812950439560690218
 Rigidbody:
   m_ObjectHideFlags: 0

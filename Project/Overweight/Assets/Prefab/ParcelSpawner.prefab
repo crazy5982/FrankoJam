@@ -48,6 +48,4 @@ MonoBehaviour:
   - {fileID: 488118658857728183, guid: d1f4db3932ebb974a89c1869b97a7832, type: 3}
   - {fileID: 6758077155941886494, guid: 83f7e4f2d81d8a64fb43415822938ad2, type: 3}
   - {fileID: 6758077155941886494, guid: 65cc912a948a07d4b936972b3d31a7eb, type: 3}
-  spawnDelay: 1
-  spawnMax: 5
-  spawnWeights: 0000000000000000
+  spawnDelay: 0.25
