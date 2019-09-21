@@ -6,10 +6,10 @@ public class parcel_spawner : MonoBehaviour
 {
     private float nextSpawnTime;
     private float spawnCount = 0;
-    private bool canSpawn = false;
+    private bool canSpawn = true;
 
     [SerializeField] private GameObject [] parcel_spawnItem;
-    [SerializeField] private float spawnDelay = 5;
+    [SerializeField] private float spawnDelay = 1;
 
     private float spawnAve = 5;
 
