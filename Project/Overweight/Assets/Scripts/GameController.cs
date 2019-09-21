@@ -12,10 +12,15 @@ public class GameController : MonoBehaviour
     public ScaleZone player4Scale;
     [SerializeField] private GameObject playerObject;
 
-    public GameObject player1;
-    public GameObject player2;
-    public GameObject player3;
-    public GameObject player4;
+    private GameObject player1;
+    private GameObject player2;
+    private GameObject player3;
+    private GameObject player4;
+
+    [SerializeField] private GameObject player1SpawnLocation;
+    [SerializeField] private GameObject player2SpawnLocation;
+    [SerializeField] private GameObject player3SpawnLocation;
+    [SerializeField] private GameObject player4SpawnLocation;
 
     public int numberOfPlayers;
     private float timer;
@@ -27,7 +32,7 @@ public class GameController : MonoBehaviour
     private int lastPlayerScoreUpdate=0;
     private int closestScoreValue = 1;
 
-    private bool playersReady = false;
+    private bool playersReady = true;
     private bool readyPlayer1 = false;
     private bool readyPlayer2 = false;
     private bool readyPlayer3 = false;
@@ -125,12 +130,49 @@ public class GameController : MonoBehaviour
     void playerSetup()
     {
         //wait for players to become active by A press
+        //when a player press A spawn the corresponding player object at the right player spawn point
         //wait for all players to press X?
         //once all players are ready call setup game
-        if (Input.GetButtonDown("GrabDrop_P" + 1))
+        if (Input.GetButtonDown("GrabDrop_P" + 1) && player1 == null)
         {
-            //player1 = Object.Instantiate();
+            player1 = Object.Instantiate(playerObject, player1SpawnLocation.transform.position, player1SpawnLocation.transform.rotation);
+            player1.GetComponent<PlayerController>().PlayerIndex = 1;
         }
+        if (Input.GetButtonDown("GrabDrop_P" + 2) && player2 == null)
+        {
+            player2 = Object.Instantiate(playerObject, player2SpawnLocation.transform.position, player2SpawnLocation.transform.rotation);
+            player2.GetComponent<PlayerController>().PlayerIndex = 2;
+        }
+        if (Input.GetButtonDown("GrabDrop_P" + 3) && player3 == null)
+        {
+            player3 = Object.Instantiate(playerObject, player3SpawnLocation.transform.position, player3SpawnLocation.transform.rotation);
+            player3.GetComponent<PlayerController>().PlayerIndex = 3;
+        }
+        if (Input.GetButtonDown("GrabDrop_P" + 4) && player4 == null)
+        {
+            player4 = Object.Instantiate(playerObject, player4SpawnLocation.transform.position, player4SpawnLocation.transform.rotation);
+            player4.GetComponent<PlayerController>().PlayerIndex = 4;
+        }
+
+
+        if (Input.GetButtonDown("Throw_P" + 1) && player1 == null && readyPlayer1 == false)
+        {
+            readyPlayer1 = true;
+        }
+        if (Input.GetButtonDown("Throw_P" + 2) && player2 == null && readyPlayer2 == false)
+        {
+            readyPlayer2 = true;
+        }
+        if (Input.GetButtonDown("Throw_P" + 3) && player3 == null && readyPlayer3 == false)
+        {
+            readyPlayer3 = true;
+        }
+        if (Input.GetButtonDown("Throw_P" + 4) && player4 == null && readyPlayer4 == false)
+        {
+            readyPlayer4 = true;
+        }
+
+
 
 
         waitingForPlayersUI();
@@ -513,7 +555,6 @@ public class GameController : MonoBehaviour
                 currentPlayers.Add(player4Scale);
                 //player4Scale.SetPlayerNumber(4);
             }
-            //AssignPlayerNumbers();
         }
     }
 }

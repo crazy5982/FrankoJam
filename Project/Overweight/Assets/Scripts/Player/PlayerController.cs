@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 	public int PlayerIndex
 	{
 		get { return m_PlayerIndex; }
+        set { m_PlayerIndex = value; m_PlayerNumber = m_PlayerIndex.ToString(); }
 	}
 
 	private List<int> PLAYER_LAYER_IDS;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Name: "+this.name+" Index: "+PlayerIndex);
 		if (Input.GetButtonDown("GrabDrop_P" + m_PlayerNumber))
 		{
 			if (m_CarriedPackage == false)
