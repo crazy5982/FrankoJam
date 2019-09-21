@@ -39,7 +39,7 @@ public class parcel_spawner : MonoBehaviour
     private void Spawn(GameObject parcelToSpawn)
     {
         nextSpawnTime = Time.time + spawnDelay;
-        Instantiate(parcelToSpawn, transform.position, transform.rotation);
+        GameObject spawnedParcel = Instantiate(parcelToSpawn, transform.position, transform.rotation);
         spawnCount++;
     }
 

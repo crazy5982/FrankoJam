@@ -66,7 +66,6 @@ public class GameController : MonoBehaviour
         currentObjectiveWeight = objectiveWeightFrozen;
         //GetPlayersList();
         SetupGame();
-
     }
 
     // Update is called once per frame
@@ -94,7 +93,8 @@ public class GameController : MonoBehaviour
         {
             timerUI.text = "Time is up mother lickers!";
             DeactivateAllPlayers();
-            if(roundScoreCalculated==false)
+            
+            if (roundScoreCalculated==false)
             {
                 GetAndEvaluateFinalScores();
                 UpdateTotalScores();
@@ -480,6 +480,5 @@ public class GameController : MonoBehaviour
             }
             AssignPlayerNumbers();
         }
-        
-    } 
+    }
 }
