@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public ScaleZone player2Scale;
     public ScaleZone player3Scale;
     public ScaleZone player4Scale;
+    [SerializeField] private GameObject playerObject;
 
     public GameObject player1;
     public GameObject player2;
@@ -25,6 +26,12 @@ public class GameController : MonoBehaviour
     private bool playersSet = false;
     private int lastPlayerScoreUpdate=0;
     private int closestScoreValue = 1;
+
+    private bool playersReady = false;
+    private bool readyPlayer1 = false;
+    private bool readyPlayer2 = false;
+    private bool readyPlayer3 = false;
+    private bool readyPlayer4 = false;
 
     public Text timerUI;
     public Text objectiveUI;
@@ -69,24 +76,28 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        //this is where some game controller things will happen
-
-        objectiveWeight = objectiveWeightFrozen;
-        currentObjectiveWeight = objectiveWeightFrozen;
-        //GetPlayersList();
-        SetupGame();
+        playerSetup();
+        //SetupGame();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CalculateTimer();
-        if(timer > 0)
+        if(playersReady)
         {
-           GetAndEvaluatePlayerScales();
-           //GetAndEvaluateCurrentScores();
-           //spawn parcels
+            CalculateTimer();
+            if (timer > 0)
+            {
+                GetAndEvaluatePlayerScales();
+                //GetAndEvaluateCurrentScores();
+                //spawn parcels
+            }
         }
+        else
+        {
+            playerSetup();
+        }
+
         
     }
 
@@ -112,6 +123,31 @@ public class GameController : MonoBehaviour
             
             CalculateEndRoundTimer();
         }
+    }
+
+    void playerSetup()
+    {
+        //wait for players to become active by A press
+        //wait for all players to press X?
+        //once all players are ready call setup game
+        if (Input.GetButtonDown("GrabDrop_P" + 1))
+        {
+            //player1 = Object.Instantiate();
+        }
+
+
+        waitingForPlayersUI();
+    }
+
+    void waitingForPlayersUI()
+    {
+        //change timer to be waiting for players
+        Color waitingCol = new Color(1f, 0f, 0f, 1f);
+        timerUI.color = waitingCol;
+        timerUI.text = "Waiting for players to be ready";
+        //change objective to be "press A to join and X to ready up"
+        objectiveUI.text = "Press A to join and X to ready up";
+        //change scores to be blank then switch to joined then ready for each player
     }
 
     void CalculateEndRoundTimer()
