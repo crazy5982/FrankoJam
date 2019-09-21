@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     public int numberOfPlayers;
     private float timer;
     private float newRoundTimer = 5;
-    private float timerFrozen = 5;
+    private float timerFrozen = 25;
     private int timerAsInt;
     private bool roundScoreCalculated = false;
     private bool playersSet = false;
@@ -149,7 +149,7 @@ public class GameController : MonoBehaviour
         //set timers
         timer = timerFrozen;
         newRoundTimer = 5;
-        Color countdownCol = new Color(0.8f, 0.8f, 0.8f, 1f);
+        Color countdownCol = new Color(0f, 0f, 0f, 1f);
         timerUI.color = countdownCol;
 
         //generate and set objectives
