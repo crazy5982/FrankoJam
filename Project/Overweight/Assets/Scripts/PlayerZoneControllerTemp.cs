@@ -14,6 +14,8 @@ public class PlayerZoneControllerTemp : MonoBehaviour
     private int objectiveWeight;
     public bool active = true;
     private int score;
+    private int winCount;
+    private int playerNumber;
     void Start()
     {
         scaleTextHolder = this.gameObject.transform.GetChild(0).gameObject;
@@ -61,6 +63,11 @@ public class PlayerZoneControllerTemp : MonoBehaviour
         weight += addedWeight;
     }
 
+    public void SetWeight(int setWeight)
+    {
+        weight = setWeight;
+    }
+
     public void SetWeightObjective(int objective)
     {
         objectiveWeight = objective;
@@ -105,5 +112,31 @@ public class PlayerZoneControllerTemp : MonoBehaviour
     {
         score = scoreVal;
     }
+
+    public int GetWinCount()
+    {
+        return winCount;
+    }
+
+    public void SetWinCount(int winVal)
+    {
+        winCount = winVal;
+    }
+
+    public void AddWins(int winVal)
+    {
+        winCount = winCount+winVal;
+    }
+
+    public int GetPlayerNumber()
+    {
+        return playerNumber;
+    }
+
+    public void SetPlayerNumber(int pNum)
+    {
+        playerNumber = pNum;
+    }
+
 
 }
