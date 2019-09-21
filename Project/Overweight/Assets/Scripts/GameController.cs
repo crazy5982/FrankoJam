@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour
     private float timerFrozen = 20;
     private int timerAsInt;
     private bool roundScoreCalculated = false;
+    private bool playersSet = false;
+    private int lastPlayerScoreUpdate=0;
+    private int closestScoreValue = 1;
 
     public Text timerUI;
     public Text objectiveUI;
@@ -47,6 +50,8 @@ public class GameController : MonoBehaviour
 
     private List<PlayerZoneControllerTemp> currentPlayers = new List<PlayerZoneControllerTemp>{};
     private List<PlayerZoneControllerTemp> perfectPlayerScores = new List<PlayerZoneControllerTemp> {};
+    private List<PlayerZoneControllerTemp> closestPlayerScores = new List<PlayerZoneControllerTemp> { };
+    private List<PlayerZoneControllerTemp> overweightPlayerScores = new List<PlayerZoneControllerTemp> { };
     private List<PlayerZoneControllerTemp> currentPerfectPlayerScores = new List<PlayerZoneControllerTemp> { };
     private List<PlayerZoneControllerTemp> PlayerScores = new List<PlayerZoneControllerTemp> { };
 
@@ -59,7 +64,7 @@ public class GameController : MonoBehaviour
 
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
-        GetPlayersList();
+        //GetPlayersList();
         SetupGame();
 
     }
@@ -91,7 +96,6 @@ public class GameController : MonoBehaviour
             DeactivateAllPlayers();
             if(roundScoreCalculated==false)
             {
-                roundScoreCalculated = true;
                 GetAndEvaluateFinalScores();
                 UpdateTotalScores();
             }
@@ -128,12 +132,13 @@ public class GameController : MonoBehaviour
         timer = timerFrozen;
         ClearAllPlayerWeights();
         roundScoreCalculated = false;
+        closestScoreValue = 1;
     }
 
     void SetupGame()
     {
         //set timers
-        timer = 5;
+        timer = 15;
         newRoundTimer = 5;
 
         //generate and set objectives
@@ -143,6 +148,7 @@ public class GameController : MonoBehaviour
         objectiveUI.text = "GOAL: " + objectiveWeightFrozen + "KG";
         //get all active players?
         GetPlayersList();
+        numberOfPlayers = currentPlayers.Count;
         //set player spawns
         //set item spawns
 
@@ -171,6 +177,7 @@ public class GameController : MonoBehaviour
             {
                 perfectPlayerScores.Add(playerScale);
             }
+            Debug.Log("Score: " + playerScore);
             playerScale.SetScore(playerScore);
             //Debug.Log("Bedson Test: " + playerScore);
         }
@@ -183,24 +190,97 @@ public class GameController : MonoBehaviour
                     Color winCol = new Color(0f, 1f, 0f, 1f);
                     playerScale.SetEvaluationTextColour(winCol);
                     playerScale.SetEvaluationText("PERFECT WINNER!!!");
-                    playerScale.AddWins(1);
-                    Debug.Log("Bedson Test: " + playerScale.GetWinCount());
+                    if(lastPlayerScoreUpdate != playerScale.GetPlayerNumber())
+                    {
+                        lastPlayerScoreUpdate = playerScale.GetPlayerNumber();
+                        //roundScoreCalculated = true;
+                        playerScale.AddWins(1);
+                    }
+                    
+                    Debug.Log("Bedson TestX: " + playerScale.GetWinCount());
                 }
                 else
                 {
+                    Color neutCol = new Color(1f, 1f, 1f, 1f);
+                    playerScale.SetEvaluationTextColour(neutCol);
                     playerScale.SetEvaluationText("WINNER!!!");
-                    playerScale.AddWins(1);
-                    Debug.Log("Bedson Test: " + playerScale.GetWinCount());
+                    if (lastPlayerScoreUpdate != playerScale.GetPlayerNumber())
+                    {
+                        lastPlayerScoreUpdate = playerScale.GetPlayerNumber();
+                        //roundScoreCalculated = true;
+                        playerScale.AddWins(1);
+                    }
+                    Debug.Log("Bedson Test: " + playerScale.GetWinCount() + " objective weight: "+objectiveWeight+" roundScoreCalc: "+roundScoreCalculated);
                 }
 
+            }
+            roundScoreCalculated = true;
+        }
+        else
+        {
+            //no perfect score so we get the closest
+            //objectiveWeight--;
+            CalculateNearestScore();
+        }
+    }
+
+    void CalculateNearestScore()
+    {
+        int playerScore;
+        closestPlayerScores = new List<PlayerZoneControllerTemp> { };
+        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        {
+            playerScore = playerScale.GetWeight();
+            playerScore = objectiveWeight - playerScore;
+            if (playerScore < 0)
+            {
+                //playerScore = playerScore * -1;
+                overweightPlayerScores.Add(playerScale);
+            }
+            if (playerScore == closestScoreValue)
+            {
+                closestPlayerScores.Add(playerScale);
+            }
+            //Debug.Log("Score: " + playerScore);
+            playerScale.SetScore(playerScore);
+            //Debug.Log("Bedson Test: " + playerScore);
+        }
+
+
+        if (closestPlayerScores.Count > 0)
+        {
+            foreach (PlayerZoneControllerTemp playerScale in closestPlayerScores)
+            {
+                Color neutCol = new Color(1f, 1f, 1f, 1f);
+                playerScale.SetEvaluationTextColour(neutCol);
+                playerScale.SetEvaluationText("WINNER!!!");
+                if (lastPlayerScoreUpdate != playerScale.GetPlayerNumber())
+                {
+                    lastPlayerScoreUpdate = playerScale.GetPlayerNumber();
+                    //roundScoreCalculated = true;
+                    playerScale.AddWins(1);
+                }
+                //Debug.Log("Bedson Test: " + playerScale.GetWinCount() + " objective weight: " + objectiveWeight + " roundScoreCalc: " + roundScoreCalculated);
+
+            }
+            roundScoreCalculated = true;
+        }
+        else if(overweightPlayerScores.Count >= numberOfPlayers)
+        {
+            foreach (PlayerZoneControllerTemp playerScale in overweightPlayerScores)
+            {
+                Color overCol = new Color(1f, 0f, 1f, 1f);
+                playerScale.SetEvaluationTextColour(overCol);
+                playerScale.SetEvaluationText("ALL OVERWEIGHT!");
             }
         }
         else
         {
             //no perfect score so we get the closest
-            objectiveWeight--;
-            GetAndEvaluateFinalScores();
+            closestScoreValue++;
+            CalculateNearestScore();
         }
+
     }
 
     //void GetAndEvaluateCurrentScores()
@@ -231,13 +311,13 @@ public class GameController : MonoBehaviour
     //                Color winCol = new Color(0f, 1f, 0f, 1f);
     //                playerScale.SetEvaluationTextColour(winCol);
     //                playerScale.SetEvaluationText("Lead Player!");
-                    
+
     //            }
     //            else
     //            {
     //                playerScale.SetEvaluationText("Joint Lead Player!");
     //            }
-                
+
     //        }
     //        currentObjectiveWeight = objectiveWeightFrozen;
     //        //GetAndEvaluateCurrentScores();
@@ -251,22 +331,10 @@ public class GameController : MonoBehaviour
     //    }
     //}
 
-    void SortScoreOutFam(PlayerZoneControllerTemp player, int score)
-    {
-        if (player1Scale != null)
-        {
-            player1Score = player1Scale.GetWeight();
-            player1Score = objectiveWeight - player1Score;
-            if (player1Score < 0)
-            {
-                //its a minus, so lets normalise it?
-                player1Score = player1Score * -1;
-            }
-        }
-    }
 
     void UpdateTotalScores()
     {
+        Debug.Log("Here we are!");
         //for each current player
         foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
         {
@@ -361,6 +429,11 @@ public class GameController : MonoBehaviour
             Color neutCol = new Color(1f, 1f, 1f, 1f);
             playerScale.SetEvaluationTextColour(neutCol);
             playerScale.SetEvaluationText("UNDERWEIGHT!");
+        }else if(playerScore == objectiveWeight)
+        {
+            Color winCol = new Color(0f, 0.8f, 0.1f, 1f);
+            playerScale.SetEvaluationTextColour(winCol);
+            playerScale.SetEvaluationText("PERFECT WEIGHT!");
         }
     }
 
@@ -375,32 +448,38 @@ public class GameController : MonoBehaviour
         foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
         {
             playerScale.SetPlayerNumber(num);
+            Debug.Log("Assigned: "+playerScale.name+" the number of "+num);
             num++;
         }
     }
 
     void GetPlayersList()
     {
-        if(player1Scale != null)
+        if(playersSet == false)
         {
-            currentPlayers.Add(player1Scale);
-            //player1Scale.SetPlayerNumber(1);
+            playersSet = true;
+            if (player1Scale != null)
+            {
+                currentPlayers.Add(player1Scale);
+                //player1Scale.SetPlayerNumber(1);
+            }
+            if (player2Scale != null)
+            {
+                currentPlayers.Add(player2Scale);
+                //player2Scale.SetPlayerNumber(2);
+            }
+            if (player3Scale != null)
+            {
+                currentPlayers.Add(player3Scale);
+                //player3Scale.SetPlayerNumber(3);
+            }
+            if (player4Scale != null)
+            {
+                currentPlayers.Add(player4Scale);
+                //player4Scale.SetPlayerNumber(4);
+            }
+            AssignPlayerNumbers();
         }
-        if (player2Scale != null)
-        {
-            currentPlayers.Add(player2Scale);
-            //player2Scale.SetPlayerNumber(2);
-        }
-        if (player3Scale != null)
-        {
-            currentPlayers.Add(player3Scale);
-            //player3Scale.SetPlayerNumber(3);
-        }
-        if (player4Scale != null)
-        {
-            currentPlayers.Add(player4Scale);
-            //player4Scale.SetPlayerNumber(4);
-        }
-        AssignPlayerNumbers();
+        
     } 
 }
