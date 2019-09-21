@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     public int numberOfPlayers;
     private float timer;
     private float newRoundTimer = 5;
-    private float timerFrozen = 25;
+    private float timerFrozen = 5;
     private int timerAsInt;
     private bool roundScoreCalculated = false;
     private bool playersSet = false;
@@ -64,6 +64,9 @@ public class GameController : MonoBehaviour
     // Parcel Spawner game object reference
     [SerializeField] private GameObject parcel_spawner_object;
 
+    // Parcel destruction setup
+    destroy_parcel des_parcel = new destroy_parcel();
+
     void Start()
     {
         //this is where some game controller things will happen
@@ -98,7 +101,9 @@ public class GameController : MonoBehaviour
         else
         {
             timerUI.text = "Time is up mother lickers!";
-            
+
+            des_parcel.DestroyParcels("Parcel");
+
             if (roundScoreCalculated==false)
             {
                 GetAndEvaluateFinalScores();
@@ -163,7 +168,7 @@ public class GameController : MonoBehaviour
 
         // Setup parcel spawners here
 
-        Vector3 parcelPosition_1 = new Vector3(0, 50, 0);
+        Vector3 parcelPosition_1 = new Vector3(0, 10, 0);
         var parcelSpawn_1 = (GameObject)Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
         parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(5, 7, 1, 0, 0, 0, LEFT);
 

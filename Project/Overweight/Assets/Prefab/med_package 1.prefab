@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3812950439560690218}
   m_Layer: 0
   m_Name: med_package 1
-  m_TagString: Untagged
+  m_TagString: Parcel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,6 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parcelWeight: 0
+  m_roundEnd:
+    m_PersistentCalls:
+      m_Calls: []
   m_ThrowSpeedH: 0.5
   m_ThrowSpeedV: 0.1
   rb: {fileID: -3812950439560690218}
