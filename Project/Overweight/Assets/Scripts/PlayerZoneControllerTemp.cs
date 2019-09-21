@@ -14,7 +14,7 @@ public class PlayerZoneControllerTemp : MonoBehaviour
     private int objectiveWeight;
     public bool active = true;
     private int score;
-    private int winCount;
+    private int winCount = 0;
     private int playerNumber;
     void Start()
     {
