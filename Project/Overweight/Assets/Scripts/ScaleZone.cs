@@ -112,6 +112,8 @@ public class ScaleZone : MonoBehaviour
 
 		m_CurrentWeight -= package.ParcelWeight;
 
+		package.SetScaleZone(null);
+
 		return true;
 	}
 
