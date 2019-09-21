@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public PlayerZoneControllerTemp player1Scale;
-    public PlayerZoneControllerTemp player2Scale;
-    public PlayerZoneControllerTemp player3Scale;
-    public PlayerZoneControllerTemp player4Scale;
+    public ScaleZone player1Scale;
+    public ScaleZone player2Scale;
+    public ScaleZone player3Scale;
+    public ScaleZone player4Scale;
 
     public GameObject player1;
     public GameObject player2;
@@ -48,12 +48,12 @@ public class GameController : MonoBehaviour
     private int player3WinCount;
     private int player4WinCount;
 
-    private List<PlayerZoneControllerTemp> currentPlayers = new List<PlayerZoneControllerTemp>{};
-    private List<PlayerZoneControllerTemp> perfectPlayerScores = new List<PlayerZoneControllerTemp> {};
-    private List<PlayerZoneControllerTemp> closestPlayerScores = new List<PlayerZoneControllerTemp> { };
-    private List<PlayerZoneControllerTemp> overweightPlayerScores = new List<PlayerZoneControllerTemp> { };
-    private List<PlayerZoneControllerTemp> currentPerfectPlayerScores = new List<PlayerZoneControllerTemp> { };
-    private List<PlayerZoneControllerTemp> PlayerScores = new List<PlayerZoneControllerTemp> { };
+    private List<ScaleZone> currentPlayers = new List<ScaleZone>{};
+    private List<ScaleZone> perfectPlayerScores = new List<ScaleZone> {};
+    private List<ScaleZone> closestPlayerScores = new List<ScaleZone> { };
+    private List<ScaleZone> overweightPlayerScores = new List<ScaleZone> { };
+    private List<ScaleZone> currentPerfectPlayerScores = new List<ScaleZone> { };
+    private List<ScaleZone> PlayerScores = new List<ScaleZone> { };
 
     // Parcel Spawner game object reference
     [SerializeField] private GameObject parcel_spawner_object;
@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour
         else
         {
             timerUI.text = "Time is up mother lickers!";
-            DeactivateAllPlayers();
+            //DeactivateAllPlayers();
             if(roundScoreCalculated==false)
             {
                 GetAndEvaluateFinalScores();
@@ -115,7 +115,7 @@ public class GameController : MonoBehaviour
         else
         {
             timerUI.text = "START!";
-            ActivateAllPlayers();
+            //ActivateAllPlayers();
             ClearGame();
             SetupGame();
         }
@@ -130,7 +130,7 @@ public class GameController : MonoBehaviour
         player4Score = 0;
         //wipe timers
         timer = timerFrozen;
-        ClearAllPlayerWeights();
+        //ClearAllPlayerWeights();
         roundScoreCalculated = false;
         closestScoreValue = 1;
     }
@@ -138,7 +138,7 @@ public class GameController : MonoBehaviour
     void SetupGame()
     {
         //set timers
-        timer = 15;
+        timer = 40;
         newRoundTimer = 5;
 
         //generate and set objectives
@@ -164,10 +164,10 @@ public class GameController : MonoBehaviour
     void GetAndEvaluateFinalScores()
     {
         int playerScore;
-        perfectPlayerScores = new List<PlayerZoneControllerTemp> { };
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        perfectPlayerScores = new List<ScaleZone> { };
+        foreach (ScaleZone playerScale in currentPlayers)
         {
-            playerScore = playerScale.GetWeight();
+            playerScore = playerScale.CurrentWeight;
             playerScore = objectiveWeight - playerScore;
             if (playerScore < 0)
             {
@@ -183,16 +183,16 @@ public class GameController : MonoBehaviour
         }
         if (perfectPlayerScores.Count > 0)
         {
-            foreach (PlayerZoneControllerTemp playerScale in perfectPlayerScores)
+            foreach (ScaleZone playerScale in perfectPlayerScores)
             {
                 if (objectiveWeight == objectiveWeightFrozen)
                 {
                     Color winCol = new Color(0f, 1f, 0f, 1f);
                     playerScale.SetEvaluationTextColour(winCol);
                     playerScale.SetEvaluationText("PERFECT WINNER!!!");
-                    if(lastPlayerScoreUpdate != playerScale.GetPlayerNumber())
+                    if(lastPlayerScoreUpdate != playerScale.PlayerIndex)
                     {
-                        lastPlayerScoreUpdate = playerScale.GetPlayerNumber();
+                        lastPlayerScoreUpdate = playerScale.PlayerIndex;
                         //roundScoreCalculated = true;
                         playerScale.AddWins(1);
                     }
@@ -204,9 +204,9 @@ public class GameController : MonoBehaviour
                     Color neutCol = new Color(1f, 1f, 1f, 1f);
                     playerScale.SetEvaluationTextColour(neutCol);
                     playerScale.SetEvaluationText("WINNER!!!");
-                    if (lastPlayerScoreUpdate != playerScale.GetPlayerNumber())
+                    if (lastPlayerScoreUpdate != playerScale.PlayerIndex)
                     {
-                        lastPlayerScoreUpdate = playerScale.GetPlayerNumber();
+                        lastPlayerScoreUpdate = playerScale.PlayerIndex;
                         //roundScoreCalculated = true;
                         playerScale.AddWins(1);
                     }
@@ -227,10 +227,10 @@ public class GameController : MonoBehaviour
     void CalculateNearestScore()
     {
         int playerScore;
-        closestPlayerScores = new List<PlayerZoneControllerTemp> { };
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        closestPlayerScores = new List<ScaleZone> { };
+        foreach (ScaleZone playerScale in currentPlayers)
         {
-            playerScore = playerScale.GetWeight();
+            playerScore = playerScale.CurrentWeight;
             playerScore = objectiveWeight - playerScore;
             if (playerScore < 0)
             {
@@ -249,14 +249,14 @@ public class GameController : MonoBehaviour
 
         if (closestPlayerScores.Count > 0)
         {
-            foreach (PlayerZoneControllerTemp playerScale in closestPlayerScores)
+            foreach (ScaleZone playerScale in closestPlayerScores)
             {
                 Color neutCol = new Color(1f, 1f, 1f, 1f);
                 playerScale.SetEvaluationTextColour(neutCol);
                 playerScale.SetEvaluationText("WINNER!!!");
-                if (lastPlayerScoreUpdate != playerScale.GetPlayerNumber())
+                if (lastPlayerScoreUpdate != playerScale.PlayerIndex)
                 {
-                    lastPlayerScoreUpdate = playerScale.GetPlayerNumber();
+                    lastPlayerScoreUpdate = playerScale.PlayerIndex;
                     //roundScoreCalculated = true;
                     playerScale.AddWins(1);
                 }
@@ -267,7 +267,7 @@ public class GameController : MonoBehaviour
         }
         else if(overweightPlayerScores.Count >= numberOfPlayers)
         {
-            foreach (PlayerZoneControllerTemp playerScale in overweightPlayerScores)
+            foreach (ScaleZone playerScale in overweightPlayerScores)
             {
                 Color overCol = new Color(1f, 0f, 1f, 1f);
                 playerScale.SetEvaluationTextColour(overCol);
@@ -287,8 +287,8 @@ public class GameController : MonoBehaviour
     //{
     //    Debug.Log("Bedson Test1: " + currentObjectiveWeight);
     //    int playerScore;
-    //    currentPerfectPlayerScores = new List<PlayerZoneControllerTemp> { };
-    //    foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+    //    currentPerfectPlayerScores = new List<ScaleZone> { };
+    //    foreach (ScaleZone playerScale in currentPlayers)
     //    {
     //        playerScore = playerScale.GetWeight();
     //        playerScore = currentObjectiveWeight - playerScore;
@@ -304,7 +304,7 @@ public class GameController : MonoBehaviour
     //    }
     //    if (currentPerfectPlayerScores.Count > 0)
     //    {
-    //        foreach (PlayerZoneControllerTemp playerScale in currentPerfectPlayerScores)
+    //        foreach (ScaleZone playerScale in currentPerfectPlayerScores)
     //        {
     //            if (currentObjectiveWeight == objectiveWeightFrozen)
     //            {
@@ -336,9 +336,9 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Here we are!");
         //for each current player
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        foreach (ScaleZone playerScale in currentPlayers)
         {
-            int playerNum = playerScale.GetPlayerNumber();
+            int playerNum = playerScale.PlayerIndex;
             if(playerNum == 1)
             {
                 player1WinCount = playerScale.GetWinCount();
@@ -370,47 +370,47 @@ public class GameController : MonoBehaviour
     void GetAndEvaluatePlayerScales()
     {
         //for each player get the current score 
-        foreach(PlayerZoneControllerTemp playerScale in currentPlayers)
+        foreach(ScaleZone playerScale in currentPlayers)
         {
-            int weight = playerScale.GetWeight();
+            int weight = playerScale.PlayerIndex;
             EvaluatePlayerScore(weight, playerScale);
         }
     }
 
-    void DeactivateAllPlayers()
-    {
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
-        {
-            playerScale.Deactivate();
-        }
-    }
+    //void DeactivateAllPlayers()
+    //{
+    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    {
+    //        playerScale.Deactivate();
+    //    }
+    //}
 
-    void ActivateAllPlayers()
-    {
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
-        {
-            playerScale.Activate();
-        }
-    }
+    //void ActivateAllPlayers()
+    //{
+    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    {
+    //        playerScale.Activate();
+    //    }
+    //}
 
-    void ClearAllPlayerWeights()
-    {
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
-        {
-            playerScale.SetWeight(0);
-        }
-    }
+    //void ClearAllPlayerWeights()
+    //{
+    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    {
+    //        playerScale.SetWeight(0);
+    //    }
+    //}
 
     void UpdatePlayerWins()
     {
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
+        foreach (ScaleZone playerScale in currentPlayers)
         {
             playerScale.GetWinCount();
         }
     }
 
 
-    void EvaluatePlayerScore(int playerScore, PlayerZoneControllerTemp playerScale)
+    void EvaluatePlayerScore(int playerScore, ScaleZone playerScale)
     {
         //if (playerScore == objectiveWeight)
         //{
@@ -442,16 +442,16 @@ public class GameController : MonoBehaviour
         return objectiveWeight;
     }
 
-    void AssignPlayerNumbers()
-    {
-        int num = 1;
-        foreach (PlayerZoneControllerTemp playerScale in currentPlayers)
-        {
-            playerScale.SetPlayerNumber(num);
-            Debug.Log("Assigned: "+playerScale.name+" the number of "+num);
-            num++;
-        }
-    }
+    //void AssignPlayerNumbers()
+    //{
+    //    int num = 1;
+    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    {
+    //        playerScale.SetPlayerNumber(num);
+    //        Debug.Log("Assigned: "+playerScale.name+" the number of "+num);
+    //        num++;
+    //    }
+    //}
 
     void GetPlayersList()
     {
@@ -478,7 +478,7 @@ public class GameController : MonoBehaviour
                 currentPlayers.Add(player4Scale);
                 //player4Scale.SetPlayerNumber(4);
             }
-            AssignPlayerNumbers();
+            //AssignPlayerNumbers();
         }
         
     } 

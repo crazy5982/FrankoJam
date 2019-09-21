@@ -21,6 +21,14 @@ public class ScaleZone : MonoBehaviour
 
 	private List<parcel> m_ParcelList;
 
+    //Bedson's added variables, sorry Dan, plz forgive me
+    private TextMesh scaleText;
+    private GameObject scaleTextHolder;
+    private GameObject evaluationTextHolder;
+    private TextMesh evaluationText;
+    private int score;
+    private int winCount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,12 +39,20 @@ public class ScaleZone : MonoBehaviour
 		{
 			m_ParcelList.Add(null);
 		}
-	}
+
+        //Bedson's added bizzle
+        scaleTextHolder = this.gameObject.transform.GetChild(1).gameObject;
+        scaleText = scaleTextHolder.GetComponent<TextMesh>();
+        evaluationTextHolder = this.gameObject.transform.GetChild(2).gameObject;
+        evaluationText = evaluationTextHolder.GetComponent<TextMesh>();
+        evaluationText.text = "";
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        scaleText.text = CurrentWeight + "kg";
+        Debug.Log("Weight: "+CurrentWeight);
     }
 
 	void OnCollisionEnter(Collision collision)
@@ -112,4 +128,46 @@ public class ScaleZone : MonoBehaviour
 
 		m_CurrentWeight = 0;
 	}
+
+    //Bedson's added bizzle
+
+    public void SetEvaluationText(string text)
+    {
+        evaluationText.text = text;
+    }
+
+    public void SetEvaluationTextColour(UnityEngine.Color colour)
+    {
+        evaluationText.color = colour;
+    }
+
+    public string GetEvaluationText()
+    {
+        return evaluationText.text;
+    }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
+    public void SetScore(int scoreVal)
+    {
+        score = scoreVal;
+    }
+
+    public int GetWinCount()
+    {
+        return winCount;
+    }
+    public void SetWinCount(int winVal)
+    {
+        winCount = winVal;
+    }
+
+    public void AddWins(int winVal)
+    {
+        winCount = winCount + winVal;
+    }
+
 }
