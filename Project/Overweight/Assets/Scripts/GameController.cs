@@ -22,10 +22,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player3SpawnLocation;
     [SerializeField] private GameObject player4SpawnLocation;
 
+	[SerializeField] private float timerFrozen = 15;
+
     public int numberOfPlayers;
     private float timer;
     private float newRoundTimer = 5;
-    private float timerFrozen = 25;
     private int timerAsInt;
     private bool roundScoreCalculated = false;
     private bool playersSet = false;
@@ -220,7 +221,13 @@ public class GameController : MonoBehaviour
         //ClearAllPlayerWeights();
         roundScoreCalculated = false;
         closestScoreValue = 1;
-    }
+		lastPlayerScoreUpdate = 0;
+
+		player1Scale.ResetScale();
+		player2Scale.ResetScale();
+		player3Scale.ResetScale();
+		player4Scale.ResetScale();
+	}
 
     void SetupGame()
     {
@@ -316,20 +323,23 @@ public class GameController : MonoBehaviour
         closestPlayerScores = new List<ScaleZone> { };
         foreach (ScaleZone playerScale in currentPlayers)
         {
-            playerScore = playerScale.CurrentWeight;
-            playerScore = objectiveWeight - playerScore;
-            if (playerScore < 0)
-            {
-                //playerScore = playerScore * -1;
-                overweightPlayerScores.Add(playerScale);
-            }
-            if (playerScore == closestScoreValue)
-            {
-                closestPlayerScores.Add(playerScale);
-            }
-            //Debug.Log("Score: " + playerScore);
-            playerScale.SetScore(playerScore);
-            //Debug.Log("Bedson Test: " + playerScore);
+			if (playerScale.CurrentWeight > 0)
+			{
+				playerScore = playerScale.CurrentWeight;
+				playerScore = objectiveWeight - playerScore;
+				if (playerScore < 0)
+				{
+					//playerScore = playerScore * -1;
+					overweightPlayerScores.Add(playerScale);
+				}
+				if (playerScore == closestScoreValue)
+				{
+					closestPlayerScores.Add(playerScale);
+				}
+				//Debug.Log("Score: " + playerScore);
+				playerScale.SetScore(playerScore);
+				//Debug.Log("Bedson Test: " + playerScore);
+			}
         }
 
 

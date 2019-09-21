@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementSpeed: 0.3
-  m_ThrowSpeedH: 1000
+  m_ThrowSpeedH: 750
   m_ThrowSpeedV: 200
   m_PlayerIndex: 1
 --- !u!1001 &674995349870720501
