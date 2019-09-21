@@ -6,6 +6,7 @@ public class parcel_spawner : MonoBehaviour
 {
     private float nextSpawnTime;
     private float spawnCount = 0;
+    private bool canSpawn = false;
 
     [SerializeField] private GameObject [] parcel_spawnItem;
     [SerializeField] private float spawnDelay = 5;
@@ -15,10 +16,21 @@ public class parcel_spawner : MonoBehaviour
 
     private void Update()
     {
-        if (ShouldSpawn())
+        if(canSpawn)
         {
-            Spawn(parcelToSpawn());
+            if (ShouldSpawn())
+            {
+                Spawn(parcelToSpawn());
+            }
         }
+    }
+
+    private void StartSpawning(int numSpawn, int[] parcelWeights)
+    {
+        spawnMax = numSpawn;
+        parcelSpawnWeight = null;
+        parcelWeights.CopyTo(parcelSpawnWeight, 0);
+        canSpawn = true;
     }
 
     private void Spawn(GameObject parcelToSpawn)
@@ -41,30 +53,24 @@ public class parcel_spawner : MonoBehaviour
     private GameObject parcelToSpawn()
     {
         float choice = Random.Range(0, totalWeighting());
-        print("The Choice is : " + choice);
         if(choice >= 0 && choice < parcelSpawnWeight[0])
         {
-            print("Here");
             return parcel_spawnItem[0];
         }
         else if (choice >= parcelSpawnWeight[0] && choice < givenWeighting(2))
         {
-            print("There");
             return parcel_spawnItem[1];
         }
         else if (choice >= parcelSpawnWeight[1] && choice < givenWeighting(3))
         {
-            print("Be");
             return parcel_spawnItem[2];
         }
         else if (choice >= parcelSpawnWeight[2] && choice < givenWeighting(4))
         {
-            print("Monsters");
             return parcel_spawnItem[3];
         }
         else
         {
-            print("Man");
             return parcel_spawnItem[0];
         }
     }
@@ -86,7 +92,6 @@ public class parcel_spawner : MonoBehaviour
         {
             tSum += parcelSpawnWeight[i];
         }
-        print("The tSum is : " + tSum);
         return tSum;
     }
 }
