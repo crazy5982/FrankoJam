@@ -35,14 +35,6 @@ public class parcel : MonoBehaviour
         m_roundEnd.AddListener(DestroyParcel);
     }
 
-    private void Update()
-    {
-        if(destroy_blocks)
-        {
-            m_roundEnd.Invoke();
-        }
-    }
-
     public void SetScaleZone(ScaleZone scaleZone)
 	{
 		m_ScaleZone = scaleZone;

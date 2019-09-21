@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parcel_spawnItem:
-  - {fileID: 8126890212636976124, guid: 085e6a7a000c46d4c98832018843b83d, type: 3}
-  - {fileID: 488118658857728183, guid: d1f4db3932ebb974a89c1869b97a7832, type: 3}
-  - {fileID: 6758077155941886494, guid: 83f7e4f2d81d8a64fb43415822938ad2, type: 3}
-  - {fileID: 6758077155941886494, guid: 65cc912a948a07d4b936972b3d31a7eb, type: 3}
+  - {fileID: 4457854834931758916, guid: c6469346f5bcdd14d82c1288ce767f01, type: 3}
+  - {fileID: 2763048511357824818, guid: 3602910082cf3ff4d9075629568cba09, type: 3}
+  - {fileID: 6412713823884558916, guid: ecdd3a6b4a456f645b2a74f3e8543f5c, type: 3}
+  - {fileID: 4414280674982710205, guid: 045cda9f1c5fe3b42a72277974bd0cdb, type: 3}
   spawnDelay: 0.25

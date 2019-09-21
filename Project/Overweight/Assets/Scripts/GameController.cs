@@ -17,9 +17,9 @@ public class GameController : MonoBehaviour
     public GameObject player4;
 
     public int numberOfPlayers;
-    private float timer = 5;
+    private float timer;
     private float newRoundTimer = 5;
-    private float timerFrozen = 20;
+    private float timerFrozen = 25;
     private int timerAsInt;
     private bool roundScoreCalculated = false;
     private bool playersSet = false;
@@ -92,7 +92,6 @@ public class GameController : MonoBehaviour
         else
         {
             timerUI.text = "Time is up mother lickers!";
-            DeactivateAllPlayers();
             
             if (roundScoreCalculated==false)
             {
@@ -110,6 +109,8 @@ public class GameController : MonoBehaviour
         {
             newRoundTimer -= Time.deltaTime;
             timerAsInt = Mathf.RoundToInt(newRoundTimer);
+            Color countdownCol = new Color(1f, 0f, 0f, 1f);
+            timerUI.color = countdownCol;
             timerUI.text = "New Round starts in: " + timerAsInt+"s";
         }
         else
@@ -138,11 +139,13 @@ public class GameController : MonoBehaviour
     void SetupGame()
     {
         //set timers
-        timer = 40;
+        timer = timerFrozen;
         newRoundTimer = 5;
+        Color countdownCol = new Color(0.8f, 0.8f, 0.8f, 1f);
+        timerUI.color = countdownCol;
 
         //generate and set objectives
-        objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(1, 20));
+        objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(1, 6));
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
         objectiveUI.text = "GOAL: " + objectiveWeightFrozen + "KG";
@@ -372,7 +375,7 @@ public class GameController : MonoBehaviour
         //for each player get the current score 
         foreach(ScaleZone playerScale in currentPlayers)
         {
-            int weight = playerScale.PlayerIndex;
+            int weight = playerScale.CurrentWeight;
             EvaluatePlayerScore(weight, playerScale);
         }
     }
@@ -412,13 +415,13 @@ public class GameController : MonoBehaviour
 
     void EvaluatePlayerScore(int playerScore, ScaleZone playerScale)
     {
-        //if (playerScore == objectiveWeight)
-        //{
-        //    playerScale.SetEvaluationText("PERFECT WEIGHT!");
-        //}
-        //else 
-        
-        if(playerScore > objectiveWeight)
+        if (playerScore == objectiveWeight)
+        {
+            Color winCol = new Color(0f, 0.8f, 0.1f, 1f);
+            playerScale.SetEvaluationTextColour(winCol);
+            playerScale.SetEvaluationText("PERFECT WEIGHT!");
+        }
+        else if (playerScore > objectiveWeight)
         {
             Color overCol = new Color(1f, 0f, 1f, 1f);
             playerScale.SetEvaluationTextColour(overCol);
@@ -429,18 +432,9 @@ public class GameController : MonoBehaviour
             Color neutCol = new Color(1f, 1f, 1f, 1f);
             playerScale.SetEvaluationTextColour(neutCol);
             playerScale.SetEvaluationText("UNDERWEIGHT!");
-        }else if(playerScore == objectiveWeight)
-        {
-            Color winCol = new Color(0f, 0.8f, 0.1f, 1f);
-            playerScale.SetEvaluationTextColour(winCol);
-            playerScale.SetEvaluationText("PERFECT WEIGHT!");
         }
     }
 
-    public int getObjectiveWeight()
-    {
-        return objectiveWeight;
-    }
 
     //void AssignPlayerNumbers()
     //{
