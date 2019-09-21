@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Parcel
+  - Parcel_spawner
   layers:
   - Default
   - TransparentFX
