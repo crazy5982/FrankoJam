@@ -22,9 +22,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player3SpawnLocation;
     [SerializeField] private GameObject player4SpawnLocation;
 
-    public int numberOfPlayers;
+    private int numberOfPlayers = 0;
     private float timer;
     private float newRoundTimer = 5;
+    private float startGameTimer = 5;
     private float timerFrozen = 25;
     private int timerAsInt;
     private bool roundScoreCalculated = false;
@@ -32,11 +33,18 @@ public class GameController : MonoBehaviour
     private int lastPlayerScoreUpdate=0;
     private int closestScoreValue = 1;
 
-    private bool playersReady = true;
+    private bool playersReady = false;
+    private bool maxPlayersReady = false;
     private bool readyPlayer1 = false;
     private bool readyPlayer2 = false;
     private bool readyPlayer3 = false;
     private bool readyPlayer4 = false;
+    private int readyCount = 0;
+
+    private string player1State = "";
+    private string player2State = "";
+    private string player3State = "";
+    private string player4State = "";
 
     public Text timerUI;
     public Text objectiveUI;
@@ -60,7 +68,8 @@ public class GameController : MonoBehaviour
     private int player3WinCount;
     private int player4WinCount;
 
-    private List<ScaleZone> currentPlayers = new List<ScaleZone>{};
+    private List<ScaleZone> currentZones = new List<ScaleZone>{};
+    private List<GameObject> currentPlayers = new List<GameObject>{};
     private List<ScaleZone> perfectPlayerScores = new List<ScaleZone> {};
     private List<ScaleZone> closestPlayerScores = new List<ScaleZone> { };
     private List<ScaleZone> overweightPlayerScores = new List<ScaleZone> { };
@@ -78,8 +87,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        //playerSetup();
-        SetupGame();
+        playerSetup();
+        //SetupGame();
     }
 
     // Update is called once per frame
@@ -137,56 +146,115 @@ public class GameController : MonoBehaviour
         {
             player1 = Object.Instantiate(playerObject, player1SpawnLocation.transform.position, player1SpawnLocation.transform.rotation);
             player1.GetComponent<PlayerController>().PlayerIndex = 1;
+            currentPlayers.Add(player1);
+            currentZones.Add(player1Scale);
+            player1State = "Joined";
+            numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 2) && player2 == null)
         {
             player2 = Object.Instantiate(playerObject, player2SpawnLocation.transform.position, player2SpawnLocation.transform.rotation);
             player2.GetComponent<PlayerController>().PlayerIndex = 2;
+            currentPlayers.Add(player2);
+            currentZones.Add(player2Scale);
+            player2State = "Joined";
+            numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 3) && player3 == null)
         {
             player3 = Object.Instantiate(playerObject, player3SpawnLocation.transform.position, player3SpawnLocation.transform.rotation);
             player3.GetComponent<PlayerController>().PlayerIndex = 3;
+            currentPlayers.Add(player3);
+            currentZones.Add(player3Scale);
+            player3State = "Joined";
+            numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 4) && player4 == null)
         {
             player4 = Object.Instantiate(playerObject, player4SpawnLocation.transform.position, player4SpawnLocation.transform.rotation);
             player4.GetComponent<PlayerController>().PlayerIndex = 4;
+            currentPlayers.Add(player4);
+            currentZones.Add(player4Scale);
+            player4State = "Joined";
+            numberOfPlayers++;
         }
 
-
-        if (Input.GetButtonDown("Throw_P" + 1) && player1 == null && readyPlayer1 == false)
+        if (Input.GetButtonDown("Throw_P" + 1) && player1 != null && readyPlayer1 == false)
         {
             readyPlayer1 = true;
+            player1.GetComponent<PlayerController>().ready = true;
+            player1State = "Ready";
+            readyCount++;
         }
-        if (Input.GetButtonDown("Throw_P" + 2) && player2 == null && readyPlayer2 == false)
+        if (Input.GetButtonDown("Throw_P" + 2) && player2 != null && readyPlayer2 == false)
         {
             readyPlayer2 = true;
+            player2.GetComponent<PlayerController>().ready = true;
+            player2State = "Ready";
+            readyCount++;
         }
-        if (Input.GetButtonDown("Throw_P" + 3) && player3 == null && readyPlayer3 == false)
+        if (Input.GetButtonDown("Throw_P" + 3) && player3 != null && readyPlayer3 == false)
         {
             readyPlayer3 = true;
+            player3.GetComponent<PlayerController>().ready = true;
+            player3State = "Ready";
+            readyCount++;
         }
-        if (Input.GetButtonDown("Throw_P" + 4) && player4 == null && readyPlayer4 == false)
+        if (Input.GetButtonDown("Throw_P" + 4) && player4 != null && readyPlayer4 == false)
         {
             readyPlayer4 = true;
+            player4.GetComponent<PlayerController>().ready = true;
+            player4State = "Ready";
+            readyCount++;
         }
 
-
-
-
+        if(numberOfPlayers > 1 && (readyCount == numberOfPlayers))
+        {
+            playersReady = true;
+        }
+        //else if(numberOfPlayers > 0 && (readyCount != numberOfPlayers))
+        //{
+        //    playersReady = false;
+        //}
         waitingForPlayersUI();
     }
 
     void waitingForPlayersUI()
     {
-        //change timer to be waiting for players
-        Color waitingCol = new Color(1f, 0f, 0f, 1f);
-        timerUI.color = waitingCol;
-        timerUI.text = "Waiting for players to be ready";
-        //change objective to be "press A to join and X to ready up"
-        objectiveUI.text = "Press A to join and X to ready up";
-        //change scores to be blank then switch to joined then ready for each player
+        if(!playersReady)
+        {
+            //change timer to be waiting for players
+            Color waitingCol = new Color(1f, 0f, 0f, 1f);
+            timerUI.color = waitingCol;
+            timerUI.text = "Waiting for players to be ready, Ready? "+playersReady+" #"+readyCount;
+            //change objective to be "press A to join and X to ready up"
+            objectiveUI.text = "Press A to join and X to ready up";
+            //change scores to be blank then switch to joined then ready for each player
+            player1WinUI.text = "Player1: " + player1State;
+            player2WinUI.text = "Player2: " + player2State;
+            player3WinUI.text = "Player3: " + player3State;
+            player4WinUI.text = "Player4: " + player4State;
+        }
+        else
+        {
+            //do some timer stuff here
+            if (startGameTimer >= 0)
+            {
+                startGameTimer -= Time.deltaTime;
+                timerAsInt = Mathf.RoundToInt(startGameTimer);
+                Color countdownCol = new Color(1f, 0f, 0f, 1f);
+                timerUI.color = countdownCol;
+                timerUI.text = "Game starts in: " + timerAsInt + "s";
+            }
+            else
+            {
+                timerUI.text = "START!";
+                //ActivateAllPlayers();
+                //ClearGame();
+                //SetupGame();
+            }
+        }
+
     }
 
     void CalculateEndRoundTimer()
@@ -236,8 +304,8 @@ public class GameController : MonoBehaviour
         currentObjectiveWeight = objectiveWeightFrozen;
         objectiveUI.text = "GOAL: " + objectiveWeightFrozen + "KG";
         //get all active players?
-        GetPlayersList();
-        numberOfPlayers = currentPlayers.Count;
+        //GetPlayersList();
+        //numberOfPlayers = currentZones.Count;
         //set player spawns
         //set item spawns
 
@@ -251,7 +319,7 @@ public class GameController : MonoBehaviour
     {
         int playerScore;
         perfectPlayerScores = new List<ScaleZone> { };
-        foreach (ScaleZone playerScale in currentPlayers)
+        foreach (ScaleZone playerScale in currentZones)
         {
             playerScore = playerScale.CurrentWeight;
             playerScore = objectiveWeight - playerScore;
@@ -314,7 +382,7 @@ public class GameController : MonoBehaviour
     {
         int playerScore;
         closestPlayerScores = new List<ScaleZone> { };
-        foreach (ScaleZone playerScale in currentPlayers)
+        foreach (ScaleZone playerScale in currentZones)
         {
             playerScore = playerScale.CurrentWeight;
             playerScore = objectiveWeight - playerScore;
@@ -374,7 +442,7 @@ public class GameController : MonoBehaviour
     //    Debug.Log("Bedson Test1: " + currentObjectiveWeight);
     //    int playerScore;
     //    currentPerfectPlayerScores = new List<ScaleZone> { };
-    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    foreach (ScaleZone playerScale in currentZones)
     //    {
     //        playerScore = playerScale.GetWeight();
     //        playerScore = currentObjectiveWeight - playerScore;
@@ -422,7 +490,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Here we are!");
         //for each current player
-        foreach (ScaleZone playerScale in currentPlayers)
+        foreach (ScaleZone playerScale in currentZones)
         {
             int playerNum = playerScale.PlayerIndex;
             if(playerNum == 1)
@@ -456,7 +524,7 @@ public class GameController : MonoBehaviour
     void GetAndEvaluatePlayerScales()
     {
         //for each player get the current score 
-        foreach(ScaleZone playerScale in currentPlayers)
+        foreach(ScaleZone playerScale in currentZones)
         {
             int weight = playerScale.CurrentWeight;
             EvaluatePlayerScore(weight, playerScale);
@@ -465,7 +533,7 @@ public class GameController : MonoBehaviour
 
     //void DeactivateAllPlayers()
     //{
-    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    foreach (ScaleZone playerScale in currentZones)
     //    {
     //        playerScale.Deactivate();
     //    }
@@ -473,7 +541,7 @@ public class GameController : MonoBehaviour
 
     //void ActivateAllPlayers()
     //{
-    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    foreach (ScaleZone playerScale in currentZones)
     //    {
     //        playerScale.Activate();
     //    }
@@ -481,7 +549,7 @@ public class GameController : MonoBehaviour
 
     //void ClearAllPlayerWeights()
     //{
-    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    foreach (ScaleZone playerScale in currentZones)
     //    {
     //        playerScale.SetWeight(0);
     //    }
@@ -489,7 +557,7 @@ public class GameController : MonoBehaviour
 
     void UpdatePlayerWins()
     {
-        foreach (ScaleZone playerScale in currentPlayers)
+        foreach (ScaleZone playerScale in currentZones)
         {
             playerScale.GetWinCount();
         }
@@ -522,7 +590,7 @@ public class GameController : MonoBehaviour
     //void AssignPlayerNumbers()
     //{
     //    int num = 1;
-    //    foreach (ScaleZone playerScale in currentPlayers)
+    //    foreach (ScaleZone playerScale in currentZones)
     //    {
     //        playerScale.SetPlayerNumber(num);
     //        Debug.Log("Assigned: "+playerScale.name+" the number of "+num);
@@ -530,31 +598,31 @@ public class GameController : MonoBehaviour
     //    }
     //}
 
-    void GetPlayersList()
-    {
-        if(playersSet == false)
-        {
-            playersSet = true;
-            if (player1Scale != null)
-            {
-                currentPlayers.Add(player1Scale);
-                //player1Scale.SetPlayerNumber(1);
-            }
-            if (player2Scale != null)
-            {
-                currentPlayers.Add(player2Scale);
-                //player2Scale.SetPlayerNumber(2);
-            }
-            if (player3Scale != null)
-            {
-                currentPlayers.Add(player3Scale);
-                //player3Scale.SetPlayerNumber(3);
-            }
-            if (player4Scale != null)
-            {
-                currentPlayers.Add(player4Scale);
-                //player4Scale.SetPlayerNumber(4);
-            }
-        }
-    }
+    //void GetPlayersList()
+    //{
+    //    if(playersSet == false)
+    //    {
+    //        playersSet = true;
+    //        if (player1Scale != null)
+    //        {
+    //            currentZones.Add(player1Scale);
+    //            //player1Scale.SetPlayerNumber(1);
+    //        }
+    //        if (player2Scale != null)
+    //        {
+    //            currentZones.Add(player2Scale);
+    //            //player2Scale.SetPlayerNumber(2);
+    //        }
+    //        if (player3Scale != null)
+    //        {
+    //            currentZones.Add(player3Scale);
+    //            //player3Scale.SetPlayerNumber(3);
+    //        }
+    //        if (player4Scale != null)
+    //        {
+    //            currentZones.Add(player4Scale);
+    //            //player4Scale.SetPlayerNumber(4);
+    //        }
+    //    }
+    //}
 }

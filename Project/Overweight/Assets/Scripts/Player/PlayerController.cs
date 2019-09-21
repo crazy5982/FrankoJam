@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour
         set { m_PlayerIndex = value; m_PlayerNumber = m_PlayerIndex.ToString(); }
 	}
 
+    protected bool m_Ready = false;
+    public bool ready
+    {
+        get { return m_Ready; }
+        set { m_Ready = value; }
+    }
+
 	private List<int> PLAYER_LAYER_IDS;
 	private int PARCEL_LAYER_ID = 9;
 
@@ -54,7 +61,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Name: "+this.name+" Index: "+PlayerIndex);
 		if (Input.GetButtonDown("GrabDrop_P" + m_PlayerNumber))
 		{
 			if (m_CarriedPackage == false)
