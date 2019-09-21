@@ -132,7 +132,7 @@ public class GameController : MonoBehaviour
         // Setup parcel spawners here
         Vector3 parcelPosition_1 = new Vector3(0, 50, 0);
         var parcelSpawn_1 = (GameObject)Instantiate(parcel_spawner_object, parcelPosition_1, transform.rotation);
-        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(7, 1, 0, 0, 0);
+        parcelSpawn_1.GetComponent<parcel_spawner>().StartSpawning(5, 7, 1, 0, 0, 0);
     }
 
     void GetAndEvaluateFinalScores()

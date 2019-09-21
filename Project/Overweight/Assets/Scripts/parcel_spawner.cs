@@ -10,28 +10,25 @@ public class parcel_spawner : MonoBehaviour
 
     [SerializeField] private GameObject [] parcel_spawnItem;
     [SerializeField] private float spawnDelay = 5;
-    [SerializeField] private float spawnMax = 5;
+
+    private float spawnAve = 5;
 
     private List<int> parcelSpawnWeight = new List<int>();
 
     private void Update()
     {
-        print("outie");
         if (canSpawn)
         {
-            print("innie");
             if (ShouldSpawn())
             {
-                print("deepie");
                 Spawn(parcelToSpawn());
             }
         }
     }
 
-    public void StartSpawning(int numSpawn, int smallP, int medP, int largeP, int badP)
+    public void StartSpawning(int numSpawnMin, int numSpawnMax, int smallP, int medP, int largeP, int badP)
     {
-        print("GEES");
-        spawnMax = numSpawn;
+        spawnAve = Mathf.RoundToInt(Random.Range(numSpawnMin, numSpawnMax+0.49f));
         parcelSpawnWeight.Add(smallP);
         parcelSpawnWeight.Add(medP);
         parcelSpawnWeight.Add(largeP);
@@ -53,7 +50,7 @@ public class parcel_spawner : MonoBehaviour
 
     private bool TimerCheck()
     {
-        return Time.time > nextSpawnTime && spawnCount < spawnMax;
+        return Time.time > nextSpawnTime && spawnCount < spawnAve;
     }
 
     private GameObject parcelToSpawn()
