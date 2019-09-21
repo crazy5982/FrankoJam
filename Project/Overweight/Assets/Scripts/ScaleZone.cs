@@ -40,7 +40,6 @@ public class ScaleZone : MonoBehaviour
 		parcel collidingParcel = collision.gameObject.GetComponent<parcel>();
 		if (collidingParcel != null)
 		{
-			//int thisParcelIndex = m_ParcelList.Count % m_AttachPointParent.childCount;
 			int firstFreeIndex = -1;
 			for (int i = 0; i < m_AttachPointParent.childCount; ++i)
 			{
@@ -57,7 +56,6 @@ public class ScaleZone : MonoBehaviour
 			}
 
 			// And parcel to the list and increase the weight
-			//m_ParcelList.Add(collidingParcel);
 			m_ParcelList[firstFreeIndex] = collidingParcel;
 			collidingParcel.SetScaleZone(this);
 
@@ -83,8 +81,6 @@ public class ScaleZone : MonoBehaviour
 			return false;
 		}
 
-		//m_ParcelList.Remove(package);
-
 		for (int i = 0; i < m_ParcelList.Count; ++i)
 		{
 			if (m_ParcelList[i] == package)
@@ -109,7 +105,6 @@ public class ScaleZone : MonoBehaviour
 				m_ParcelList[i] = null;
 			}
 		}
-		//m_ParcelList.Clear();
 
 		m_CurrentWeight = 0;
 	}
