@@ -337,15 +337,15 @@ public class GameController : MonoBehaviour
         gameStarting = true;
         timer = timerFrozen;
         newRoundTimer = 5;
-        Color countdownCol = new Color(0f, 0f, 0f, 1f);
+        Color countdownCol = new Color(1f, 1f, 1f, 1f);
         timerUI.color = countdownCol;
 
         //generate and set objectives
         objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(minObjective, maxObjective));
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
-        objectiveUILeft.text = "GOAL: " + objectiveWeightFrozen + "KG";
-        objectiveUIRight.text = "GOAL: " + objectiveWeightFrozen + "KG";
+        objectiveUILeft.text = "GOAL: " + objectiveWeightFrozen + " KG";
+        objectiveUIRight.text = "GOAL: " + objectiveWeightFrozen + " KG";
         //get all active players?
         foreach (ScaleZone playerScale in currentZones)
         {

@@ -3634,7 +3634,7 @@ PrefabInstance:
     - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
         type: 3}
       propertyPath: minPlayerCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
         type: 3}
@@ -7127,6 +7127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044513773002054977, guid: 7c21d4c54c6c140428d980546364693a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 12.700012
       objectReference: {fileID: 0}
     - target: {fileID: 4823351302527542485, guid: 7c21d4c54c6c140428d980546364693a,
         type: 3}
