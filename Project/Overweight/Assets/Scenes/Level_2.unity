@@ -6603,13 +6603,13 @@ PrefabInstance:
         type: 3}
       propertyPath: player3Object
       value: 
-      objectReference: {fileID: 8827052692358255856, guid: 2a3d09af22a60e0408ac45eaec171f0f,
+      objectReference: {fileID: 8827052692358255856, guid: 735b2b86f87955d4c89cf03e38cc43b3,
         type: 3}
     - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
         type: 3}
       propertyPath: player4Object
       value: 
-      objectReference: {fileID: 8827052692358255856, guid: 735b2b86f87955d4c89cf03e38cc43b3,
+      objectReference: {fileID: 8827052692358255856, guid: 2a3d09af22a60e0408ac45eaec171f0f,
         type: 3}
     - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
         type: 3}
