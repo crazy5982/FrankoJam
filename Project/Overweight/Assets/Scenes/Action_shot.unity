@@ -1769,6 +1769,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 183499844630246601, guid: 55a983ca5d8665849b60744a728dec7e,
+        type: 3}
+      propertyPath: imageDisplay
+      value: 
+      objectReference: {fileID: 1636808370}
+    - target: {fileID: 183499844630246601, guid: 55a983ca5d8665849b60744a728dec7e,
+        type: 3}
+      propertyPath: controlImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 3ba241c2f10dcbe44aeaf1ceec936e4f, type: 3}
+    - target: {fileID: 183499844630246601, guid: 55a983ca5d8665849b60744a728dec7e,
+        type: 3}
+      propertyPath: mainMenuDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 183499844630246601, guid: 55a983ca5d8665849b60744a728dec7e,
+        type: 3}
+      propertyPath: controlDisplayDelay
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5198837707734960309, guid: 55a983ca5d8665849b60744a728dec7e,
         type: 3}
       propertyPath: m_Name
@@ -2672,7 +2692,7 @@ GameObject:
   - component: {fileID: 1636808372}
   - component: {fileID: 1636808371}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Menu_image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
