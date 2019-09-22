@@ -51,10 +51,10 @@ public class GameController : MonoBehaviour
     private bool readyPlayer4 = false;
     private int readyCount = 0;
 
-    private string player1State = "Press A to join";
-    private string player2State = "Press A to join";
-    private string player3State = "Press A to join";
-    private string player4State = "Press A to join";
+    private string player1State = "A to join";
+    private string player2State = "A to join";
+    private string player3State = "A to join";
+    private string player4State = "A to join";
 
     public Text timerUI;
     public Text objectiveUILeft;
@@ -181,7 +181,7 @@ public class GameController : MonoBehaviour
             player1.GetComponent<PlayerController>().PlayerIndex = 1;
             currentPlayers.Add(player1);
             currentZones.Add(player1Scale);
-            player1State = "Press X to ready up";
+            player1State = "X to ready";
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 2) && player2 == null)
@@ -190,7 +190,7 @@ public class GameController : MonoBehaviour
             player2.GetComponent<PlayerController>().PlayerIndex = 2;
             currentPlayers.Add(player2);
             currentZones.Add(player2Scale);
-            player2State = "Press X to ready up";
+            player2State = "X to ready";
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 3) && player3 == null)
@@ -199,7 +199,7 @@ public class GameController : MonoBehaviour
             player3.GetComponent<PlayerController>().PlayerIndex = 3;
             currentPlayers.Add(player3);
             currentZones.Add(player3Scale);
-            player3State = "Press X to ready up";
+            player3State = "X to ready";
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 4) && player4 == null)
@@ -208,7 +208,7 @@ public class GameController : MonoBehaviour
             player4.GetComponent<PlayerController>().PlayerIndex = 4;
             currentPlayers.Add(player4);
             currentZones.Add(player4Scale);
-            player4State = "Press X to ready up";
+            player4State = "X to ready";
             numberOfPlayers++;
         }
 
@@ -259,10 +259,10 @@ public class GameController : MonoBehaviour
             //change timer to be waiting for players
             Color waitingCol = new Color(1f, 0f, 0f, 1f);
             timerUI.color = waitingCol;
-            timerUI.text = "Waiting for players to be ready, Ready?";
+            timerUI.text = "Ready up!";
             //change objective to be "press A to join and X to ready up"
-            objectiveUILeft.text = "Press A to join and X to ready up";
-            objectiveUILeft.text = "Press A to join and X to ready up";
+            objectiveUILeft.text = "GOAL:";
+            objectiveUIRight.text = "GOAL:     ";
             //change scores to be blank then switch to joined then ready for each player
             player1WinUI.text = "" + player1State;
             player2WinUI.text = "" + player2State;
@@ -599,13 +599,15 @@ public class GameController : MonoBehaviour
 
         if (winners.Count > 0)
         {
-            //set a winner found variable to rpevent other things from happening
+            //set a winner found variable to prevent other things from happening
             gameWon = true;
             string winnerNames = "WINNER!: ";
-            foreach (ScaleZone playerScale in currentZones)
+            foreach (ScaleZone playerScale in winners)
             {
+                string scaleS = playerScale.name;
+                string playerN = scaleS.Replace("ScaleZone_", "");
                 Debug.Log("Your winner: "+playerScale.name);
-                winnerNames = winnerNames+playerScale.name;
+                winnerNames = winnerNames + " Player " + playerN;
             }
             //do some winning function
             winnerCanvas.enabled = true;

@@ -66,7 +66,7 @@ public class ScaleZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scaleText.text = CurrentWeight + "kg";
+        scaleText.text = CurrentWeight + " kg";
     }
 
 	void OnCollisionEnter(Collision collision)
