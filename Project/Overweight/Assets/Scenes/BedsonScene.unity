@@ -295,6 +295,16 @@ PrefabInstance:
       propertyPath: parcelDirection
       value: right
       objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: spawnDelayLimit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelInitalForce
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}
 --- !u!1001 &72032848
@@ -598,6 +608,16 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnDelay
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: spawnDelayLimit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelInitalForce
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}
@@ -1001,6 +1021,16 @@ PrefabInstance:
       propertyPath: spawnDelay
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: spawnDelayLimit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelInitalForce
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}
 --- !u!1 &1417061101 stripped
@@ -1324,6 +1354,16 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnDelay
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: spawnDelayLimit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelInitalForce
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}

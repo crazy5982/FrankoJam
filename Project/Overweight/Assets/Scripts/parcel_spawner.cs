@@ -10,14 +10,15 @@ public class parcel_spawner : MonoBehaviour
 
     [SerializeField] private GameObject [] parcel_spawnItem;
     [SerializeField] private float spawnDelay = 1;
-    [SerializeField] private float spawnDelayLimit = 1f;
+    [SerializeField] private float spawnDelayVariance = 1f;
 
     private float spawnAve = 5;
 
     private List<float> parcelSpawnWeight = new List<float>();
 
     [SerializeField] private string parcelDirection;
-    private float parcelSpeed = 1.3f;
+    [SerializeField] private float parcelInitalForce = 1.3f;
+    [SerializeField] private float parcelForceVariance = 1f;
 
     // Parcel box numbers
     [SerializeField] int boxMin = 1;
@@ -69,23 +70,24 @@ public class parcel_spawner : MonoBehaviour
 
     private void Spawn(GameObject parcelToSpawn)
     {
-        nextSpawnTime = Time.time + Random.Range(spawnDelay - spawnDelayLimit, spawnDelay + spawnDelayLimit);
+        parcelForceVariance = Random.Range(parcelInitalForce - 1, parcelInitalForce + 1);
+        nextSpawnTime = Time.time + Random.Range(spawnDelay - spawnDelayVariance, spawnDelay + spawnDelayVariance);
         GameObject spawnedParcel = Instantiate(parcelToSpawn, transform.position, transform.rotation);
         if (parcelDirection == "right")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(parcelSpeed, 0, 0);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(parcelForceVariance, 0, 0);
         }
         else if (parcelDirection == "left")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(-parcelSpeed, 0, 0);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(-parcelForceVariance, 0, 0);
         }
         else if (parcelDirection == "down")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -parcelSpeed);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -parcelForceVariance);
         }
         else if (parcelDirection == "up")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, parcelSpeed);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, parcelForceVariance);
         }
         else
         {
