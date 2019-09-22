@@ -405,7 +405,7 @@ public class GameController : MonoBehaviour
         closestPlayerScores = new List<ScaleZone> { };
         foreach (ScaleZone playerScale in currentZones)
         {
-			//if (playerScale.CurrentWeight > 0)
+			if (playerScale.CurrentWeight > 0)
 			{
 				playerScore = playerScale.CurrentWeight;
 				playerScore = objectiveWeight - playerScore;
