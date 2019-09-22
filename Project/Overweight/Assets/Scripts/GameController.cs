@@ -264,10 +264,10 @@ public class GameController : MonoBehaviour
             objectiveUILeft.text = "Press A to join and X to ready up";
             objectiveUILeft.text = "Press A to join and X to ready up";
             //change scores to be blank then switch to joined then ready for each player
-            player1WinUI.text = "Player1: " + player1State;
-            player2WinUI.text = "Player2: " + player2State;
-            player3WinUI.text = "Player3: " + player3State;
-            player4WinUI.text = "Player4: " + player4State;
+            player1WinUI.text = "" + player1State;
+            player2WinUI.text = "" + player2State;
+            player3WinUI.text = "" + player3State;
+            player4WinUI.text = "" + player4State;
         }
         else
         {
@@ -693,7 +693,7 @@ public class GameController : MonoBehaviour
         {
             Color neutCol = new Color(1f, 1f, 1f, 1f);
             playerScale.SetEvaluationTextColour(neutCol);
-            playerScale.SetEvaluationText("UNDERWEIGHT!");
+            playerScale.SetEvaluationText("");
         }
     }
 

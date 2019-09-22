@@ -104,6 +104,12 @@ public class parcel_spawner : MonoBehaviour
             spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
         spawnCount++;
+
+		AudioSource audio = GetComponent<AudioSource>();
+		if (audio != null)
+		{
+			audio.Play();
+		}
     }
 
     private bool psTimerCheck()
