@@ -569,7 +569,7 @@ public class GameController : MonoBehaviour
     void EndOfGameWait()
     {
         //wait for the players to do something
-        NextScene(winnerDelay);
+        StartCoroutine(NextScene(winnerDelay));        
     }
     void UpdateTotalScores()
     {
