@@ -1787,7 +1787,7 @@ PrefabInstance:
     - target: {fileID: 309336103563658211, guid: 6c3f646e7932c7f4eb4f3a00814375e3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -35.6
+      value: 2.899994
       objectReference: {fileID: 0}
     - target: {fileID: 309336103563658211, guid: 6c3f646e7932c7f4eb4f3a00814375e3,
         type: 3}
@@ -1822,6 +1822,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TotalWinsCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044513773002054976, guid: 7c21d4c54c6c140428d980546364693a,
+        type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9044513772724678664, guid: 7c21d4c54c6c140428d980546364693a,
         type: 3}
@@ -1962,11 +1967,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 184
-      objectReference: {fileID: 0}
-    - target: {fileID: 9044513773002054976, guid: 7c21d4c54c6c140428d980546364693a,
-        type: 3}
-      propertyPath: m_FontData.m_BestFit
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8400254162004880001, guid: 7c21d4c54c6c140428d980546364693a,
         type: 3}
