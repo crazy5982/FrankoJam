@@ -405,8 +405,8 @@ public class GameController : MonoBehaviour
         closestPlayerScores = new List<ScaleZone> { };
         foreach (ScaleZone playerScale in currentZones)
         {
-			//if (playerScale.CurrentWeight > 0)
-			//{
+			if (playerScale.CurrentWeight > 0)
+			{
 				playerScore = playerScale.CurrentWeight;
 				playerScore = objectiveWeight - playerScore;
 				if (playerScore < 0)
@@ -421,11 +421,11 @@ public class GameController : MonoBehaviour
 				//Debug.Log("Score: " + playerScore);
 				playerScale.SetScore(playerScore);
 				//Debug.Log("Bedson Test: " + playerScore);
-			//}
-            //else
-            //{
-            //    zeroWeightCount++;
-            //}
+			}
+            else
+            {
+                zeroWeightCount++;
+            }
         }
 
 
