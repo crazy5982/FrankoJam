@@ -3686,6 +3686,11 @@ PrefabInstance:
       propertyPath: winnerText
       value: 
       objectReference: {fileID: 148925314}
+    - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
+        type: 3}
+      propertyPath: winsObjective
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a309e97e96d333d4c87cf33ae36d63c4, type: 3}
 --- !u!1001 &555082724
