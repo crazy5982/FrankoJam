@@ -73,6 +73,11 @@ public class parcel_spawner : MonoBehaviour
 
     private void Spawn(GameObject parcelToSpawn)
     {
+		if (parcelToSpawn == null)
+		{
+			return;
+		}
+
         float pfv = Random.Range(parcelInitalForce - parcelForceVariance, parcelInitalForce + parcelForceVariance);
         float psv = Random.Range(-parcelSidewaysForce, parcelSidewaysForce);
         nextSpawnTime = Time.time + Random.Range(spawnDelay - spawnDelayVariance, spawnDelay + spawnDelayVariance);
@@ -107,6 +112,11 @@ public class parcel_spawner : MonoBehaviour
 
     private GameObject parcelToSpawn()
     {
+		if (parcelSpawnWeight.Count == 0)
+		{
+			return null;
+		}
+
         float choice = Random.Range(0, totalWeighting());
         if(choice >= 0 && choice < parcelSpawnWeight[0])
         {

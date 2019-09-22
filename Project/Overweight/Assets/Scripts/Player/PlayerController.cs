@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     protected float m_MovementSpeed = 0.1f;
 
 	[SerializeField]
+	protected int m_StunTimeFrames = 90;
+
+	[SerializeField]
 	protected float m_ThrowSpeedH = 0.50f;
 	[SerializeField]
 	protected float m_ThrowSpeedV = 0.10f;
@@ -27,14 +30,19 @@ public class PlayerController : MonoBehaviour
         set { m_Ready = value; }
     }
 
+	private bool m_IsDashing = false;
+	private bool m_IsStunned = false;
+	private int m_StunTimer = 0;
+
 	private List<int> PLAYER_LAYER_IDS;
-	private int PARCEL_LAYER_ID = 9;
+	private const int PARCEL_LAYER_ID = 9;
 
 	private string m_PlayerNumber;
 
 	private Transform m_AttachPoint;
     private Rigidbody m_RigidBody;
 	private Grabber m_Grabber;
+	private ParticleSystem m_StunParticles;
 
 	private Rigidbody m_CarriedPackage;
 
@@ -44,6 +52,12 @@ public class PlayerController : MonoBehaviour
         m_RigidBody.freezeRotation = true;
 
 		m_Grabber = GetComponentInChildren<Grabber>();
+
+		Transform sparkChild = transform.GetChild(5);
+		if (sparkChild != null)
+		{
+			m_StunParticles = sparkChild.GetComponentInChildren<ParticleSystem>();
+		}
 
 		m_AttachPoint = transform.GetChild(0);
 
@@ -61,6 +75,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (m_IsStunned)
+		{
+			return;
+		}
+
 		if (Input.GetButtonDown("GrabDrop_P" + m_PlayerNumber))
 		{
 			if (m_CarriedPackage == false)
@@ -102,6 +121,12 @@ public class PlayerController : MonoBehaviour
 				throwVector.y = m_ThrowSpeedV;
 				m_CarriedPackage.AddForce(throwVector);
 
+				parcel carriedParcel = m_CarriedPackage.GetComponent<parcel>();
+				if (carriedParcel)
+				{
+					carriedParcel.ThrownIndex = m_PlayerIndex;
+				}
+
 				m_CarriedPackage = null;
 			}
 		}
@@ -109,8 +134,22 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        m_RigidBody.velocity = Vector3.zero;
+		m_RigidBody.velocity = Vector3.zero;
         m_RigidBody.angularVelocity = Vector3.zero;
+
+		if (m_IsStunned)
+		{
+			m_StunTimer--;
+			if (m_StunTimer <= 0)
+			{
+				m_IsStunned = false;
+				if (m_StunParticles != null)
+				{
+					m_StunParticles.Stop();
+				}
+			}
+			return;
+		}
 
         Vector2 analogue_input;
         analogue_input.x = Input.GetAxis("Horizontal_P" + m_PlayerNumber);
@@ -130,6 +169,30 @@ public class PlayerController : MonoBehaviour
             m_RigidBody.MoveRotation(rotation);
         }
     }
+
+	void OnCollisionEnter(Collision collision)
+	{
+		parcel collidingParcel = collision.gameObject.GetComponent<parcel>();
+		if (collidingParcel != null && collidingParcel.WasThrown)
+		{
+			if (collidingParcel.ThrownIndex != m_PlayerIndex)
+			{
+				collidingParcel.ThrownIndex = 0;
+
+				DeparentCarriedPackage();
+				m_CarriedPackage = null;
+
+				m_StunTimer = m_StunTimeFrames;
+				m_IsStunned = true;
+				if (m_StunParticles != null)
+				{
+					m_StunParticles.Play();
+					ParticleSystem.EmissionModule module = m_StunParticles.emission;
+					module.enabled = true;
+				}
+			}
+		}
+	}
 
 	private void DeparentCarriedPackage()
 	{
