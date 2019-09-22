@@ -215,7 +215,7 @@ public class GameController : MonoBehaviour
             readyCount++;
         }
 
-        if(numberOfPlayers > 1 && (readyCount == numberOfPlayers))
+        if(numberOfPlayers > 0 && (readyCount == numberOfPlayers))
         {
             playersReady = true;
         }
@@ -401,7 +401,7 @@ public class GameController : MonoBehaviour
         closestPlayerScores = new List<ScaleZone> { };
         foreach (ScaleZone playerScale in currentZones)
         {
-			if (playerScale.CurrentWeight > 0)
+			//if (playerScale.CurrentWeight > 0)
 			{
 				playerScore = playerScale.CurrentWeight;
 				playerScore = objectiveWeight - playerScore;

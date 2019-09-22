@@ -29,8 +29,16 @@ public class ScaleZone : MonoBehaviour
     private int score;
     private int winCount = 0;
 
-    // Start is called before the first frame update
-    void Start()
+	private List<int> PLAYER_LAYER_IDS;
+	private int PARCEL_LAYER_ID = 9;
+
+	private void Awake()
+	{
+		PLAYER_LAYER_IDS = new List<int> { 10, 11, 12, 13 };
+	}
+
+	// Start is called before the first frame update
+	void Start()
     {
 		m_AttachPointParent = transform.GetChild(0);
 
@@ -88,6 +96,7 @@ public class ScaleZone : MonoBehaviour
 			if (parcelRigidBody != null)
 			{
 				parcelRigidBody.isKinematic = true;
+				parcelRigidBody.gameObject.layer = PLAYER_LAYER_IDS[m_PlayerIndex - 1];
 			}
 		}
 	}
