@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player4SpawnLocation;
 
     private int numberOfPlayers = 0;
+    [SerializeField] private int minPlayerCount = 2;
+    private int zeroWeightCount = 0;
 
 
     private float startGameTimer = 5;
@@ -39,6 +41,7 @@ public class GameController : MonoBehaviour
     private int lastPlayerScoreUpdate=0;
     private int closestScoreValue = 1;
     [SerializeField] private int maxObjective = 15;
+    [SerializeField] private int minObjective = 1;
 
     private bool playersReady = false;
     private bool maxPlayersReady = false;
@@ -215,7 +218,7 @@ public class GameController : MonoBehaviour
             readyCount++;
         }
 
-        if(numberOfPlayers > 0 && (readyCount == numberOfPlayers))
+        if(numberOfPlayers >= minPlayerCount && (readyCount == numberOfPlayers))
         {
             playersReady = true;
         }
@@ -296,6 +299,7 @@ public class GameController : MonoBehaviour
         roundScoreCalculated = false;
         closestScoreValue = 1;
 		lastPlayerScoreUpdate = 0;
+        zeroWeightCount = 0;
 
 		player1Scale.ResetScale();
 		player2Scale.ResetScale();
@@ -312,7 +316,7 @@ public class GameController : MonoBehaviour
         timerUI.color = countdownCol;
 
         //generate and set objectives
-        objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(1, maxObjective));
+        objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(minObjective, maxObjective));
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
         objectiveUI.text = "GOAL: " + objectiveWeightFrozen + "KG";
@@ -418,6 +422,10 @@ public class GameController : MonoBehaviour
 				playerScale.SetScore(playerScore);
 				//Debug.Log("Bedson Test: " + playerScore);
 			}
+            else
+            {
+                zeroWeightCount++;
+            }
         }
 
 
@@ -451,8 +459,23 @@ public class GameController : MonoBehaviour
         else
         {
             //no perfect score so we get the closest
-            closestScoreValue++;
-            CalculateNearestScore();
+            if (zeroWeightCount>=numberOfPlayers)
+            {
+                //all players have zero weight, this is a win for no one
+                foreach (ScaleZone playerScale in currentZones)
+                {
+                    Color overCol = new Color(1f, 0f, 1f, 1f);
+                    playerScale.SetEvaluationTextColour(overCol);
+                    playerScale.SetEvaluationText("ALL ZEROWEIGHT!");
+                }
+                    
+            }
+            else
+            {
+                closestScoreValue++;
+                CalculateNearestScore();
+            }
+            
         }
 
     }

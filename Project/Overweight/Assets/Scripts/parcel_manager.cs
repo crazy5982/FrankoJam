@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class parcel_manager : MonoBehaviour
 {
-    // Parcel box numbers
-    int boxMin = 1;
-    int boxMax = 3;
-
-    // Parcel weightings
-    float sBox = 1f;
-    float mBox = 1f;
-    float lBox = 1f;
-    float bBox = 1f;
-
     // Setup parcel gameObject array
     GameObject[] parcelObjects;
     bool gotParcel_spawns = false;
@@ -39,6 +29,18 @@ public class parcel_manager : MonoBehaviour
         {
             GetParcelSpawners();
         }        
+        foreach (GameObject parcel in parcelObjects)
+        {
+            parcel.GetComponent<parcel_spawner>().StartSpawning();
+        }
+    }
+
+    public void BeginParcelSpawning(int boxMin, int boxMax, float sBox, float mBox, float lBox, float bBox)
+    {
+        if (!gotParcel_spawns)
+        {
+            GetParcelSpawners();
+        }
         foreach (GameObject parcel in parcelObjects)
         {
             parcel.GetComponent<parcel_spawner>().StartSpawning(boxMin, boxMax, sBox, mBox, lBox, bBox);

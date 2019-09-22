@@ -10,6 +10,7 @@ public class parcel_spawner : MonoBehaviour
 
     [SerializeField] private GameObject [] parcel_spawnItem;
     [SerializeField] private float spawnDelay = 1;
+    [SerializeField] private float spawnDelayLimit = 1f;
 
     private float spawnAve = 5;
 
@@ -17,6 +18,16 @@ public class parcel_spawner : MonoBehaviour
 
     [SerializeField] private string parcelDirection;
     private float parcelSpeed = 1.3f;
+
+    // Parcel box numbers
+    [SerializeField] int boxMin = 1;
+    [SerializeField] int boxMax = 3;
+
+    // Parcel weightings
+    [SerializeField] float sBox = 1f;
+    [SerializeField] float mBox = 1f;
+    [SerializeField] float lBox = 1f;
+    [SerializeField] float bBox = 1f;
 
     private void Update()
     {
@@ -27,6 +38,17 @@ public class parcel_spawner : MonoBehaviour
                 Spawn(parcelToSpawn());
             }
         }
+    }
+
+    public void StartSpawning()
+    {
+        spawnAve = Mathf.RoundToInt(Random.Range(boxMin, boxMax + 0.49f));
+        parcelSpawnWeight.Add(sBox);
+        parcelSpawnWeight.Add(mBox);
+        parcelSpawnWeight.Add(lBox);
+        parcelSpawnWeight.Add(bBox);
+        canSpawn = true;
+        spawnCount = 0;
     }
 
     public void StartSpawning(int numSpawnMin, int numSpawnMax, float smallP, float medP, float largeP, float badP)
@@ -47,7 +69,7 @@ public class parcel_spawner : MonoBehaviour
 
     private void Spawn(GameObject parcelToSpawn)
     {
-        nextSpawnTime = Time.time + spawnDelay;
+        nextSpawnTime = Time.time + Random.Range(spawnDelay - spawnDelayLimit, spawnDelay + spawnDelayLimit);
         GameObject spawnedParcel = Instantiate(parcelToSpawn, transform.position, transform.rotation);
         if (parcelDirection == "right")
         {
