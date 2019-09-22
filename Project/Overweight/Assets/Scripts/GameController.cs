@@ -553,18 +553,14 @@ public class GameController : MonoBehaviour
     void EndOfGameWait()
     {
         //wait for the players to do something
-        for (int i = 1; i<5; i++)
+        if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
         {
-            if (Input.GetButtonDown("GrabDrop_P" + i))
-            {
-                Debug.Log("Load Next Level");
-            }
-            else if (Input.GetButtonDown("Throw_P" + i))
-            {
-                Debug.Log("Back to main menu");
-            }
+            SceneLoader.LoadNextScene();
         }
-
+        else if (Input.GetButtonDown("Throw_P" + 1) || Input.GetButtonDown("Throw_P" + 2) || Input.GetButtonDown("Throw_P" + 3) || Input.GetButtonDown("Throw_P" + 4))
+        {
+            SceneLoader.LoadStartScene();
+        }
     }
     void UpdateTotalScores()
     {

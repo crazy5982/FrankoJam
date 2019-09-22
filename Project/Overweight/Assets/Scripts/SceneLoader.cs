@@ -19,8 +19,16 @@ public static class SceneLoader
 
     public static void LoadNextScene()
     {
+        int scenes = SceneManager.sceneCount;
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1);
+        if (currentSceneIndex < scenes)
+        {
+            SceneManager.LoadScene(currentSceneIndex + 1);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     public static void LoadLevel1()
