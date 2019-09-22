@@ -328,14 +328,14 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4770204100762894031}
-  m_Text: TEST
+  m_Text: 0kg
   m_OffsetZ: 0
-  m_CharacterSize: 0.5
+  m_CharacterSize: 0.03
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 433
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: cbfa9e69697b90a4b88d07ecbb37b0dd, type: 3}
@@ -422,12 +422,12 @@ TextMesh:
   m_GameObject: {fileID: 4770204101040827318}
   m_Text: OVERWEIGHT
   m_OffsetZ: 0
-  m_CharacterSize: 0.5
+  m_CharacterSize: 0.03
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 282
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: cbfa9e69697b90a4b88d07ecbb37b0dd, type: 3}

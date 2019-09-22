@@ -64,10 +64,18 @@ public class GameController : MonoBehaviour
     public Text player3WinUI;
     public Text player4WinUI;
 
+    public Canvas objectiveCanvas;
+    public Canvas timerCanvas;
+    public Canvas winnerCanvas;
+    public Canvas scoresCanvas;
+
     private int objectiveWeightFrozen = 5;
     private int objectiveWeight;
     private int currentObjectiveWeight;
-    private int winsObjective = 5;
+
+    private int winsObjective = 1;
+    private bool gameWon = false;
+    public Text winnerText;
 
     private int player1Score;
     private int player2Score;
@@ -86,6 +94,7 @@ public class GameController : MonoBehaviour
     private List<ScaleZone> overweightPlayerScores = new List<ScaleZone> { };
     private List<ScaleZone> currentPerfectPlayerScores = new List<ScaleZone> { };
     private List<ScaleZone> PlayerScores = new List<ScaleZone> { };
+    private List<ScaleZone> winners = new List<ScaleZone> { };
 
     // Parcel Spawner game object reference
     [SerializeField] private GameObject parcel_spawner_object;
@@ -99,6 +108,8 @@ public class GameController : MonoBehaviour
     void Start()
     {
         playerSetup();
+        winnerText.text ="";
+        winnerCanvas.enabled = false;
         //SetupGame();
     }
 
@@ -107,13 +118,22 @@ public class GameController : MonoBehaviour
     {
         if(gameStarting)
         {
-            CalculateTimer();
-            if (timer > 0)
+            if(!gameWon)
             {
-                GetAndEvaluatePlayerScales();
-                //GetAndEvaluateCurrentScores();
-                //spawn parcels
+                CalculateTimer();
+                if (timer > 0)
+                {
+                    GetAndEvaluatePlayerScales();
+                    //GetAndEvaluateCurrentScores();
+                    //spawn parcels
+                }
             }
+            else
+            {
+                //GAME IS WON!
+                EndOfGameWait();
+            }
+
         }
         else
         {
@@ -530,7 +550,22 @@ public class GameController : MonoBehaviour
     //    }
     //}
 
+    void EndOfGameWait()
+    {
+        //wait for the players to do something
+        for (int i = 1; i<5; i++)
+        {
+            if (Input.GetButtonDown("GrabDrop_P" + i))
+            {
+                Debug.Log("Load Next Level");
+            }
+            else if (Input.GetButtonDown("Throw_P" + i))
+            {
+                Debug.Log("Back to main menu");
+            }
+        }
 
+    }
     void UpdateTotalScores()
     {
         Debug.Log("Here we are!");
@@ -555,8 +590,41 @@ public class GameController : MonoBehaviour
             }
         }
         UpdateTotalScoreText();
+        CheckForWinner();
+    }
+    void CheckForWinner()
+    {
+        foreach (ScaleZone playerScale in currentZones)
+        {
+            if (playerScale.GetWinCount() >= winsObjective)
+            {
+                winners.Add(playerScale);
+            }
+        }
+
+        if (winners.Count > 0)
+        {
+            //set a winner found variable to rpevent other things from happening
+            gameWon = true;
+            string winnerNames = "WINNER!: ";
+            foreach (ScaleZone playerScale in currentZones)
+            {
+                Debug.Log("Your winner: "+playerScale.name);
+                winnerNames = winnerNames+playerScale.name;
+            }
+            //do some winning function
+            winnerCanvas.enabled = true;
+            winnerText.text = winnerNames;
+        }
     }
 
+    void HideAllUI()
+    {
+        objectiveCanvas.enabled = false;
+        timerCanvas.enabled = false;
+        winnerCanvas.enabled = false;
+        scoresCanvas.enabled = false;
+    }
     void UpdateTotalScoreText()
     {
         string scoreText = "Score ";
