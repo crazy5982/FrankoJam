@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player4SpawnLocation;
 
     private int numberOfPlayers = 0;
-    private int minPlayerCount = 2;
+    [SerializeField] private int minPlayerCount = 2;
     private int zeroWeightCount = 0;
 
 

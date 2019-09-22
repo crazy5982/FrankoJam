@@ -1158,6 +1158,11 @@ PrefabInstance:
       propertyPath: player4SpawnLocation
       value: 
       objectReference: {fileID: 2004824564}
+    - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
+        type: 3}
+      propertyPath: minPlayerCount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a309e97e96d333d4c87cf33ae36d63c4, type: 3}
 --- !u!1 &1483335540
