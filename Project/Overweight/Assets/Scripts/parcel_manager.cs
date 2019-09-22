@@ -25,6 +25,7 @@ public class parcel_manager : MonoBehaviour
 
     public void BeginParcelSpawning()
     {
+        Debug.Log("Inside parcel Spawning start");
         if(!gotParcel_spawns)
         {
             GetParcelSpawners();
