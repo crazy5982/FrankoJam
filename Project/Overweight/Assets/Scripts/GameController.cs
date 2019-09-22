@@ -97,6 +97,7 @@ public class GameController : MonoBehaviour
     private List<ScaleZone> currentPerfectPlayerScores = new List<ScaleZone> { };
     private List<ScaleZone> PlayerScores = new List<ScaleZone> { };
     private List<ScaleZone> winners = new List<ScaleZone> { };
+    private List<ScaleZone> zeroWeight = new List<ScaleZone> { };
 
     // Parcel Spawner game object reference
     [SerializeField] private GameObject parcel_spawner_object;
@@ -211,7 +212,7 @@ public class GameController : MonoBehaviour
             player4.GetComponent<PlayerController>().PlayerIndex = 4;
             currentPlayers.Add(player4);
             currentZones.Add(player4Scale);
-            player3Scale.Enabled = true;
+            player4Scale.Enabled = true;
             player4State = "X to ready";
             numberOfPlayers++;
         }
@@ -328,8 +329,9 @@ public class GameController : MonoBehaviour
         closestScoreValue = 1;
 		lastPlayerScoreUpdate = 0;
         zeroWeightCount = 0;
+        zeroWeight = new List<ScaleZone> { };
 
-		player1Scale.ResetScale();
+        player1Scale.ResetScale();
 		player2Scale.ResetScale();
 		player3Scale.ResetScale();
 		player4Scale.ResetScale();
@@ -455,7 +457,12 @@ public class GameController : MonoBehaviour
 			}
             else
             {
-                zeroWeightCount++;
+                if (zeroWeight.Contains(playerScale))
+                {
+                    zeroWeightCount++;
+                    zeroWeight.Add(playerScale);
+                }
+                
             }
         }
 
