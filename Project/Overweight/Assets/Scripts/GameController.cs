@@ -41,10 +41,10 @@ public class GameController : MonoBehaviour
     private int lastPlayerScoreUpdate=0;
     private int closestScoreValue = 1;
     [SerializeField] private int maxObjective = 15;
-    [SerializeField] private int minObjective = 1;
+    [SerializeField] private int minObjective = 3;
 
     private bool playersReady = false;
-    private bool maxPlayersReady = false;
+    private bool gameStarting = false;
     private bool readyPlayer1 = false;
     private bool readyPlayer2 = false;
     private bool readyPlayer3 = false;
@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
     private int objectiveWeightFrozen = 5;
     private int objectiveWeight;
     private int currentObjectiveWeight;
+    private int winsObjective = 5;
 
     private int player1Score;
     private int player2Score;
@@ -104,7 +105,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playersReady)
+        if(gameStarting)
         {
             CalculateTimer();
             if (timer > 0)
@@ -260,8 +261,8 @@ public class GameController : MonoBehaviour
             {
                 timerUI.text = "START!";
                 //ActivateAllPlayers();
-                //ClearGame();
-                //SetupGame();
+                ClearGame();
+                SetupGame();
             }
         }
 
@@ -310,6 +311,7 @@ public class GameController : MonoBehaviour
     void SetupGame()
     {
         //set timers
+        gameStarting = true;
         timer = timerFrozen;
         newRoundTimer = 5;
         Color countdownCol = new Color(0f, 0f, 0f, 1f);
