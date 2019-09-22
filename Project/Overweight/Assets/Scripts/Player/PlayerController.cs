@@ -6,9 +6,16 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     protected float m_MovementSpeed = 0.1f;
+	[SerializeField]
+	protected float m_DashSpeed = 0.2f;
 
 	[SerializeField]
 	protected int m_StunTimeFrames = 90;
+
+	[SerializeField]
+	protected int m_DashTimeFrames = 20;
+	[SerializeField]
+	protected int m_DashCooldownFrames = 180;
 
 	[SerializeField]
 	protected float m_ThrowSpeedH = 0.50f;
@@ -30,7 +37,13 @@ public class PlayerController : MonoBehaviour
         set { m_Ready = value; }
     }
 
-	private bool m_IsDashing = false;
+	private int m_DashCooldown = 0;
+	private int m_DashTimer = 0;
+	public bool IsDashing
+	{
+		get { return m_DashTimer > 0; }
+	}
+
 	private bool m_IsStunned = false;
 	private int m_StunTimer = 0;
 
@@ -129,6 +142,14 @@ public class PlayerController : MonoBehaviour
 
 				m_CarriedPackage = null;
 			}
+			else
+			{
+				if (m_DashCooldown <= 0)
+				{
+					m_DashTimer = m_DashTimeFrames;
+					m_DashCooldown = m_DashCooldownFrames;
+				}
+			}
 		}
     }
 
@@ -151,10 +172,20 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
+		if (m_DashTimer > 0)
+		{
+			m_DashTimer--;
+		}
+
+		if (m_DashCooldown > 0)
+		{
+			m_DashCooldown--;
+		}
+
         Vector2 analogue_input;
         analogue_input.x = Input.GetAxis("Horizontal_P" + m_PlayerNumber);
         analogue_input.y = Input.GetAxis("Vertical_P" + m_PlayerNumber);
-        analogue_input *= m_MovementSpeed;
+        analogue_input *= m_DashTimer > 0 ? m_DashSpeed : m_MovementSpeed;
 
         if (m_RigidBody && analogue_input.SqrMagnitude() >= 0.00001f)
         {
@@ -179,18 +210,14 @@ public class PlayerController : MonoBehaviour
 			{
 				collidingParcel.ThrownIndex = 0;
 
-				DeparentCarriedPackage();
-				m_CarriedPackage = null;
-
-				m_StunTimer = m_StunTimeFrames;
-				m_IsStunned = true;
-				if (m_StunParticles != null)
-				{
-					m_StunParticles.Play();
-					ParticleSystem.EmissionModule module = m_StunParticles.emission;
-					module.enabled = true;
-				}
+				Stun();
 			}
+		}
+
+		PlayerController collidingPlayer = collision.gameObject.GetComponent<PlayerController>();
+		if (collidingPlayer != null && collidingPlayer.IsDashing)
+		{
+			Stun();
 		}
 	}
 
@@ -202,6 +229,21 @@ public class PlayerController : MonoBehaviour
 			m_CarriedPackage.gameObject.transform.SetParent(null);
 
 			m_CarriedPackage.gameObject.layer = PARCEL_LAYER_ID;
+		}
+	}
+
+	private void Stun()
+	{
+		DeparentCarriedPackage();
+		m_CarriedPackage = null;
+
+		m_StunTimer = m_StunTimeFrames;
+		m_IsStunned = true;
+		if (m_StunParticles != null)
+		{
+			m_StunParticles.Play();
+			ParticleSystem.EmissionModule module = m_StunParticles.emission;
+			module.enabled = true;
 		}
 	}
 }

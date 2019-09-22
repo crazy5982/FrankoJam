@@ -9847,7 +9847,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementSpeed: 0.3
+  m_DashSpeed: 0.8
   m_StunTimeFrames: 90
+  m_DashTimeFrames: 10
   m_ThrowSpeedH: 2000
   m_ThrowSpeedV: 500
   m_PlayerIndex: 1
