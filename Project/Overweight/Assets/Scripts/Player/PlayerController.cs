@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
 				parcel carriedParcel = m_CarriedPackage.GetComponent<parcel>();
 				if (carriedParcel)
 				{
-					carriedParcel.WasThrown = true;
+					carriedParcel.ThrownIndex = m_PlayerIndex;
 				}
 
 				m_CarriedPackage = null;
@@ -175,18 +175,21 @@ public class PlayerController : MonoBehaviour
 		parcel collidingParcel = collision.gameObject.GetComponent<parcel>();
 		if (collidingParcel != null && collidingParcel.WasThrown)
 		{
-			collidingParcel.WasThrown = false;
-
-			DeparentCarriedPackage();
-			m_CarriedPackage = null;
-
-			m_StunTimer = m_StunTimeFrames;
-			m_IsStunned = true;
-			if (m_StunParticles != null)
+			if (collidingParcel.ThrownIndex != m_PlayerIndex)
 			{
-				m_StunParticles.Play();
-				ParticleSystem.EmissionModule module = m_StunParticles.emission;
-				module.enabled = true;
+				collidingParcel.ThrownIndex = 0;
+
+				DeparentCarriedPackage();
+				m_CarriedPackage = null;
+
+				m_StunTimer = m_StunTimeFrames;
+				m_IsStunned = true;
+				if (m_StunParticles != null)
+				{
+					m_StunParticles.Play();
+					ParticleSystem.EmissionModule module = m_StunParticles.emission;
+					module.enabled = true;
+				}
 			}
 		}
 	}

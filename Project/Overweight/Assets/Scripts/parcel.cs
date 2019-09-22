@@ -24,11 +24,16 @@ public class parcel : MonoBehaviour
 
 	public Rigidbody rb;
 
-	private bool m_WasThrown = false;
+	private int m_ThrownIndex = 0;
 	public bool WasThrown
 	{
-		get { return m_WasThrown; }
-		set { m_WasThrown = value; }
+		get { return m_ThrownIndex != 0; }
+	}
+
+	public int ThrownIndex
+	{
+		get { return m_ThrownIndex; }
+		set { m_ThrownIndex = value; }
 	}
 
 	private void Start()
@@ -55,7 +60,7 @@ public class parcel : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if (m_WasThrown)
+		if (WasThrown)
 		{
 			// Normally want to set was thrown to false on any collision, but if the collision is another player
 			// we don't want to reset was thrown before the player gets a chance to react to it!
@@ -63,7 +68,7 @@ public class parcel : MonoBehaviour
 			PlayerController collidingPlayer = collision.gameObject.GetComponent<PlayerController>();
 			if (collidingPlayer == null)
 			{
-				m_WasThrown = false;
+				ThrownIndex = 0;
 			}
 		}
 	}
