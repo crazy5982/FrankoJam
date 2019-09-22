@@ -45,14 +45,13 @@ public class ScaleZone : MonoBehaviour
         scaleText = scaleTextHolder.GetComponent<TextMesh>();
         evaluationTextHolder = this.gameObject.transform.GetChild(2).gameObject;
         evaluationText = evaluationTextHolder.GetComponent<TextMesh>();
-        evaluationText.text = "";
+        evaluationText.text = "X";
     }
 
     // Update is called once per frame
     void Update()
     {
         scaleText.text = CurrentWeight + "kg";
-        Debug.Log("Weight: "+CurrentWeight);
     }
 
 	void OnCollisionEnter(Collision collision)

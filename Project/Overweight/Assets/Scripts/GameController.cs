@@ -10,7 +10,10 @@ public class GameController : MonoBehaviour
     public ScaleZone player2Scale;
     public ScaleZone player3Scale;
     public ScaleZone player4Scale;
-    [SerializeField] private GameObject playerObject;
+    [SerializeField] private GameObject player1Object;
+    [SerializeField] private GameObject player2Object;
+    [SerializeField] private GameObject player3Object;
+    [SerializeField] private GameObject player4Object;
 
     private GameObject player1;
     private GameObject player2;
@@ -35,6 +38,7 @@ public class GameController : MonoBehaviour
     private bool playersSet = false;
     private int lastPlayerScoreUpdate=0;
     private int closestScoreValue = 1;
+    [SerializeField] private int maxObjective = 15;
 
     private bool playersReady = false;
     private bool maxPlayersReady = false;
@@ -147,7 +151,7 @@ public class GameController : MonoBehaviour
         //once all players are ready call setup game
         if (Input.GetButtonDown("GrabDrop_P" + 1) && player1 == null)
         {
-            player1 = Object.Instantiate(playerObject, player1SpawnLocation.transform.position, player1SpawnLocation.transform.rotation);
+            player1 = Object.Instantiate(player1Object, player1SpawnLocation.transform.position, player1SpawnLocation.transform.rotation);
             player1.GetComponent<PlayerController>().PlayerIndex = 1;
             currentPlayers.Add(player1);
             currentZones.Add(player1Scale);
@@ -156,7 +160,7 @@ public class GameController : MonoBehaviour
         }
         if (Input.GetButtonDown("GrabDrop_P" + 2) && player2 == null)
         {
-            player2 = Object.Instantiate(playerObject, player2SpawnLocation.transform.position, player2SpawnLocation.transform.rotation);
+            player2 = Object.Instantiate(player2Object, player2SpawnLocation.transform.position, player2SpawnLocation.transform.rotation);
             player2.GetComponent<PlayerController>().PlayerIndex = 2;
             currentPlayers.Add(player2);
             currentZones.Add(player2Scale);
@@ -165,7 +169,7 @@ public class GameController : MonoBehaviour
         }
         if (Input.GetButtonDown("GrabDrop_P" + 3) && player3 == null)
         {
-            player3 = Object.Instantiate(playerObject, player3SpawnLocation.transform.position, player3SpawnLocation.transform.rotation);
+            player3 = Object.Instantiate(player3Object, player3SpawnLocation.transform.position, player3SpawnLocation.transform.rotation);
             player3.GetComponent<PlayerController>().PlayerIndex = 3;
             currentPlayers.Add(player3);
             currentZones.Add(player3Scale);
@@ -174,7 +178,7 @@ public class GameController : MonoBehaviour
         }
         if (Input.GetButtonDown("GrabDrop_P" + 4) && player4 == null)
         {
-            player4 = Object.Instantiate(playerObject, player4SpawnLocation.transform.position, player4SpawnLocation.transform.rotation);
+            player4 = Object.Instantiate(player4Object, player4SpawnLocation.transform.position, player4SpawnLocation.transform.rotation);
             player4.GetComponent<PlayerController>().PlayerIndex = 4;
             currentPlayers.Add(player4);
             currentZones.Add(player4Scale);
@@ -308,18 +312,22 @@ public class GameController : MonoBehaviour
         timerUI.color = countdownCol;
 
         //generate and set objectives
-        objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(1, 6));
+        objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(1, maxObjective));
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
         objectiveUI.text = "GOAL: " + objectiveWeightFrozen + "KG";
         //get all active players?
-        //GetPlayersList();
-        //numberOfPlayers = currentZones.Count;
-        //set player spawns
-        //set item spawns
+        foreach (ScaleZone playerScale in currentZones)
+        {
+            Debug.Log("Player "+playerScale.name);
+        }
+            //GetPlayersList();
+            //numberOfPlayers = currentZones.Count;
+            //set player spawns
+            //set item spawns
 
-        // Setup parcel spawners here
-        parcel_man.BeginParcelSpawning();
+            // Setup parcel spawners here
+            parcel_man.BeginParcelSpawning();
 
         UpdateTotalScores();
     }
@@ -332,10 +340,10 @@ public class GameController : MonoBehaviour
         {
             playerScore = playerScale.CurrentWeight;
             playerScore = objectiveWeight - playerScore;
-            if (playerScore < 0)
-            {
-                playerScore = playerScore * -1;
-            }
+            //if (playerScore < 0)
+            //{
+            //    playerScore = playerScore * -1;
+            //}
             if (playerScore == 0)
             {
                 perfectPlayerScores.Add(playerScale);

@@ -4917,7 +4917,7 @@ GameObject:
   - component: {fileID: 674995350440156642}
   - component: {fileID: 674995350440156643}
   - component: {fileID: 674995350440156646}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: PlayerTest_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5038,7 +5038,7 @@ MonoBehaviour:
   m_MovementSpeed: 0.3
   m_ThrowSpeedH: 750
   m_ThrowSpeedV: 200
-  m_PlayerIndex: 1
+  m_PlayerIndex: 2
 --- !u!1 &8832502739982919076
 GameObject:
   m_ObjectHideFlags: 0
