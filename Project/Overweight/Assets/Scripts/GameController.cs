@@ -357,7 +357,6 @@ public class GameController : MonoBehaviour
         //set item spawns
 
         // Setup parcel spawners here
-        Debug.Log("Just before start spawning");
         parcel_man.BeginParcelSpawning();
 
         UpdateTotalScores();
@@ -565,7 +564,6 @@ public class GameController : MonoBehaviour
     }
     void UpdateTotalScores()
     {
-        Debug.Log("Here we are!");
         //for each current player
         foreach (ScaleZone playerScale in currentZones)
         {

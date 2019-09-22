@@ -44,7 +44,6 @@ public class parcel_spawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        Debug.Log("parcel spawner");
         spawnAve = Mathf.RoundToInt(Random.Range(boxMin, boxMax + 0.49f));
         parcelSpawnWeight.Clear();
         parcelSpawnWeight.Add(sBox);
