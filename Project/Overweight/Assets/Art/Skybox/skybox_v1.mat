@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sky05
+  m_Name: skybox_v1
   m_Shader: {fileID: 104, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,19 +20,19 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BackTex:
-        m_Texture: {fileID: 2800000, guid: 3178078491426844ba9d478a96294889, type: 3}
+        m_Texture: {fileID: 2800000, guid: ea51c7762a616e24f9d9a3b2746a6cc5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DownTex:
-        m_Texture: {fileID: 2800000, guid: 47c2b1a88ccc18e4d8117e4d1f00220e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5cc8f104fbbe3f14d979ebbfaadd5974, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrontTex:
-        m_Texture: {fileID: 2800000, guid: 5297a2d25f6203e47805b825b01a1c20, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9085252f967f6b24991a5ece2c6e8c18, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LeftTex:
-        m_Texture: {fileID: 2800000, guid: 9979536c72dc9d748ac6814a93d055ec, type: 3}
+        m_Texture: {fileID: 2800000, guid: ef7cd91a5c47fe145a46ed45ce1c84c1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -40,14 +40,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RightTex:
-        m_Texture: {fileID: 2800000, guid: 432b5b520d50f874e92b6a88bdbcca27, type: 3}
+        m_Texture: {fileID: 2800000, guid: ebdb28d14549ae44d81d58390831f3ad, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
-        m_Texture: {fileID: 2800000, guid: f78f0fc46a475ef43b2ab727f16589e1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 678022e3259d83741ba88c5ecbae6d69, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - _Exposure: 1
+    - _Rotation: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
