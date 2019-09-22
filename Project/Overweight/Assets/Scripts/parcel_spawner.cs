@@ -35,7 +35,7 @@ public class parcel_spawner : MonoBehaviour
     {
         if (canSpawn)
         {
-            if (TimerCheck())
+            if (psTimerCheck())
             {
                 Spawn(parcelToSpawn());
             }
@@ -44,6 +44,7 @@ public class parcel_spawner : MonoBehaviour
 
     public void StartSpawning()
     {
+        Debug.Log("parcel spawner");
         spawnAve = Mathf.RoundToInt(Random.Range(boxMin, boxMax + 0.49f));
         parcelSpawnWeight.Clear();
         parcelSpawnWeight.Add(sBox);
@@ -111,7 +112,7 @@ public class parcel_spawner : MonoBehaviour
 		}
     }
 
-    private bool TimerCheck()
+    private bool psTimerCheck()
     {
         return Time.time > nextSpawnTime && spawnCount < spawnAve;
     }

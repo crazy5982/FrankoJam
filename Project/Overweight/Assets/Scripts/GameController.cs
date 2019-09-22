@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
     private int objectiveWeight;
     private int currentObjectiveWeight;
 
-    private int winsObjective = 7;
+    [SerializeField] private int winsObjective = 7;
     private bool gameWon = false;
     public Text winnerText;
 
@@ -104,8 +104,8 @@ public class GameController : MonoBehaviour
     // Parcel destruction setup
     parcel_manager parcel_man = new parcel_manager();
 
-    // Parcel spawn setup
-    //parcel_spawner spw_parcel;
+    // Winner delay timer setup
+    [SerializeField] private float winnerDelay = 3f;
 
     void Start()
     {
@@ -351,13 +351,14 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Player "+playerScale.name);
         }
-            //GetPlayersList();
-            //numberOfPlayers = currentZones.Count;
-            //set player spawns
-            //set item spawns
+        //GetPlayersList();
+        //numberOfPlayers = currentZones.Count;
+        //set player spawns
+        //set item spawns
 
-            // Setup parcel spawners here
-            parcel_man.BeginParcelSpawning();
+        // Setup parcel spawners here
+        Debug.Log("Just before start spawning");
+        parcel_man.BeginParcelSpawning();
 
         UpdateTotalScores();
     }
@@ -557,7 +558,10 @@ public class GameController : MonoBehaviour
     void EndOfGameWait()
     {
         //wait for the players to do something
-        StartCoroutine("DelayThenNextScene", 3);      
+        if(gcTimerCheck())
+        {
+            NextScene();
+        }
     }
     void UpdateTotalScores()
     {
@@ -733,9 +737,13 @@ public class GameController : MonoBehaviour
     //    }
     //}
 
-    IEnumerator DelayThenNextScene(float count)
+    private bool gcTimerCheck()
     {
-        yield return new WaitForSeconds(count);
+        return Time.time > winnerDelay;
+    }
+
+    private void NextScene()
+    {
         if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
         {
             SceneLoader.LoadNextScene();
