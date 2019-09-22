@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour
     private int objectiveWeight;
     private int currentObjectiveWeight;
 
-    private int winsObjective = 1;
+    private int winsObjective = 7;
     private bool gameWon = false;
     public Text winnerText;
 
