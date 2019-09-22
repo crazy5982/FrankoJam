@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int minObjective = 1;
 
     private bool playersReady = false;
-    private bool maxPlayersReady = false;
+    private bool gameStarting = false;
     private bool readyPlayer1 = false;
     private bool readyPlayer2 = false;
     private bool readyPlayer3 = false;
@@ -104,7 +104,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playersReady)
+        if(gameStarting)
         {
             CalculateTimer();
             if (timer > 0)
@@ -260,8 +260,8 @@ public class GameController : MonoBehaviour
             {
                 timerUI.text = "START!";
                 //ActivateAllPlayers();
-                //ClearGame();
-                //SetupGame();
+                ClearGame();
+                SetupGame();
             }
         }
 
@@ -310,6 +310,7 @@ public class GameController : MonoBehaviour
     void SetupGame()
     {
         //set timers
+        gameStarting = true;
         timer = timerFrozen;
         newRoundTimer = 5;
         Color countdownCol = new Color(0f, 0f, 0f, 1f);
