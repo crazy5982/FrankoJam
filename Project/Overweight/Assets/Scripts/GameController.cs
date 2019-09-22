@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     private int lastPlayerScoreUpdate=0;
     private int closestScoreValue = 1;
     [SerializeField] private int maxObjective = 15;
-    [SerializeField] private int minObjective = 1;
+    [SerializeField] private int minObjective = 3;
 
     private bool playersReady = false;
     private bool gameStarting = false;
@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
     private int objectiveWeightFrozen = 5;
     private int objectiveWeight;
     private int currentObjectiveWeight;
+    private int winsObjective = 5;
 
     private int player1Score;
     private int player2Score;
