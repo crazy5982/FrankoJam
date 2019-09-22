@@ -59,7 +59,15 @@ public class PlayerController : MonoBehaviour
 
 	private Rigidbody m_CarriedPackage;
 
-    void Awake()
+	[SerializeField]
+	private AudioClip m_DashClip;
+	[SerializeField]
+	private AudioClip m_StunClip;
+
+	private AudioSource m_AudioSource;
+
+
+	void Awake()
     {
         m_RigidBody = GetComponent<Rigidbody>();
         m_RigidBody.freezeRotation = true;
@@ -77,6 +85,8 @@ public class PlayerController : MonoBehaviour
 		m_PlayerNumber = m_PlayerIndex.ToString();
 
 		PLAYER_LAYER_IDS = new List<int> { 10, 11, 12, 13 };
+
+		m_AudioSource = GetComponent<AudioSource>();
 	}
 
     // Start is called before the first frame update
@@ -148,6 +158,9 @@ public class PlayerController : MonoBehaviour
 				{
 					m_DashTimer = m_DashTimeFrames;
 					m_DashCooldown = m_DashCooldownFrames;
+
+					m_AudioSource.clip = m_DashClip;
+					m_AudioSource.Play();
 				}
 			}
 		}
@@ -245,5 +258,8 @@ public class PlayerController : MonoBehaviour
 			ParticleSystem.EmissionModule module = m_StunParticles.emission;
 			module.enabled = true;
 		}
+
+		m_AudioSource.clip = m_StunClip;
+		m_AudioSource.Play();
 	}
 }

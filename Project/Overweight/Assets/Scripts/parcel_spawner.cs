@@ -29,9 +29,18 @@ public class parcel_spawner : MonoBehaviour
     [SerializeField] float lBox = 1f;
     [SerializeField] float bBox = 1f;
 
-    private List<float> parcelSpawnWeight = new List<float> { 1f , 1f , 1f , 1f };
+	[SerializeField]
+	protected List<AudioClip> m_AudioClips = new List<AudioClip>();
+	protected AudioSource m_AudioSource;
 
-    private void Update()
+	private List<float> parcelSpawnWeight = new List<float> { 1f , 1f , 1f , 1f };
+
+	void Awake()
+	{
+		m_AudioSource = GetComponent<AudioSource>();
+	}
+
+	private void Update()
     {
         if (canSpawn)
         {
@@ -104,10 +113,12 @@ public class parcel_spawner : MonoBehaviour
         }
         spawnCount++;
 
-		AudioSource audio = GetComponent<AudioSource>();
-		if (audio != null)
+		if (m_AudioSource != null)
 		{
-			audio.Play();
+			int clipIndex = Random.Range(0, m_AudioClips.Count - 1);
+			AudioClip clipToPlay = m_AudioClips[clipIndex];
+			m_AudioSource.clip = clipToPlay;
+			m_AudioSource.Play();
 		}
     }
 
