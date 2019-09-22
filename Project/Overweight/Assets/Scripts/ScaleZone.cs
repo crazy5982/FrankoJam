@@ -19,6 +19,13 @@ public class ScaleZone : MonoBehaviour
 		get { return m_CurrentWeight; }
 	}
 
+	private bool m_Enabled = false;
+	public bool Enabled
+	{
+		get { return m_Enabled; }
+		set { m_Enabled = value; }
+	}
+
 	private List<parcel> m_ParcelList;
 
     //Bedson's added variables, sorry Dan, plz forgive me
@@ -64,39 +71,42 @@ public class ScaleZone : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		parcel collidingParcel = collision.gameObject.GetComponent<parcel>();
-		if (collidingParcel != null)
+		if (Enabled)
 		{
-			int firstFreeIndex = -1;
-			for (int i = 0; i < m_AttachPointParent.childCount; ++i)
+			parcel collidingParcel = collision.gameObject.GetComponent<parcel>();
+			if (collidingParcel != null)
 			{
-				if (m_ParcelList[i] == null)
+				int firstFreeIndex = -1;
+				for (int i = 0; i < m_AttachPointParent.childCount; ++i)
 				{
-					firstFreeIndex = i;
-					break;
+					if (m_ParcelList[i] == null)
+					{
+						firstFreeIndex = i;
+						break;
+					}
 				}
-			}
 
-			if (firstFreeIndex == -1)
-			{
-				return;
-			}
+				if (firstFreeIndex == -1)
+				{
+					return;
+				}
 
-			// And parcel to the list and increase the weight
-			m_ParcelList[firstFreeIndex] = collidingParcel;
-			collidingParcel.SetScaleZone(this);
+				// And parcel to the list and increase the weight
+				m_ParcelList[firstFreeIndex] = collidingParcel;
+				collidingParcel.SetScaleZone(this);
 
-			m_CurrentWeight += collidingParcel.ParcelWeight;
+				m_CurrentWeight += collidingParcel.ParcelWeight;
 
-			Transform attachPoint = m_AttachPointParent.GetChild(firstFreeIndex);
-			collidingParcel.gameObject.transform.position = attachPoint.position;
-			collidingParcel.gameObject.transform.rotation = attachPoint.rotation;
+				Transform attachPoint = m_AttachPointParent.GetChild(firstFreeIndex);
+				collidingParcel.gameObject.transform.position = attachPoint.position;
+				collidingParcel.gameObject.transform.rotation = attachPoint.rotation;
 
-			Rigidbody parcelRigidBody = collidingParcel.GetComponent<Rigidbody>();
-			if (parcelRigidBody != null)
-			{
-				parcelRigidBody.isKinematic = true;
-				parcelRigidBody.gameObject.layer = PLAYER_LAYER_IDS[m_PlayerIndex - 1];
+				Rigidbody parcelRigidBody = collidingParcel.GetComponent<Rigidbody>();
+				if (parcelRigidBody != null)
+				{
+					parcelRigidBody.isKinematic = true;
+					parcelRigidBody.gameObject.layer = PLAYER_LAYER_IDS[m_PlayerIndex - 1];
+				}
 			}
 		}
 	}

@@ -22,7 +22,11 @@ public class parcel : MonoBehaviour
 	[SerializeField]
 	protected float m_ThrowSpeedV = 0.10f;
 
+	[SerializeField]
+	protected List<AudioClip> m_AudioClips = new List<AudioClip>();
+
 	public Rigidbody rb;
+	protected AudioSource m_AudioSource;
 
 	private int m_ThrownIndex = 0;
 	public bool WasThrown
@@ -41,6 +45,8 @@ public class parcel : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		//Vector3 throwVector = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
 		//rb.velocity = throwVector;
+
+		m_AudioSource = GetComponent<AudioSource>();
 	}
 
 	public void SetScaleZone(ScaleZone scaleZone)
@@ -70,6 +76,14 @@ public class parcel : MonoBehaviour
 			{
 				ThrownIndex = 0;
 			}
+		}
+
+		if (m_AudioSource != null)
+		{
+			int clipIndex = Random.Range(0, m_AudioClips.Count - 1);
+			AudioClip clipToPlay = m_AudioClips[clipIndex];
+			m_AudioSource.clip = clipToPlay;
+			m_AudioSource.Play();
 		}
 	}
 }
