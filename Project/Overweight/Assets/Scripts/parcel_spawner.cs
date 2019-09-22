@@ -69,6 +69,11 @@ public class parcel_spawner : MonoBehaviour
 
     private void Spawn(GameObject parcelToSpawn)
     {
+		if (parcelToSpawn == null)
+		{
+			return;
+		}
+
         nextSpawnTime = Time.time + Random.Range(spawnDelay - spawnDelayLimit, spawnDelay + spawnDelayLimit);
         GameObject spawnedParcel = Instantiate(parcelToSpawn, transform.position, transform.rotation);
         if (parcelDirection == "right")
@@ -101,6 +106,11 @@ public class parcel_spawner : MonoBehaviour
 
     private GameObject parcelToSpawn()
     {
+		if (parcelSpawnWeight.Count == 0)
+		{
+			return null;
+		}
+
         float choice = Random.Range(0, totalWeighting());
         if(choice >= 0 && choice < parcelSpawnWeight[0])
         {
