@@ -562,10 +562,7 @@ public class GameController : MonoBehaviour
     void EndOfGameWait()
     {
         //wait for the players to do something
-        if(gcTimerCheck())
-        {
-            NextScene();
-        }
+        NextScene(winnerDelay);
     }
     void UpdateTotalScores()
     {
@@ -742,13 +739,9 @@ public class GameController : MonoBehaviour
     //    }
     //}
 
-    private bool gcTimerCheck()
+    IEnumerator NextScene(float winnerDelay)
     {
-        return Time.time > winnerDelay;
-    }
-
-    private void NextScene()
-    {
+        yield return new WaitForSeconds(winnerDelay);
         if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
         {
             SceneLoader.LoadNextScene();
