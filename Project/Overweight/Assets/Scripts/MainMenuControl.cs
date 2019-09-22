@@ -13,7 +13,7 @@ public class MainMenuControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine("DelayOnMainMenu", 2);
+        StartCoroutine("DelayOnMainMenu", 1);
     }
 
     IEnumerator DelayOnMainMenu(float count)
