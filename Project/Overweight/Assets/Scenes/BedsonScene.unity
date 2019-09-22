@@ -305,6 +305,11 @@ PrefabInstance:
       propertyPath: parcelInitalForce
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelSidewaysForce
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}
 --- !u!1001 &72032848
@@ -618,6 +623,11 @@ PrefabInstance:
         type: 3}
       propertyPath: parcelInitalForce
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelSidewaysForce
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}
@@ -1031,6 +1041,11 @@ PrefabInstance:
       propertyPath: parcelInitalForce
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelSidewaysForce
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}
 --- !u!1 &1417061101 stripped
@@ -1191,7 +1206,7 @@ PrefabInstance:
     - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
         type: 3}
       propertyPath: minPlayerCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a309e97e96d333d4c87cf33ae36d63c4, type: 3}
@@ -1364,6 +1379,11 @@ PrefabInstance:
         type: 3}
       propertyPath: parcelInitalForce
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874572970931642544, guid: 29c021562e1d844499d4429318dd6c7c,
+        type: 3}
+      propertyPath: parcelSidewaysForce
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29c021562e1d844499d4429318dd6c7c, type: 3}

@@ -6,7 +6,7 @@ public class parcel_spawner : MonoBehaviour
 {
     private float nextSpawnTime;
     private float spawnCount = 0;
-    private bool canSpawn = true;
+    private bool canSpawn = false;
 
     [SerializeField] private GameObject [] parcel_spawnItem;
     [SerializeField] private float spawnDelay = 1;
@@ -14,11 +14,10 @@ public class parcel_spawner : MonoBehaviour
 
     private float spawnAve = 5;
 
-    private List<float> parcelSpawnWeight = new List<float>();
-
     [SerializeField] private string parcelDirection;
     [SerializeField] private float parcelInitalForce = 1.3f;
     [SerializeField] private float parcelForceVariance = 1f;
+    [SerializeField] private float parcelSidewaysForce = 1f;
 
     // Parcel box numbers
     [SerializeField] int boxMin = 1;
@@ -29,6 +28,8 @@ public class parcel_spawner : MonoBehaviour
     [SerializeField] float mBox = 1f;
     [SerializeField] float lBox = 1f;
     [SerializeField] float bBox = 1f;
+
+    private List<float> parcelSpawnWeight = new List<float> { 1f , 1f , 1f , 1f };
 
     private void Update()
     {
@@ -44,6 +45,7 @@ public class parcel_spawner : MonoBehaviour
     public void StartSpawning()
     {
         spawnAve = Mathf.RoundToInt(Random.Range(boxMin, boxMax + 0.49f));
+        parcelSpawnWeight.Clear();
         parcelSpawnWeight.Add(sBox);
         parcelSpawnWeight.Add(mBox);
         parcelSpawnWeight.Add(lBox);
@@ -55,6 +57,7 @@ public class parcel_spawner : MonoBehaviour
     public void StartSpawning(int numSpawnMin, int numSpawnMax, float smallP, float medP, float largeP, float badP)
     {
         spawnAve = Mathf.RoundToInt(Random.Range(numSpawnMin, numSpawnMax+0.49f));
+        parcelSpawnWeight.Clear();
         parcelSpawnWeight.Add(smallP);
         parcelSpawnWeight.Add(medP);
         parcelSpawnWeight.Add(largeP);
@@ -70,24 +73,25 @@ public class parcel_spawner : MonoBehaviour
 
     private void Spawn(GameObject parcelToSpawn)
     {
-        parcelForceVariance = Random.Range(parcelInitalForce - 1, parcelInitalForce + 1);
+        float pfv = Random.Range(parcelInitalForce - parcelForceVariance, parcelInitalForce + parcelForceVariance);
+        float psv = Random.Range(-parcelSidewaysForce, parcelSidewaysForce);
         nextSpawnTime = Time.time + Random.Range(spawnDelay - spawnDelayVariance, spawnDelay + spawnDelayVariance);
         GameObject spawnedParcel = Instantiate(parcelToSpawn, transform.position, transform.rotation);
         if (parcelDirection == "right")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(parcelForceVariance, 0, 0);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(pfv, 0, psv);
         }
         else if (parcelDirection == "left")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(-parcelForceVariance, 0, 0);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(-pfv, 0, psv);
         }
         else if (parcelDirection == "down")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -parcelForceVariance);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(psv, 0, -pfv);
         }
         else if (parcelDirection == "up")
         {
-            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, parcelForceVariance);
+            spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(psv, 0, pfv);
         }
         else
         {
