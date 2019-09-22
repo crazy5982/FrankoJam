@@ -599,13 +599,15 @@ public class GameController : MonoBehaviour
 
         if (winners.Count > 0)
         {
-            //set a winner found variable to rpevent other things from happening
+            //set a winner found variable to prevent other things from happening
             gameWon = true;
             string winnerNames = "WINNER!: ";
-            foreach (ScaleZone playerScale in currentZones)
+            foreach (ScaleZone playerScale in winners)
             {
+                string scaleS = playerScale.name;
+                string playerN = scaleS.Replace("ScaleZone_", "");
                 Debug.Log("Your winner: "+playerScale.name);
-                winnerNames = winnerNames+playerScale.name;
+                winnerNames = winnerNames + " Player " + playerN;
             }
             //do some winning function
             winnerCanvas.enabled = true;
