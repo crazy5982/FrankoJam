@@ -181,6 +181,7 @@ public class GameController : MonoBehaviour
             player1.GetComponent<PlayerController>().PlayerIndex = 1;
             currentPlayers.Add(player1);
             currentZones.Add(player1Scale);
+            player1Scale.Enabled = true;
             player1State = "X to ready";
             numberOfPlayers++;
         }
@@ -190,6 +191,7 @@ public class GameController : MonoBehaviour
             player2.GetComponent<PlayerController>().PlayerIndex = 2;
             currentPlayers.Add(player2);
             currentZones.Add(player2Scale);
+            player2Scale.Enabled = true;
             player2State = "X to ready";
             numberOfPlayers++;
         }
@@ -199,6 +201,7 @@ public class GameController : MonoBehaviour
             player3.GetComponent<PlayerController>().PlayerIndex = 3;
             currentPlayers.Add(player3);
             currentZones.Add(player3Scale);
+            player3Scale.Enabled = true;
             player3State = "X to ready";
             numberOfPlayers++;
         }
@@ -208,6 +211,7 @@ public class GameController : MonoBehaviour
             player4.GetComponent<PlayerController>().PlayerIndex = 4;
             currentPlayers.Add(player4);
             currentZones.Add(player4Scale);
+            player3Scale.Enabled = true;
             player4State = "X to ready";
             numberOfPlayers++;
         }
@@ -429,6 +433,7 @@ public class GameController : MonoBehaviour
     {
         int playerScore;
         closestPlayerScores = new List<ScaleZone> { };
+        overweightPlayerScores = new List<ScaleZone> { };
         foreach (ScaleZone playerScale in currentZones)
         {
 			if (playerScale.CurrentWeight > 0)
