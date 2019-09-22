@@ -8,27 +8,43 @@ public class MainMenuControl : MonoBehaviour
     [SerializeField] private GameObject imageDisplay;
     [SerializeField] private Texture controlImage;
     [SerializeField] private float mainMenuDelay = 1f;
-    [SerializeField] private float controlDisplayDelay = 4f;
+    [SerializeField] private float controlDisplayDelay = 1f;
+
+    private bool controlsVisible = false;
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine("DelayOnMainMenu", mainMenuDelay);
-    }
-
-    IEnumerator DelayOnMainMenu(float count)
-    {
-        yield return new WaitForSeconds(count);
-        if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
+        if(mmcTimerCheck() && controlsVisible == false)
         {
-            imageDisplay.GetComponent<RawImage>().texture = controlImage;
-            StartCoroutine("DelayNextScene", controlDisplayDelay);
+            DisplayControls();
+        }
+        else if (controlsVisible)
+        {
+            GoNextScene();
         }
     }
 
-    IEnumerator DelayNextScene(float count)
+    private bool mmcTimerCheck()
     {
-        yield return new WaitForSeconds(count);
-        SceneLoader.LoadNextScene();
+        return Time.time > mainMenuDelay;
+    }
+
+    private void DisplayControls()
+    {
+        if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
+        {
+            imageDisplay.GetComponent<RawImage>().texture = controlImage;
+            controlsVisible = true;
+        }
+    }
+
+    private void GoNextScene()
+    {
+        if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
+        {
+            SceneLoader.LoadNextScene();
+            controlsVisible = false;
+        }
     }
 }

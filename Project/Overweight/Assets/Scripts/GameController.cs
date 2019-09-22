@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
     private int objectiveWeight;
     private int currentObjectiveWeight;
 
-    private int winsObjective = 7;
+    [SerializeField] private int winsObjective = 7;
     private bool gameWon = false;
     public Text winnerText;
 
@@ -104,8 +104,8 @@ public class GameController : MonoBehaviour
     // Parcel destruction setup
     parcel_manager parcel_man = new parcel_manager();
 
-    // Parcel spawn setup
-    //parcel_spawner spw_parcel;
+    // Winner delay timer setup
+    [SerializeField] private float winnerDelay = 3f;
 
     void Start()
     {
@@ -264,10 +264,10 @@ public class GameController : MonoBehaviour
             objectiveUILeft.text = "Press A to join and X to ready up";
             objectiveUILeft.text = "Press A to join and X to ready up";
             //change scores to be blank then switch to joined then ready for each player
-            player1WinUI.text = "Player1: " + player1State;
-            player2WinUI.text = "Player2: " + player2State;
-            player3WinUI.text = "Player3: " + player3State;
-            player4WinUI.text = "Player4: " + player4State;
+            player1WinUI.text = "" + player1State;
+            player2WinUI.text = "" + player2State;
+            player3WinUI.text = "" + player3State;
+            player4WinUI.text = "" + player4State;
         }
         else
         {
@@ -337,27 +337,27 @@ public class GameController : MonoBehaviour
         gameStarting = true;
         timer = timerFrozen;
         newRoundTimer = 5;
-        Color countdownCol = new Color(0f, 0f, 0f, 1f);
+        Color countdownCol = new Color(1f, 1f, 1f, 1f);
         timerUI.color = countdownCol;
 
         //generate and set objectives
         objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(minObjective, maxObjective));
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
-        objectiveUILeft.text = "GOAL: " + objectiveWeightFrozen + "KG";
-        objectiveUIRight.text = "GOAL: " + objectiveWeightFrozen + "KG";
+        objectiveUILeft.text = "GOAL: " + objectiveWeightFrozen + " KG";
+        objectiveUIRight.text = "GOAL: " + objectiveWeightFrozen + " KG";
         //get all active players?
         foreach (ScaleZone playerScale in currentZones)
         {
             Debug.Log("Player "+playerScale.name);
         }
-            //GetPlayersList();
-            //numberOfPlayers = currentZones.Count;
-            //set player spawns
-            //set item spawns
+        //GetPlayersList();
+        //numberOfPlayers = currentZones.Count;
+        //set player spawns
+        //set item spawns
 
-            // Setup parcel spawners here
-            parcel_man.BeginParcelSpawning();
+        // Setup parcel spawners here
+        parcel_man.BeginParcelSpawning();
 
         UpdateTotalScores();
     }
@@ -557,11 +557,13 @@ public class GameController : MonoBehaviour
     void EndOfGameWait()
     {
         //wait for the players to do something
-        StartCoroutine("DelayThenNextScene", 3);      
+        if(gcTimerCheck())
+        {
+            NextScene();
+        }
     }
     void UpdateTotalScores()
     {
-        Debug.Log("Here we are!");
         //for each current player
         foreach (ScaleZone playerScale in currentZones)
         {
@@ -689,7 +691,7 @@ public class GameController : MonoBehaviour
         {
             Color neutCol = new Color(1f, 1f, 1f, 1f);
             playerScale.SetEvaluationTextColour(neutCol);
-            playerScale.SetEvaluationText("UNDERWEIGHT!");
+            playerScale.SetEvaluationText("");
         }
     }
 
@@ -733,9 +735,13 @@ public class GameController : MonoBehaviour
     //    }
     //}
 
-    IEnumerator DelayThenNextScene(float count)
+    private bool gcTimerCheck()
     {
-        yield return new WaitForSeconds(count);
+        return Time.time > winnerDelay;
+    }
+
+    private void NextScene()
+    {
         if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
         {
             SceneLoader.LoadNextScene();

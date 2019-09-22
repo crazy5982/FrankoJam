@@ -19,7 +19,7 @@ public static class SceneLoader
 
     public static void LoadNextScene()
     {
-        int scenes = SceneManager.sceneCount;
+        int scenes = SceneManager.sceneCountInBuildSettings;
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex < scenes)
         {

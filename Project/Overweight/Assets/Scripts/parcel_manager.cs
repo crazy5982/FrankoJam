@@ -28,7 +28,7 @@ public class parcel_manager : MonoBehaviour
         if(!gotParcel_spawns)
         {
             GetParcelSpawners();
-        }        
+        }
         foreach (GameObject parcel in parcelObjects)
         {
             parcel.GetComponent<parcel_spawner>().StartSpawning();

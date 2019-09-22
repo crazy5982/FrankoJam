@@ -35,7 +35,7 @@ public class parcel_spawner : MonoBehaviour
     {
         if (canSpawn)
         {
-            if (TimerCheck())
+            if (psTimerCheck())
             {
                 Spawn(parcelToSpawn());
             }
@@ -111,7 +111,7 @@ public class parcel_spawner : MonoBehaviour
 		}
     }
 
-    private bool TimerCheck()
+    private bool psTimerCheck()
     {
         return Time.time > nextSpawnTime && spawnCount < spawnAve;
     }
