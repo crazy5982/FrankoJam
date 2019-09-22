@@ -47,18 +47,32 @@ MonoBehaviour:
   player2Scale: {fileID: 0}
   player3Scale: {fileID: 0}
   player4Scale: {fileID: 0}
-  playerObject: {fileID: 0}
+  player1Object: {fileID: 0}
+  player2Object: {fileID: 0}
+  player3Object: {fileID: 0}
+  player4Object: {fileID: 0}
   player1SpawnLocation: {fileID: 0}
   player2SpawnLocation: {fileID: 0}
   player3SpawnLocation: {fileID: 0}
   player4SpawnLocation: {fileID: 0}
+  minPlayerCount: 2
   timerFrozen: 15
-  numberOfPlayers: 0
+  maxObjective: 15
+  minObjective: 3
   timerUI: {fileID: 0}
-  objectiveUI: {fileID: 0}
+  objectiveUILeft: {fileID: 0}
+  objectiveUIRight: {fileID: 0}
   player1WinUI: {fileID: 0}
   player2WinUI: {fileID: 0}
   player3WinUI: {fileID: 0}
   player4WinUI: {fileID: 0}
+  objectiveCanvasLeft: {fileID: 0}
+  objectiveCanvasRight: {fileID: 0}
+  timerCanvas: {fileID: 0}
+  winnerCanvas: {fileID: 0}
+  scoresCanvas: {fileID: 0}
+  winsObjective: 2
+  winnerText: {fileID: 0}
   parcel_spawner_object: {fileID: 3874572970931642558, guid: 29c021562e1d844499d4429318dd6c7c,
     type: 3}
+  winnerDelay: 3
