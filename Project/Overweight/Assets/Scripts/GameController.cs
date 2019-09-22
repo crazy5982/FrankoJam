@@ -51,20 +51,22 @@ public class GameController : MonoBehaviour
     private bool readyPlayer4 = false;
     private int readyCount = 0;
 
-    private string player1State = "";
-    private string player2State = "";
-    private string player3State = "";
-    private string player4State = "";
+    private string player1State = "Press A to join";
+    private string player2State = "Press A to join";
+    private string player3State = "Press A to join";
+    private string player4State = "Press A to join";
 
     public Text timerUI;
-    public Text objectiveUI;
+    public Text objectiveUILeft;
+    public Text objectiveUIRight;
 
     public Text player1WinUI;
     public Text player2WinUI;
     public Text player3WinUI;
     public Text player4WinUI;
 
-    public Canvas objectiveCanvas;
+    public Canvas objectiveCanvasLeft;
+    public Canvas objectiveCanvasRight;
     public Canvas timerCanvas;
     public Canvas winnerCanvas;
     public Canvas scoresCanvas;
@@ -179,7 +181,7 @@ public class GameController : MonoBehaviour
             player1.GetComponent<PlayerController>().PlayerIndex = 1;
             currentPlayers.Add(player1);
             currentZones.Add(player1Scale);
-            player1State = "Joined";
+            player1State = "Press X to ready up";
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 2) && player2 == null)
@@ -188,7 +190,7 @@ public class GameController : MonoBehaviour
             player2.GetComponent<PlayerController>().PlayerIndex = 2;
             currentPlayers.Add(player2);
             currentZones.Add(player2Scale);
-            player2State = "Joined";
+            player2State = "Press X to ready up";
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 3) && player3 == null)
@@ -197,7 +199,7 @@ public class GameController : MonoBehaviour
             player3.GetComponent<PlayerController>().PlayerIndex = 3;
             currentPlayers.Add(player3);
             currentZones.Add(player3Scale);
-            player3State = "Joined";
+            player3State = "Press X to ready up";
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 4) && player4 == null)
@@ -206,7 +208,7 @@ public class GameController : MonoBehaviour
             player4.GetComponent<PlayerController>().PlayerIndex = 4;
             currentPlayers.Add(player4);
             currentZones.Add(player4Scale);
-            player4State = "Joined";
+            player4State = "Press X to ready up";
             numberOfPlayers++;
         }
 
@@ -257,9 +259,10 @@ public class GameController : MonoBehaviour
             //change timer to be waiting for players
             Color waitingCol = new Color(1f, 0f, 0f, 1f);
             timerUI.color = waitingCol;
-            timerUI.text = "Waiting for players to be ready, Ready? "+playersReady+" #"+readyCount;
+            timerUI.text = "Waiting for players to be ready, Ready?";
             //change objective to be "press A to join and X to ready up"
-            objectiveUI.text = "Press A to join and X to ready up";
+            objectiveUILeft.text = "Press A to join and X to ready up";
+            objectiveUILeft.text = "Press A to join and X to ready up";
             //change scores to be blank then switch to joined then ready for each player
             player1WinUI.text = "Player1: " + player1State;
             player2WinUI.text = "Player2: " + player2State;
@@ -341,7 +344,8 @@ public class GameController : MonoBehaviour
         objectiveWeightFrozen = Mathf.RoundToInt(Random.Range(minObjective, maxObjective));
         objectiveWeight = objectiveWeightFrozen;
         currentObjectiveWeight = objectiveWeightFrozen;
-        objectiveUI.text = "GOAL: " + objectiveWeightFrozen + "KG";
+        objectiveUILeft.text = "GOAL: " + objectiveWeightFrozen + "KG";
+        objectiveUIRight.text = "GOAL: " + objectiveWeightFrozen + "KG";
         //get all active players?
         foreach (ScaleZone playerScale in currentZones)
         {
@@ -609,7 +613,8 @@ public class GameController : MonoBehaviour
 
     void HideAllUI()
     {
-        objectiveCanvas.enabled = false;
+        objectiveCanvasLeft.enabled = false;
+        objectiveCanvasRight.enabled = false;
         timerCanvas.enabled = false;
         winnerCanvas.enabled = false;
         scoresCanvas.enabled = false;

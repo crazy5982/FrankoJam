@@ -4841,6 +4841,37 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &2070125661693538538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8405271066030329408}
+  m_Layer: 0
+  m_Name: Trail_vfx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8405271066030329408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070125661693538538}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.049999952, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children:
+  - {fileID: 9050821185726202199}
+  m_Father: {fileID: 5486691111449503459}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2353284551920239883
 GameObject:
   m_ObjectHideFlags: 0
@@ -4870,9 +4901,9 @@ Transform:
   m_Children:
   - {fileID: 8480445894789333380}
   m_Father: {fileID: 5486691111449503459}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4550891912274771461
+--- !u!1 &3164757720822444374
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4880,9 +4911,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4088615231534462465}
-  - component: {fileID: 9019393815529864853}
-  - component: {fileID: 2667380008515660195}
+  - component: {fileID: 9050821185726202199}
+  - component: {fileID: 3783590885988042074}
+  - component: {fileID: 7261756218649134584}
   m_Layer: 0
   m_Name: Trail_particle
   m_TagString: Untagged
@@ -4890,27 +4921,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4088615231534462465
+--- !u!4 &9050821185726202199
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4550891912274771461}
+  m_GameObject: {fileID: 3164757720822444374}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000001490116}
   m_LocalPosition: {x: 0, y: -0.233, z: 0}
   m_LocalScale: {x: 0.22922, y: 0.22922, z: 0.22922}
   m_Children: []
-  m_Father: {fileID: 5501944151415238645}
+  m_Father: {fileID: 8405271066030329408}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180.00002, z: 0}
---- !u!198 &9019393815529864853
+--- !u!198 &3783590885988042074
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4550891912274771461}
+  m_GameObject: {fileID: 3164757720822444374}
   serializedVersion: 6
   lengthInSec: 0.5
   simulationSpeed: 1
@@ -4987,8 +5018,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.1
+      scalar: 0.75
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6233,8 +6264,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0}
+        key0: {r: 0, g: 1, b: 0.0802474, a: 1}
+        key1: {r: 0, g: 1, b: 0.083200455, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -6249,7 +6280,7 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 0
+        atime0: 38936
         atime1: 65150
         atime2: 0
         atime3: 0
@@ -9620,14 +9651,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &2667380008515660195
+--- !u!199 &7261756218649134584
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4550891912274771461}
+  m_GameObject: {fileID: 3164757720822444374}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -9683,37 +9714,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!1 &4651096917031243256
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5501944151415238645}
-  m_Layer: 0
-  m_Name: Trail_vfx
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5501944151415238645
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4651096917031243256}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.049999952, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children:
-  - {fileID: 4088615231534462465}
-  m_Father: {fileID: 5486691111449503459}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5109314276980360032
 GameObject:
   m_ObjectHideFlags: 0
@@ -9743,7 +9743,7 @@ Transform:
   m_Children:
   - {fileID: 8321518454206070543}
   m_Father: {fileID: 5486691111449503459}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8429212927610237302
 GameObject:
@@ -14592,9 +14592,9 @@ Transform:
   - {fileID: 674995348878931600}
   - {fileID: 5486691112612273903}
   - {fileID: 8080135540154599433}
-  - {fileID: 5501944151415238645}
   - {fileID: 4831695616727422977}
   - {fileID: 824741443182021517}
+  - {fileID: 8405271066030329408}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
