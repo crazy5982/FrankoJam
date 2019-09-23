@@ -107,7 +107,12 @@ public class parcel_spawner : MonoBehaviour
         {
             spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(psv, 0, pfv);
         }
-        else
+		else if (parcelDirection == "vert")
+		{
+			float psv2 = Random.Range(-parcelSidewaysForce, parcelSidewaysForce);
+			spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(psv, pfv, psv2);
+		}
+		else
         {
             spawnedParcel.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }

@@ -14661,7 +14661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MovementSpeed: 0.3
   m_DashSpeed: 0.8
-  m_StunTimeFrames: 90
+  m_StunTimeFrames: 60
   m_DashTimeFrames: 10
   m_DashCooldownFrames: 120
   m_ThrowSpeedH: 2000
