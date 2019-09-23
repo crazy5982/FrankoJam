@@ -47,9 +47,6 @@ public class PlayerController : MonoBehaviour
 	private bool m_IsStunned = false;
 	private int m_StunTimer = 0;
 
-	private List<int> PLAYER_LAYER_IDS;
-	private const int PARCEL_LAYER_ID = 9;
-
 	private string m_PlayerNumber;
 
 	private Transform m_AttachPoint;
@@ -65,6 +62,10 @@ public class PlayerController : MonoBehaviour
 	private AudioClip m_StunClip;
 
 	private AudioSource m_AudioSource;
+
+	private List<int> PLAYER_LAYER_IDS;
+	private const int PARCEL_LAYER_ID = 9;
+	private const float MAX_TURN_ANGLE = 20.0f * Mathf.Deg2Rad;
 
 
 	void Awake()
@@ -209,8 +210,19 @@ public class PlayerController : MonoBehaviour
 
             analogue_input.Normalize();
 
-            Quaternion rotation = Quaternion.LookRotation(new Vector3(analogue_input.x, 0.0f, analogue_input.y));
-            m_RigidBody.MoveRotation(rotation);
+			//float desiredAngleChange = Vector3.Dot(gameObject.transform.forward, analogue_input);
+			//float desiredChangeAbs = Mathf.Abs(desiredAngleChange);
+			//if (desiredChangeAbs < MAX_TURN_ANGLE)
+			//{
+			Vector3 newForwards = Vector3.RotateTowards(gameObject.transform.forward, new Vector3(analogue_input.x, 0.0f, analogue_input.y), MAX_TURN_ANGLE, 0.0f);
+			//Quaternion rotation = Quaternion.LookRotation(new Vector3(analogue_input.x, 0.0f, analogue_input.y));
+			Quaternion rotation = Quaternion.LookRotation(newForwards);
+			m_RigidBody.MoveRotation(rotation);
+			//}
+			//else
+			//{
+			//	
+			//}
         }
     }
 

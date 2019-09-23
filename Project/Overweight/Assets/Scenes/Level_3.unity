@@ -9688,11 +9688,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
         type: 3}
-      propertyPath: minObjective
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
-        type: 3}
       propertyPath: maxObjective
       value: 12
       objectReference: {fileID: 0}
