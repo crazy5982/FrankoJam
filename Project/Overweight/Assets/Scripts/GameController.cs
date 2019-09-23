@@ -262,7 +262,7 @@ public class GameController : MonoBehaviour
         if(!playersReady)
         {
             //change timer to be waiting for players
-            Color waitingCol = new Color(1f, 0f, 0f, 1f);
+            Color waitingCol = new Color(1f, 1f, 1f, 1f);
             timerUI.color = waitingCol;
             timerUI.text = "Ready up!";
             //change objective to be "press A to join and X to ready up"
@@ -281,7 +281,7 @@ public class GameController : MonoBehaviour
             {
                 startGameTimer -= Time.deltaTime;
                 timerAsInt = Mathf.RoundToInt(startGameTimer);
-                Color countdownCol = new Color(1f, 0f, 0f, 1f);
+                Color countdownCol = new Color(1f, 1f, 1f, 1f);
                 timerUI.color = countdownCol;
                 timerUI.text = "Game starts in: " + timerAsInt + "s";
             }
@@ -302,7 +302,7 @@ public class GameController : MonoBehaviour
         {
             newRoundTimer -= Time.deltaTime;
             timerAsInt = Mathf.RoundToInt(newRoundTimer);
-            Color countdownCol = new Color(1f, 0f, 0f, 1f);
+            Color countdownCol = new Color(1f, 1f, 1f, 1f);
             timerUI.color = countdownCol;
             timerUI.text = "New Round starts in: " + timerAsInt+"s";
         }
@@ -457,7 +457,7 @@ public class GameController : MonoBehaviour
 			}
             else
             {
-                if (zeroWeight.Contains(playerScale))
+                if (zeroWeight.Contains(playerScale) == false)
                 {
                     zeroWeightCount++;
                     zeroWeight.Add(playerScale);
@@ -497,7 +497,7 @@ public class GameController : MonoBehaviour
         else
         {
             //no perfect score so we get the closest
-            if (zeroWeightCount>=numberOfPlayers)
+            if (zeroWeightCount >= numberOfPlayers)
             {
                 //all players have zero weight, this is a win for no one
                 foreach (ScaleZone playerScale in currentZones)
@@ -508,7 +508,9 @@ public class GameController : MonoBehaviour
                 }
                     
             }
-            else
+            // If the closestScoreValue becomes > objectiveWeight any remaining players must have no weight,
+            // so no-one gets any more points, and we break out of this loop
+            else if (closestScoreValue < objectiveWeight)
             {
                 closestScoreValue++;
                 CalculateNearestScore();
