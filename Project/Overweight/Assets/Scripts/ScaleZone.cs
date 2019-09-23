@@ -16,7 +16,13 @@ public class ScaleZone : MonoBehaviour
 	private int m_CurrentWeight = 0;
 	public int CurrentWeight
 	{
-		get { return m_CurrentWeight; }
+		get { m_WeightChanged = false; return m_CurrentWeight; }
+	}
+
+	private bool m_WeightChanged = false;
+	public bool WeightChangedSinceLastChecked
+	{
+		get { return m_WeightChanged; }
 	}
 
 	private bool m_Enabled = false;
@@ -96,6 +102,7 @@ public class ScaleZone : MonoBehaviour
 				collidingParcel.SetScaleZone(this);
 
 				m_CurrentWeight += collidingParcel.ParcelWeight;
+				m_WeightChanged = true;
 
 				Transform attachPoint = m_AttachPointParent.GetChild(firstFreeIndex);
 				collidingParcel.gameObject.transform.position = attachPoint.position;
@@ -129,6 +136,7 @@ public class ScaleZone : MonoBehaviour
 		}
 
 		m_CurrentWeight -= package.ParcelWeight;
+		m_WeightChanged = true;
 
 		package.SetScaleZone(null);
 
@@ -147,6 +155,7 @@ public class ScaleZone : MonoBehaviour
 		}
 
 		m_CurrentWeight = 0;
+		m_WeightChanged = true;
 	}
 
     //Bedson's added bizzle

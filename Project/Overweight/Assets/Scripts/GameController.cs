@@ -108,12 +108,18 @@ public class GameController : MonoBehaviour
     // Winner delay timer setup
     [SerializeField] private float winnerDelay = 3f;
 
+    [SerializeField] protected AudioClip m_PerfectClip;
+	[SerializeField] protected AudioClip m_OverweightClip;
+	protected AudioSource m_AudioSource;
+
     void Start()
     {
         playerSetup();
         winnerText.text ="";
         winnerCanvas.enabled = false;
-        //SetupGame();
+		//SetupGame();
+
+		m_AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -648,8 +654,11 @@ public class GameController : MonoBehaviour
         //for each player get the current score 
         foreach(ScaleZone playerScale in currentZones)
         {
-            int weight = playerScale.CurrentWeight;
-            EvaluatePlayerScore(weight, playerScale);
+			if (playerScale.WeightChangedSinceLastChecked)
+			{
+				int weight = playerScale.CurrentWeight;
+				EvaluatePlayerScore(weight, playerScale);
+			}
         }
     }
 
@@ -688,17 +697,23 @@ public class GameController : MonoBehaviour
 
     void EvaluatePlayerScore(int playerScore, ScaleZone playerScale)
     {
+		AudioClip clipToUse = null;
+
         if (playerScore == objectiveWeight)
         {
             Color winCol = new Color(0f, 0.8f, 0.1f, 1f);
             playerScale.SetEvaluationTextColour(winCol);
             playerScale.SetEvaluationText("PERFECT WEIGHT!");
+
+			clipToUse = m_PerfectClip;
         }
         else if (playerScore > objectiveWeight)
         {
             Color overCol = new Color(1f, 0f, 1f, 1f);
             playerScale.SetEvaluationTextColour(overCol);
             playerScale.SetEvaluationText("OVERWEIGHT!");
+
+			clipToUse = m_OverweightClip;
         }
         else if(playerScore < objectiveWeight)
         {
@@ -706,6 +721,12 @@ public class GameController : MonoBehaviour
             playerScale.SetEvaluationTextColour(neutCol);
             playerScale.SetEvaluationText("");
         }
+
+		if (clipToUse != null && m_AudioSource != null)
+		{
+			m_AudioSource.clip = clipToUse;
+			m_AudioSource.Play();
+		}
     }
 
 
