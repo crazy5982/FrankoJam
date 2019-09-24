@@ -29,7 +29,10 @@ public class Grabber : MonoBehaviour
 			if (m_ObjectList.Count > 0)
 			{
 				int latestIndex = m_ObjectList.Count - 1;
-				SetMaterial(m_ObjectList[latestIndex], m_PrevMaterial, false);
+				if (m_ObjectList[latestIndex] != null)
+				{
+					SetMaterial(m_ObjectList[latestIndex], m_PrevMaterial, false);
+				}
 			}
 
 			SetMaterial(collidingPackage, m_GrabMaterial, true);
@@ -56,7 +59,10 @@ public class Grabber : MonoBehaviour
 			int latestIndex = m_ObjectList.Count - 1;
 			parcel latestPackage = m_ObjectList[latestIndex];
 
-			SetMaterial(latestPackage, m_PrevMaterial, false);
+			if (latestPackage != null)
+			{
+				SetMaterial(latestPackage, m_PrevMaterial, false);
+			}
 
 			m_ObjectList.RemoveAt(latestIndex);
 			return latestPackage;
