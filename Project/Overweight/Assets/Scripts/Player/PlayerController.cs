@@ -172,6 +172,16 @@ public class PlayerController : MonoBehaviour
 		m_RigidBody.velocity = Vector3.zero;
         m_RigidBody.angularVelocity = Vector3.zero;
 
+		if (m_DashTimer > 0)
+		{
+			m_DashTimer--;
+		}
+
+		if (m_DashCooldown > 0)
+		{
+			m_DashCooldown--;
+		}
+
 		if (m_IsStunned)
 		{
 			m_StunTimer--;
@@ -184,16 +194,6 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 			return;
-		}
-
-		if (m_DashTimer > 0)
-		{
-			m_DashTimer--;
-		}
-
-		if (m_DashCooldown > 0)
-		{
-			m_DashCooldown--;
 		}
 
         Vector2 analogue_input;
@@ -210,19 +210,9 @@ public class PlayerController : MonoBehaviour
 
             analogue_input.Normalize();
 
-			//float desiredAngleChange = Vector3.Dot(gameObject.transform.forward, analogue_input);
-			//float desiredChangeAbs = Mathf.Abs(desiredAngleChange);
-			//if (desiredChangeAbs < MAX_TURN_ANGLE)
-			//{
 			Vector3 newForwards = Vector3.RotateTowards(gameObject.transform.forward, new Vector3(analogue_input.x, 0.0f, analogue_input.y), MAX_TURN_ANGLE, 0.0f);
-			//Quaternion rotation = Quaternion.LookRotation(new Vector3(analogue_input.x, 0.0f, analogue_input.y));
 			Quaternion rotation = Quaternion.LookRotation(newForwards);
 			m_RigidBody.MoveRotation(rotation);
-			//}
-			//else
-			//{
-			//	
-			//}
         }
     }
 
