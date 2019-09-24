@@ -722,15 +722,15 @@ public class GameController : MonoBehaviour
                 player3Light.intensity = 2.5f;
             }
 
-            if (player3Scale.CurrentWeight > objectiveWeight && player4Light != null)
+            if (player4Scale.CurrentWeight > objectiveWeight && player4Light != null)
             {
-                player3Light.intensity = PULSE_MINIMUM +
+                player4Light.intensity = PULSE_MINIMUM +
                               Mathf.PingPong(Time.time * PULSE_SPEED,
                                              PULSE_RANGE - PULSE_MINIMUM);
             }
             else
             {
-                player3Light.intensity = 2.5f;
+                player4Light.intensity = 2.5f;
             }
         }
         else
