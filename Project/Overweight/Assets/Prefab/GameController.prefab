@@ -76,9 +76,9 @@ MonoBehaviour:
   winnerText: {fileID: 0}
   parcel_spawner_object: {fileID: 3874572970931642558, guid: 29c021562e1d844499d4429318dd6c7c,
     type: 3}
-  winnerDelay: 3
-  m_PerfectClip: {fileID: 8300000, guid: 373ef39214b4e9c499d71d853a037c87, type: 3}
-  m_OverweightClip: {fileID: 8300000, guid: 5a43a48a407a149448e6d5afabe7c862, type: 3}
+  winnerDelay: 1.5
+  m_PerfectClip: {fileID: 8300000, guid: 2fe23ea007f2cec4389004439dbfe77a, type: 3}
+  m_OverweightClip: {fileID: 8300000, guid: 42e4b9460d982f342860c25e667fd672, type: 3}
 --- !u!82 &6170129037721994341
 AudioSource:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0

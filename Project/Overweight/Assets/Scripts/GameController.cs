@@ -792,7 +792,14 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(winnerDelay);
         if (Input.GetButtonDown("GrabDrop_P" + 1) || Input.GetButtonDown("GrabDrop_P" + 2) || Input.GetButtonDown("GrabDrop_P" + 3) || Input.GetButtonDown("GrabDrop_P" + 4))
         {
-            SceneLoader.LoadNextScene();
+			if (gameObject.scene.buildIndex == 3)
+			{
+				SceneLoader.LoadStartScene();
+			}
+			else
+			{
+				SceneLoader.LoadNextScene();
+			}
         }
         else if (Input.GetButtonDown("Throw_P" + 1) || Input.GetButtonDown("Throw_P" + 2) || Input.GetButtonDown("Throw_P" + 3) || Input.GetButtonDown("Throw_P" + 4))
         {
