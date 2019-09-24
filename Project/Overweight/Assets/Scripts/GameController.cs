@@ -20,10 +20,11 @@ public class GameController : MonoBehaviour
     private GameObject player3;
     private GameObject player4;
 
-    //[SerializeField] private Light player1Light;
-    //[SerializeField] private Light player2Light;
-    //[SerializeField] private Light player3Light;
-    //[SerializeField] private Light player4Light;
+    [SerializeField] private Light player1Light;
+    [SerializeField] private Light player2Light;
+    [SerializeField] private Light player3Light;
+    [SerializeField] private Light player4Light;
+
 
     [SerializeField] private GameObject player1SpawnLocation;
     [SerializeField] private GameObject player2SpawnLocation;
@@ -60,6 +61,10 @@ public class GameController : MonoBehaviour
     private string player2State = "A to join";
     private string player3State = "A to join";
     private string player4State = "A to join";
+
+    private const float PULSE_RANGE = 2.5f;
+    private const float PULSE_SPEED = 5.0f;
+    private const float PULSE_MINIMUM = 0.5f;
 
     public Text timerUI;
     public Text objectiveUILeft;
@@ -122,10 +127,10 @@ public class GameController : MonoBehaviour
         playerSetup();
         winnerText.text ="";
         winnerCanvas.enabled = false;
-        //player1Light.intensity = 0;
-        //player2Light.intensity = 0;
-        //player3Light.intensity = 0;
-        //player4Light.intensity = 0;
+        player1Light.intensity = 0;
+        player2Light.intensity = 0;
+        player3Light.intensity = 0;
+        player4Light.intensity = 0;
         //SetupGame();
 
         m_AudioSource = GetComponent<AudioSource>();
@@ -145,6 +150,7 @@ public class GameController : MonoBehaviour
                     //GetAndEvaluateCurrentScores();
                     //spawn parcels
                 }
+                //FlashPlayerLight();
             }
             else
             {
@@ -199,7 +205,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player1Scale);
             player1Scale.Enabled = true;
             player1State = "X to ready";
-            //player1Light.intensity = 2.5f;
+            player1Light.intensity = 2.5f;
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 2) && player2 == null)
@@ -210,7 +216,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player2Scale);
             player2Scale.Enabled = true;
             player2State = "X to ready";
-            //player2Light.intensity = 2.5f;
+            player2Light.intensity = 2.5f;
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 3) && player3 == null)
@@ -221,7 +227,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player3Scale);
             player3Scale.Enabled = true;
             player3State = "X to ready";
-            //player3Light.intensity = 2.5f;
+            player3Light.intensity = 2.5f;
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 4) && player4 == null)
@@ -232,7 +238,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player4Scale);
             player4Scale.Enabled = true;
             player4State = "X to ready";
-            //player4Light.intensity = 2.5f;
+            player4Light.intensity = 2.5f;
             numberOfPlayers++;
         }
 
@@ -679,6 +685,90 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void FlashPlayerLight()
+    {
+        if (timer > 0)
+        {
+            if (player1Scale.CurrentWeight > objectiveWeight && player1Light != null)
+            {
+                player1Light.intensity = PULSE_MINIMUM +
+                              Mathf.PingPong(Time.time * PULSE_SPEED,
+                                             PULSE_RANGE - PULSE_MINIMUM);
+            }
+            else
+            {
+                player1Light.intensity = 2.5f;
+            }
+
+            if (player2Scale.CurrentWeight > objectiveWeight && player2Light != null)
+            {
+                player2Light.intensity = PULSE_MINIMUM +
+                              Mathf.PingPong(Time.time * PULSE_SPEED,
+                                             PULSE_RANGE - PULSE_MINIMUM);
+            }
+            else
+            {
+                player2Light.intensity = 2.5f;
+            }
+
+            if (player3Scale.CurrentWeight > objectiveWeight && player3Light != null)
+            {
+                player3Light.intensity = PULSE_MINIMUM +
+                              Mathf.PingPong(Time.time * PULSE_SPEED,
+                                             PULSE_RANGE - PULSE_MINIMUM);
+            }
+            else
+            {
+                player3Light.intensity = 2.5f;
+            }
+
+            if (player3Scale.CurrentWeight > objectiveWeight && player4Light != null)
+            {
+                player3Light.intensity = PULSE_MINIMUM +
+                              Mathf.PingPong(Time.time * PULSE_SPEED,
+                                             PULSE_RANGE - PULSE_MINIMUM);
+            }
+            else
+            {
+                player3Light.intensity = 2.5f;
+            }
+        }
+        else
+        {
+            if (player1 != null)
+            {
+                player1Light.intensity = 2.5f;
+            }
+            if (player2 != null)
+            {
+                player2Light.intensity = 2.5f;
+            }
+            if (player3 != null)
+            {
+                player3Light.intensity = 2.5f;
+            }
+            if (player4 != null)
+            {
+                player4Light.intensity = 2.5f;
+            }
+        }
+        
+
+    }
+
+    void FlashLightP1()
+    {
+        
+        if (player1Light.intensity == 2.5f)
+        {
+            player1Light.intensity = 0;
+        }
+        else
+        {
+            player1Light.intensity = 2.5f;
+        }
+    }
+
     //void DeactivateAllPlayers()
     //{
     //    foreach (ScaleZone playerScale in currentZones)
@@ -721,7 +811,6 @@ public class GameController : MonoBehaviour
             Color winCol = new Color(0f, 0.8f, 0.1f, 1f);
             playerScale.SetEvaluationTextColour(winCol);
             playerScale.SetEvaluationText("PERFECT WEIGHT!");
-            //player1Light.intensity = 2.5f;
             clipToUse = m_PerfectClip;
         }
         else if (playerScore > objectiveWeight)
@@ -729,7 +818,6 @@ public class GameController : MonoBehaviour
             Color overCol = new Color(1f, 0f, 1f, 1f);
             playerScale.SetEvaluationTextColour(overCol);
             playerScale.SetEvaluationText("OVERWEIGHT!");
-            //player1Light.intensity = 0;
             clipToUse = m_OverweightClip;
         }
         else if(playerScore < objectiveWeight)
@@ -737,7 +825,6 @@ public class GameController : MonoBehaviour
             Color neutCol = new Color(1f, 1f, 1f, 1f);
             playerScale.SetEvaluationTextColour(neutCol);
             playerScale.SetEvaluationText("");
-            //player1Light.intensity = 2.5f;
         }
 
 		if (clipToUse != null && m_AudioSource != null)

@@ -6103,7 +6103,7 @@ GameObject:
   - component: {fileID: 721066621}
   - component: {fileID: 721066622}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Point Light2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6917,7 +6917,7 @@ GameObject:
   - component: {fileID: 807740827}
   - component: {fileID: 807740828}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Point Light3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7856,7 +7856,7 @@ GameObject:
   - component: {fileID: 857355572}
   - component: {fileID: 857355573}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Point Light4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9746,6 +9746,26 @@ PrefabInstance:
       propertyPath: winsObjective
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
+        type: 3}
+      propertyPath: player1Light
+      value: 
+      objectReference: {fileID: 1246292977}
+    - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
+        type: 3}
+      propertyPath: player2Light
+      value: 
+      objectReference: {fileID: 721066622}
+    - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
+        type: 3}
+      propertyPath: player3Light
+      value: 
+      objectReference: {fileID: 807740828}
+    - target: {fileID: 7259643526173244525, guid: a309e97e96d333d4c87cf33ae36d63c4,
+        type: 3}
+      propertyPath: player4Light
+      value: 
+      objectReference: {fileID: 857355573}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a309e97e96d333d4c87cf33ae36d63c4, type: 3}
 --- !u!1001 &981921946
@@ -12373,7 +12393,7 @@ GameObject:
   - component: {fileID: 1246292976}
   - component: {fileID: 1246292977}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Point Light1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
