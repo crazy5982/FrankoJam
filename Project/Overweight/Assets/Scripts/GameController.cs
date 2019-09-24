@@ -20,6 +20,11 @@ public class GameController : MonoBehaviour
     private GameObject player3;
     private GameObject player4;
 
+    [SerializeField] private Light player1Light;
+    [SerializeField] private Light player2Light;
+    [SerializeField] private Light player3Light;
+    [SerializeField] private Light player4Light;
+
     [SerializeField] private GameObject player1SpawnLocation;
     [SerializeField] private GameObject player2SpawnLocation;
     [SerializeField] private GameObject player3SpawnLocation;
@@ -117,9 +122,13 @@ public class GameController : MonoBehaviour
         playerSetup();
         winnerText.text ="";
         winnerCanvas.enabled = false;
-		//SetupGame();
+        player1Light.intensity = 0;
+        player2Light.intensity = 0;
+        player3Light.intensity = 0;
+        player4Light.intensity = 0;
+        //SetupGame();
 
-		m_AudioSource = GetComponent<AudioSource>();
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -190,6 +199,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player1Scale);
             player1Scale.Enabled = true;
             player1State = "X to ready";
+            player1Light.intensity = 2.5f;
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 2) && player2 == null)
@@ -200,6 +210,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player2Scale);
             player2Scale.Enabled = true;
             player2State = "X to ready";
+            player2Light.intensity = 2.5f;
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 3) && player3 == null)
@@ -210,6 +221,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player3Scale);
             player3Scale.Enabled = true;
             player3State = "X to ready";
+            player3Light.intensity = 2.5f;
             numberOfPlayers++;
         }
         if (Input.GetButtonDown("GrabDrop_P" + 4) && player4 == null)
@@ -220,6 +232,7 @@ public class GameController : MonoBehaviour
             currentZones.Add(player4Scale);
             player4Scale.Enabled = true;
             player4State = "X to ready";
+            player4Light.intensity = 2.5f;
             numberOfPlayers++;
         }
 
@@ -708,22 +721,23 @@ public class GameController : MonoBehaviour
             Color winCol = new Color(0f, 0.8f, 0.1f, 1f);
             playerScale.SetEvaluationTextColour(winCol);
             playerScale.SetEvaluationText("PERFECT WEIGHT!");
-
-			clipToUse = m_PerfectClip;
+            player1Light.intensity = 2.5f;
+            clipToUse = m_PerfectClip;
         }
         else if (playerScore > objectiveWeight)
         {
             Color overCol = new Color(1f, 0f, 1f, 1f);
             playerScale.SetEvaluationTextColour(overCol);
             playerScale.SetEvaluationText("OVERWEIGHT!");
-
-			clipToUse = m_OverweightClip;
+            player1Light.intensity = 0;
+            clipToUse = m_OverweightClip;
         }
         else if(playerScore < objectiveWeight)
         {
             Color neutCol = new Color(1f, 1f, 1f, 1f);
             playerScale.SetEvaluationTextColour(neutCol);
             playerScale.SetEvaluationText("");
+            player1Light.intensity = 2.5f;
         }
 
 		if (clipToUse != null && m_AudioSource != null)
