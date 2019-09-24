@@ -290,6 +290,10 @@ public class GameController : MonoBehaviour
                 Color countdownCol = new Color(1f, 1f, 1f, 1f);
                 timerUI.color = countdownCol;
                 timerUI.text = "Game starts in: " + timerAsInt + "s";
+                player1WinUI.text = "" + player1State;
+                player2WinUI.text = "" + player2State;
+                player3WinUI.text = "" + player3State;
+                player4WinUI.text = "" + player4State;
             }
             else
             {
